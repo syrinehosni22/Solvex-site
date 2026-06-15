@@ -47,7 +47,7 @@ export default function ServicesPage() {
       {/* Page header */}
       <section style={{ background: "var(--color-dark, #121315)", paddingTop: 160, paddingBottom: 70, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.06 }}>
-          <svg width="100%" height="100%"><defs><pattern id="servicesHeaderGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-primary)" strokeWidth="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#servicesHeaderGrid)"/></svg>
+          <svg width="100%" height="100%"><defs><pattern id="servicesHeaderGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-primary, #0A1684)" strokeWidth="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#servicesHeaderGrid)"/></svg>
         </div>
         <div style={{ position: "absolute", top: -80, right: -80, width: 320, height: 320, borderRadius: "50%", background: "rgba(245,91,31,0.10)" }} />
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
@@ -56,8 +56,8 @@ export default function ServicesPage() {
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: "#aaa" }}>
             <Link to="/" style={{ color: "#aaa", textDecoration: "none" }}>{t("nav.home")}</Link>
-            <span style={{ color: "var(--color-primary)" }}>›</span>
-            <span style={{ color: "var(--color-primary)" }}>{t("nav.services")}</span>
+            <span style={{ color: "var(--color-primary, #0A1684)" }}>›</span>
+            <span style={{ color: "var(--color-primary, #0A1684)" }}>{t("nav.services")}</span>
           </div>
         </div>
       </section>
@@ -96,7 +96,7 @@ export default function ServicesPage() {
               <button
                 onClick={goToContact}
                 style={{
-                  background: "var(--color-primary)", color: "#fff", border: "none", padding: "15px 36px",
+                  background: "var(--color-primary, #0A1684)", color: "#fff", border: "none", padding: "15px 36px",
                   borderRadius: 4, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif",
                   fontSize: 14, display: "inline-flex", alignItems: "center", gap: 10,
                   transition: "transform 0.3s",

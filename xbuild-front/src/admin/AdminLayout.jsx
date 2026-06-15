@@ -26,7 +26,7 @@ function AdminLogo({ info }) {
   const suffix = match ? match[0] : "";
   return (
     <span style={{ fontSize:20, fontWeight:900, color:"#fff", letterSpacing:-0.5 }}>
-      {prefix}<span style={{ color:"var(--color-primary)" }}>{suffix || "BUILD"}</span>
+      {prefix}<span style={{ color:"var(--color-primary, #0A1684)" }}>{suffix || "BUILD"}</span>
     </span>
   );
 }
@@ -66,7 +66,7 @@ useThemeVars(info);
             {NAV.map(item => {
               const active = isActive(item);
               return (
-                <Link key={item.to} to={item.to} style={{ display:"flex", alignItems:"center", gap:5, padding:"6px 10px", borderRadius:8, textDecoration:"none", fontWeight:700, fontSize:12, color: active?"var(--color-primary)":"#8e95a3", background: active?"rgba(245,91,31,0.10)":"transparent", border: active?"1px solid rgba(245,91,31,0.20)":"1px solid transparent", transition:"all 0.15s", whiteSpace:"nowrap" }}>
+                <Link key={item.to} to={item.to} style={{ display:"flex", alignItems:"center", gap:5, padding:"6px 10px", borderRadius:8, textDecoration:"none", fontWeight:700, fontSize:12, color: active?"var(--color-primary, #0A1684)":"#8e95a3", background: active?"rgba(245,91,31,0.10)":"transparent", border: active?"1px solid rgba(245,91,31,0.20)":"1px solid transparent", transition:"all 0.15s", whiteSpace:"nowrap" }}>
                   <span style={{ fontSize:13 }}>{item.icon}</span>{item.label}
                 </Link>
               );

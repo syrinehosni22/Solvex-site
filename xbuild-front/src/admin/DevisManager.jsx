@@ -6,7 +6,7 @@ import { Alert, Button, Card, EmptyState, Field, Input, PageHeader, Spinner, Tex
 /* ── helpers ── */
 const fmtDate = (iso) => iso ? new Date(iso).toLocaleString("fr-FR", { day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" }) : "—";
 const statusInfo = {
-  new:     { label:"Nouveau",          color:"var(--color-primary)", bg:"rgba(245,91,31,0.12)" },
+  new:     { label:"Nouveau",          color:"var(--color-primary, #0A1684)", bg:"rgba(245,91,31,0.12)" },
   read:    { label:"Lu",               color:"#8e95a3", bg:"rgba(142,149,163,0.10)" },
   quoted:  { label:"Devis envoyé",     color:"#10b981", bg:"rgba(16,185,129,0.12)" },
   visited: { label:"Visite proposée",  color:"#06b6d4", bg:"rgba(6,182,212,0.12)" },
@@ -160,7 +160,7 @@ L'équipe ${companyName}`
           <div style={{ padding:"12px 16px", borderRadius:10, background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)", marginBottom:20 }}>
             <div style={{ fontSize:11, fontWeight:800, color:"#555", textTransform:"uppercase", letterSpacing:1, marginBottom:8 }}>Demande originale</div>
             <div style={{ color:"#aaa", fontSize:13, fontFamily:"'DM Sans',sans-serif", lineHeight:1.6 }}>
-              {request.service && <span style={{ color:"var(--color-primary)", fontWeight:700 }}>[{request.service}] </span>}
+              {request.service && <span style={{ color:"var(--color-primary, #0A1684)", fontWeight:700 }}>[{request.service}] </span>}
               {request.message}
             </div>
           </div>
@@ -307,9 +307,9 @@ export default function DevisManager() {
           <button key={f.key} onClick={() => setFilter(f.key)} style={{
             padding:"7px 16px", borderRadius:20, fontFamily:"'DM Sans',sans-serif",
             fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid",
-            borderColor: filter===f.key ? "var(--color-primary)" : "rgba(255,255,255,0.12)",
+            borderColor: filter===f.key ? "var(--color-primary, #0A1684)" : "rgba(255,255,255,0.12)",
             background:  filter===f.key ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)",
-            color:       filter===f.key ? "var(--color-primary)" : "#8e95a3",
+            color:       filter===f.key ? "var(--color-primary, #0A1684)" : "#8e95a3",
           }}>{f.label}</button>
         ))}
       </div>
@@ -437,7 +437,7 @@ export default function DevisManager() {
                     >
                       <div style={{ display:"flex", gap:10, flex:1, minWidth:0, alignItems:"flex-start" }}>
                         {/* Indicateur non-lu */}
-                        <div style={{ width:8, height:8, borderRadius:"50%", background: !doc.read ? "var(--color-primary)" : "transparent", flexShrink:0, marginTop:5 }} />
+                        <div style={{ width:8, height:8, borderRadius:"50%", background: !doc.read ? "var(--color-primary, #0A1684)" : "transparent", flexShrink:0, marginTop:5 }} />
                         <div style={{ minWidth:0, flex:1 }}>
                           <div style={{ display:"flex", gap:8, alignItems:"center", marginBottom:4, flexWrap:"wrap" }}>
                             <span style={{ fontWeight:800, color:"#fff", fontSize:14 }}>{doc.name||"—"}</span>
@@ -445,7 +445,7 @@ export default function DevisManager() {
                           </div>
                           <div style={{ color:"#555", fontSize:12, marginBottom:4 }}>{doc.email}</div>
                           <div style={{ color:"#666", fontSize:12, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:300 }}>
-                            {doc.service ? <span style={{ color:"var(--color-primary)", fontWeight:700 }}>[{doc.service}] </span> : null}{doc.message}
+                            {doc.service ? <span style={{ color:"var(--color-primary, #0A1684)", fontWeight:700 }}>[{doc.service}] </span> : null}{doc.message}
                           </div>
                         </div>
                       </div>

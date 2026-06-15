@@ -34,7 +34,7 @@ export default function ProjectsEditor() {
             <SectionHeading title={isEdit ? "Modifier le projet" : "Nouveau projet"} subtitle="Remplissez les champs dans les deux langues" />
             <div style={{ display:"flex", gap:8, marginBottom:16 }}>
               {LANG_TABS.map(tab => (
-                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary)":"#aaa" }}>{tab.label}</button>
+                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
               ))}
             </div>
             <Field label={`Titre — ${lang==="fr"?"Français 🇫🇷":"English 🇬🇧"}`}>
@@ -47,14 +47,14 @@ export default function ProjectsEditor() {
               <Input value={form[`category_${lang}`]||""} onChange={e => patch(`category_${lang}`, e.target.value)} placeholder={lang==="fr"?"Ex: Industriel":"Ex: Industrial"} />
               <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:6 }}>
                 {CAT[lang].map(c => (
-                  <button key={c} onClick={() => patch(`category_${lang}`, c)} style={{ padding:"3px 10px", borderRadius:6, fontSize:11, fontWeight:700, cursor:"pointer", border: form[`category_${lang}`]===c?"1px solid rgba(245,91,31,0.5)":"1px solid rgba(255,255,255,0.10)", background: form[`category_${lang}`]===c?"rgba(245,91,31,0.12)":"rgba(255,255,255,0.04)", color: form[`category_${lang}`]===c?"var(--color-primary)":"#888" }}>{c}</button>
+                  <button key={c} onClick={() => patch(`category_${lang}`, c)} style={{ padding:"3px 10px", borderRadius:6, fontSize:11, fontWeight:700, cursor:"pointer", border: form[`category_${lang}`]===c?"1px solid rgba(245,91,31,0.5)":"1px solid rgba(255,255,255,0.10)", background: form[`category_${lang}`]===c?"rgba(245,91,31,0.12)":"rgba(255,255,255,0.04)", color: form[`category_${lang}`]===c?"var(--color-primary, #0A1684)":"#888" }}>{c}</button>
                 ))}
               </div>
             </Field>
             <Field label="Année">
               <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
                 {YEAR_RANGE.map(y => (
-                  <button key={y} onClick={() => patch("year", y)} style={{ padding:"6px 14px", borderRadius:8, fontSize:13, fontWeight:800, cursor:"pointer", border: form.year===y?"1px solid rgba(245,91,31,0.5)":"1px solid rgba(255,255,255,0.10)", background: form.year===y?"rgba(245,91,31,0.12)":"rgba(255,255,255,0.04)", color: form.year===y?"var(--color-primary)":"#888" }}>{y}</button>
+                  <button key={y} onClick={() => patch("year", y)} style={{ padding:"6px 14px", borderRadius:8, fontSize:13, fontWeight:800, cursor:"pointer", border: form.year===y?"1px solid rgba(245,91,31,0.5)":"1px solid rgba(255,255,255,0.10)", background: form.year===y?"rgba(245,91,31,0.12)":"rgba(255,255,255,0.04)", color: form.year===y?"var(--color-primary, #0A1684)":"#888" }}>{y}</button>
                 ))}
               </div>
             </Field>
@@ -65,7 +65,7 @@ export default function ProjectsEditor() {
                     <div key={gi} style={{ position:"relative", width:96 }}>
                       <div style={{
                         borderRadius:8, overflow:"hidden", height:72,
-                        border: form.coverIndex === gi ? "2px solid var(--color-primary)" : "1px solid rgba(255,255,255,0.12)",
+                        border: form.coverIndex === gi ? "2px solid var(--color-primary, #0A1684)" : "1px solid rgba(255,255,255,0.12)",
                       }}>
                         <img src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
                       </div>
@@ -77,7 +77,7 @@ export default function ProjectsEditor() {
                             flex:1, fontSize:11, fontWeight:700, padding:"4px 0", borderRadius:6, cursor:"pointer",
                             border: form.coverIndex === gi ? "1px solid rgba(245,91,31,0.5)" : "1px solid rgba(255,255,255,0.10)",
                             background: form.coverIndex === gi ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)",
-                            color: form.coverIndex === gi ? "var(--color-primary)" : "#888",
+                            color: form.coverIndex === gi ? "var(--color-primary, #0A1684)" : "#888",
                           }}
                         >{form.coverIndex === gi ? "★ Couverture" : "☆"}</button>
                         <button
@@ -111,7 +111,7 @@ export default function ProjectsEditor() {
               </div>
               <div style={{ display:"flex", gap:6, marginTop:6, flexWrap:"wrap" }}>
                 {BG_PRESETS.map(bg => (
-                  <button key={bg} onClick={() => patch("bg", bg)} style={{ width:28, height:28, borderRadius:6, background:bg, cursor:"pointer", border: form.bg===bg?"2px solid var(--color-primary)":"1px solid rgba(255,255,255,0.15)" }} />
+                  <button key={bg} onClick={() => patch("bg", bg)} style={{ width:28, height:28, borderRadius:6, background:bg, cursor:"pointer", border: form.bg===bg?"2px solid var(--color-primary, #0A1684)":"1px solid rgba(255,255,255,0.15)" }} />
                 ))}
               </div>
             </Field>
@@ -145,7 +145,7 @@ export default function ProjectsEditor() {
                   </div>
                   <div style={{ display:"flex", gap:8, alignItems:"center" }}>
                     <span style={{ color:"#666", fontSize:12 }}>{doc.category_fr || ""}</span>
-                    <Badge color="var(--color-primary)">{doc.year}</Badge>
+                    <Badge color="var(--color-primary, #0A1684)">{doc.year}</Badge>
                   </div>
                 </div>
               </div>

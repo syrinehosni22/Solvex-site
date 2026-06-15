@@ -82,7 +82,7 @@ export default function Navbar({ active, info }) {
         transition:"box-shadow 0.3s",
         boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.35)" : "none",
       }}>
-        <div style={{ position:"relative", height:"100%", overflow:"hidden" }}>
+        <div style={{ position:"relative", height:"100%"}}>
           {/* Liseré d'accent bleu derrière le panneau blanc */}
           <div className="navbar-accent" style={{
             position:"absolute", top:0, left:0, bottom:0, width:"calc(26% + 10px)",

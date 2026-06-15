@@ -40,7 +40,7 @@ export default function StatsSection({ info }) {
   return (
     <section ref={ref} style={{ padding:"80px 0", background:"var(--color-dark, #121315)", position:"relative", overflow:"hidden" }}>
       <div style={{ position:"absolute", inset:0, opacity:0.05 }}>
-        <svg width="100%" height="100%"><defs><pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-primary)" strokeWidth="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid2)"/></svg>
+        <svg width="100%" height="100%"><defs><pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-primary, #0A1684)" strokeWidth="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid2)"/></svg>
       </div>
 
       <div style={{ maxWidth:1400, margin:"0 auto", padding:"0 24px" }}>
@@ -56,7 +56,7 @@ export default function StatsSection({ info }) {
             <div className="stats-counts" style={{ display:"flex", gap:40, marginBottom:40, flexWrap:"wrap" }}>
               {statsItems.map((s, i) => (
                 <div key={i}>
-                  <div style={{ fontSize:40, fontWeight:900, color:"var(--color-primary)", fontFamily:"'DM Sans',sans-serif" }}>
+                  <div style={{ fontSize:40, fontWeight:900, color:"var(--color-primary, #0A1684)", fontFamily:"'DM Sans',sans-serif" }}>
                     {counts[i]}{s.suffix}
                   </div>
                   <div style={{ color:"#aaa", fontFamily:"'DM Sans',sans-serif", fontSize:14 }}>
@@ -68,7 +68,7 @@ export default function StatsSection({ info }) {
 
             <button
               onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior:"smooth" })}
-              style={{ background:"var(--color-primary)", color:"#fff", border:"none", padding:"14px 32px", borderRadius:4, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}
+              style={{ background:"var(--color-primary, #0A1684)", color:"#fff", border:"none", padding:"14px 32px", borderRadius:4, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}
             >
               {t("stats.learnMore")}
             </button>

@@ -66,10 +66,10 @@ export function Button({ children, variant = "primary", onClick, disabled, type 
     ...style,
   };
   const variants = {
-    primary: { background: "var(--color-primary)", color: "#fff" },
+    primary: { background: "var(--color-primary, #0A1684)", color: "#fff" },
     ghost:   { background: "rgba(255,255,255,0.07)", color: "#cfd2da", border: "1px solid rgba(255,255,255,0.1)" },
     danger:  { background: "rgba(239,68,68,0.12)", color: "#f87171", border: "1px solid rgba(239,68,68,0.25)" },
-    outline: { background: "transparent", color: "var(--color-primary)", border: "1px solid rgba(245,91,31,0.4)" },
+    outline: { background: "transparent", color: "var(--color-primary, #0A1684)", border: "1px solid rgba(245,91,31,0.4)" },
   };
   return (
     <button type={type} onClick={onClick} disabled={disabled} style={{ ...base, ...variants[variant] }}>
@@ -197,7 +197,7 @@ export function Alert({ type = "error", children }) {
 }
 
 // ─── Badge ─────────────────────────────────────────────────────────────────────
-export function Badge({ children, color = "var(--color-primary)" }) {
+export function Badge({ children, color = "var(--color-primary, #0A1684)" }) {
   return (
     <span style={{
       display: "inline-block", padding: "2px 8px",

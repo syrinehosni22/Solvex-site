@@ -9,7 +9,7 @@ const LANG_TABS = [{ code: "fr", label: "🇫🇷 Français" }, { code: "en", la
 /* ── Toggle ──────────────────────────────────────────────────────────── */
 function Toggle({ value, onChange }) {
   return (
-    <div onClick={() => onChange(!value)} style={{ width: 44, height: 24, borderRadius: 12, position: "relative", cursor: "pointer", background: value ? "var(--color-primary)" : "rgba(255,255,255,0.12)", transition: "background 0.2s", flexShrink: 0 }}>
+    <div onClick={() => onChange(!value)} style={{ width: 44, height: 24, borderRadius: 12, position: "relative", cursor: "pointer", background: value ? "var(--color-primary, #0A1684)" : "rgba(255,255,255,0.12)", transition: "background 0.2s", flexShrink: 0 }}>
       <div style={{ position: "absolute", top: 3, left: value ? 23 : 3, width: 18, height: 18, borderRadius: "50%", background: "#fff", transition: "left 0.2s", boxShadow: "0 1px 4px rgba(0,0,0,0.3)" }} />
     </div>
   );
@@ -92,7 +92,7 @@ export default function InfoEditor() {
       {/* Lang tabs */}
       <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
         {LANG_TABS.map(tab => (
-          <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding: "7px 16px", borderRadius: 8, fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 12, cursor: "pointer", border: "1px solid", borderColor: lang === tab.code ? "var(--color-primary)" : "rgba(255,255,255,0.12)", background: lang === tab.code ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", color: lang === tab.code ? "var(--color-primary)" : "#aaa" }}>{tab.label}</button>
+          <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding: "7px 16px", borderRadius: 8, fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 12, cursor: "pointer", border: "1px solid", borderColor: lang === tab.code ? "var(--color-primary, #0A1684)" : "rgba(255,255,255,0.12)", background: lang === tab.code ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", color: lang === tab.code ? "var(--color-primary, #0A1684)" : "#aaa" }}>{tab.label}</button>
         ))}
       </div>
 
@@ -117,7 +117,7 @@ export default function InfoEditor() {
                     const m = n.match(/build/i);
                     const pre = m ? n.slice(0, m.index) : n.slice(0, -1);
                     const suf = m ? m[0] : n.slice(-1);
-                    return <>{pre}<span style={{ color: "var(--color-primary)" }}>{suf}</span></>;
+                    return <>{pre}<span style={{ color: "var(--color-primary, #0A1684)" }}>{suf}</span></>;
                   })()}
                 </span>
               </div>
@@ -144,7 +144,7 @@ export default function InfoEditor() {
             <Field label="Ingénieurs"><Input value={form.heroStats?.engineers || ""} onChange={e => patchStats("engineers", e.target.value)} placeholder="120+" /></Field>
           </div>
           {/* Stats preview */}
-          <div style={{ padding: "14px 20px", borderRadius: 10, background: "var(--color-primary)", display: "flex", gap: 24, flexWrap: "wrap", marginTop: 4 }}>
+          <div style={{ padding: "14px 20px", borderRadius: 10, background: "var(--color-primary, #0A1684)", display: "flex", gap: 24, flexWrap: "wrap", marginTop: 4 }}>
             {[{ v: form.heroStats?.projects || "45K+", l: "Projets", ic: "🏗️" }, { v: form.heroStats?.clients || "25K+", l: "Clients", ic: "😊" }, { v: `${form.yearsExperience || 25}+`, l: "Ans", ic: "⭐" }, { v: form.heroStats?.engineers || "120+", l: "Ingénieurs", ic: "👷" }].map((s, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 18 }}>{s.ic}</span>
@@ -187,7 +187,7 @@ export default function InfoEditor() {
           <div style={{ padding: "12px 16px", borderRadius: 10, background: "rgba(245,91,31,0.08)", border: "1px solid rgba(245,91,31,0.2)", display: "flex", alignItems: "center", gap: 12, marginTop: 4 }}>
             <span>📞</span>
             <span style={{ color: "#aaa", fontSize: 13, fontFamily: "'DM Sans',sans-serif" }}>Bouton d'appel → </span>
-            <a href={phoneHref} style={{ color: "var(--color-primary)", fontWeight: 800, fontFamily: "'DM Sans',sans-serif", fontSize: 14, textDecoration: "none" }}>{form.phone || "—"}</a>
+            <a href={phoneHref} style={{ color: "var(--color-primary, #0A1684)", fontWeight: 800, fontFamily: "'DM Sans',sans-serif", fontSize: 14, textDecoration: "none" }}>{form.phone || "—"}</a>
           </div>
         </Card>
 
@@ -201,7 +201,7 @@ export default function InfoEditor() {
                 <span style={{ fontWeight: 800, color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: 14, flex: 1 }}>{s.label}</span>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <Toggle value={form[`${s.key}Active`] !== false} onChange={v => patch(`${s.key}Active`, v)} />
-                  <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: form[`${s.key}Active`] !== false ? "var(--color-primary)" : "#555", fontWeight: 600 }}>
+                  <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: form[`${s.key}Active`] !== false ? "var(--color-primary, #0A1684)" : "#555", fontWeight: 600 }}>
                     {form[`${s.key}Active`] !== false ? "Affiché" : "Masqué"}
                   </span>
                 </div>
@@ -263,7 +263,7 @@ export default function InfoEditor() {
       {/* Floating save */}
       {dirty && (
         <div style={{ position: "fixed", bottom: 24, right: 24, zIndex: 200, background: "#0a0c0f", border: "1px solid rgba(245,91,31,0.3)", borderRadius: 14, padding: "14px 20px", display: "flex", alignItems: "center", gap: 14, boxShadow: "0 8px 32px rgba(0,0,0,0.5)" }}>
-          <span style={{ color: "var(--color-primary)", fontSize: 13, fontWeight: 700 }}>⚠️ Non sauvegardé</span>
+          <span style={{ color: "var(--color-primary, #0A1684)", fontSize: 13, fontWeight: 700 }}>⚠️ Non sauvegardé</span>
           <Button variant="primary" onClick={save} disabled={saving}>
             {saving ? <><Spinner size={14} /> …</> : "💾 Sauvegarder"}
           </Button>

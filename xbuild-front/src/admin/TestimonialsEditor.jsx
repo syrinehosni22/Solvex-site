@@ -28,7 +28,7 @@ export default function TestimonialsEditor() {
             <SectionHeading title={isEdit ? "Modifier le témoignage" : "Nouveau témoignage"} subtitle="Remplissez les champs dans les deux langues" />
             <div style={{ display:"flex", gap:8, marginBottom:16 }}>
               {LANG_TABS.map(tab => (
-                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary)":"#aaa" }}>{tab.label}</button>
+                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
               ))}
             </div>
 
@@ -67,12 +67,12 @@ export default function TestimonialsEditor() {
               <div style={{ fontSize:11, color:"#555", fontWeight:700, letterSpacing:1, textTransform:"uppercase", marginBottom:10 }}>Aperçu</div>
               <p style={{ color:"#ccc", fontStyle:"italic", fontSize:14, lineHeight:1.7, marginBottom:12 }}>"{form[`text_${lang}`] || "Texte du témoignage…"}"</p>
               <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <div style={{ width:40, height:40, borderRadius:"50%", background:"linear-gradient(135deg,var(--color-primary),#ff8c6b)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>👤</div>
+                <div style={{ width:40, height:40, borderRadius:"50%", background:"linear-gradient(135deg,var(--color-primary, #0A1684),#ff8c6b)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>👤</div>
                 <div>
                   <div style={{ fontWeight:800, color:"#fff", fontSize:14 }}>{form.name||"Nom du client"}</div>
                   <div style={{ color:"#aaa", fontSize:12 }}>{form[`role_${lang}`]||"Rôle"} — {form.company||"Entreprise"}</div>
                   <div style={{ display:"flex", gap:2, marginTop:2 }}>
-                    {Array.from({length: form.stars||5}).map((_,i) => <span key={i} style={{ color:"var(--color-primary)", fontSize:12 }}>★</span>)}
+                    {Array.from({length: form.stars||5}).map((_,i) => <span key={i} style={{ color:"var(--color-primary, #0A1684)", fontSize:12 }}>★</span>)}
                   </div>
                 </div>
               </div>
@@ -94,11 +94,11 @@ export default function TestimonialsEditor() {
           : [...items].sort((a,b)=>(a.order||0)-(b.order||0)).map(doc => (
             <ListItem key={doc._id} active={editing?._id===doc._id}>
               <div style={{ display:"flex", gap:12, alignItems:"flex-start", flex:1, minWidth:0 }}>
-                <div style={{ width:40, height:40, borderRadius:"50%", background:"linear-gradient(135deg,var(--color-primary),#ff8c6b)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>👤</div>
+                <div style={{ width:40, height:40, borderRadius:"50%", background:"linear-gradient(135deg,var(--color-primary, #0A1684),#ff8c6b)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>👤</div>
                 <div style={{ minWidth:0 }}>
                   <div style={{ fontWeight:800, color:"#fff", fontSize:14, marginBottom:2 }}>{doc.name} <span style={{ color:"#555", fontWeight:400, fontSize:12 }}>— {doc.company}</span></div>
                   <div style={{ display:"flex", gap:1, marginBottom:4 }}>
-                    {Array.from({length:doc.stars||5}).map((_,i) => <span key={i} style={{ color:"var(--color-primary)", fontSize:11 }}>★</span>)}
+                    {Array.from({length:doc.stars||5}).map((_,i) => <span key={i} style={{ color:"var(--color-primary, #0A1684)", fontSize:11 }}>★</span>)}
                   </div>
                   <div style={{ color:"#666", fontSize:12, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:280 }}>{doc.text_fr||""}</div>
                 </div>

@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { PageHeader } from "./components/UI";
 
 const CARDS = [
-  { to:"/admin/info",         icon:"⚙️", title:"Infos & Site",       desc:"Hero section, À propos, stats, coordonnées, réseaux sociaux avec toggle.", color:"var(--color-primary)" },
+  { to:"/admin/info",         icon:"⚙️", title:"Infos & Site",       desc:"Hero section, À propos, stats, coordonnées, réseaux sociaux avec toggle.", color:"var(--color-primary, #0A1684)" },
   { to:"/admin/about",        icon:"📖", title:"À Propos & Pourquoi Nous Choisir", desc:"Points forts, badges, atouts et visuels des sections « Qui sommes-nous » et « Pourquoi nous choisir ».", color:"#a855f7" },
   { to:"/admin/services",     icon:"🏗️", title:"Services",           desc:"Ajouter, modifier ou supprimer les services avec image.",                  color:"#3b82f6" },
   { to:"/admin/projects",     icon:"📁", title:"Projets",            desc:"Gérer le portfolio : titres, catégories, années, images.",                 color:"#8b5cf6" },

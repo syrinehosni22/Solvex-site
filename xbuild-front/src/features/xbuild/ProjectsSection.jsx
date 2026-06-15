@@ -70,7 +70,7 @@ function ProjectModal({ project, onClose, t }) {
           <div style={{ position: "relative", zIndex: 1, padding: "0 28px 24px" }}>
             <div style={{
               display: "inline-block", padding: "4px 12px",
-              background: "var(--color-primary)", color: "#fff",
+              background: "var(--color-primary, #0A1684)", color: "#fff",
               fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 700,
               letterSpacing: 1, textTransform: "uppercase", borderRadius: 3, marginBottom: 8,
             }}>{project.category}</div>
@@ -92,7 +92,7 @@ function ProjectModal({ project, onClose, t }) {
                 style={{
                   flexShrink: 0, width: 96, height: 72, borderRadius: 10, overflow: "hidden",
                   padding: 0, cursor: "pointer",
-                  border: gi === activeImage ? "2px solid var(--color-primary)" : "2px solid transparent",
+                  border: gi === activeImage ? "2px solid var(--color-primary, #0A1684)" : "2px solid transparent",
                   outline: gi === activeImage ? "none" : "1px solid rgba(255,255,255,0.12)",
                   background: `url(${img}) center/cover no-repeat`,
                   opacity: gi === activeImage ? 1 : 0.6,
@@ -110,7 +110,7 @@ function ProjectModal({ project, onClose, t }) {
             <div style={{
               padding: "6px 14px", borderRadius: 8,
               background: "rgba(245,91,31,0.12)", border: "1px solid rgba(245,91,31,0.25)",
-              color: "var(--color-primary)", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: 14,
+              color: "var(--color-primary, #0A1684)", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: 14,
             }}>📅 {project.year}</div>
           </div>
 
@@ -171,7 +171,7 @@ function ProjectCard({ p, i, visible, onClick }) {
       ))}
 
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.05))", opacity: hovered ? 1 : 0.35, transition: "opacity 0.3s" }} />
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "var(--color-primary)", transform: hovered ? "scaleX(1)" : "scaleX(0)", transition: "transform 0.3s", transformOrigin: "left" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "var(--color-primary, #0A1684)", transform: hovered ? "scaleX(1)" : "scaleX(0)", transition: "transform 0.3s", transformOrigin: "left" }} />
 
       {/* Carousel dots */}
       {orderedImages.length > 1 && (
@@ -179,7 +179,7 @@ function ProjectCard({ p, i, visible, onClick }) {
           {orderedImages.map((_, gi) => (
             <span key={gi} style={{
               width: 6, height: 6, borderRadius: "50%",
-              background: gi === current ? "var(--color-primary)" : "rgba(255,255,255,0.4)",
+              background: gi === current ? "var(--color-primary, #0A1684)" : "rgba(255,255,255,0.4)",
               transition: "background 0.3s",
             }} />
           ))}
@@ -188,7 +188,7 @@ function ProjectCard({ p, i, visible, onClick }) {
 
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: 24, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div style={{ minWidth: 0 }}>
-          <div style={{ display: "inline-block", padding: "4px 12px", background: "var(--color-primary)", color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", borderRadius: 3, marginBottom: 8, transform: hovered ? "translateY(0)" : "translateY(8px)", opacity: hovered ? 1 : 0, transition: "all 0.3s" }}>{p.category}</div>
+          <div style={{ display: "inline-block", padding: "4px 12px", background: "var(--color-primary, #0A1684)", color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", borderRadius: 3, marginBottom: 8, transform: hovered ? "translateY(0)" : "translateY(8px)", opacity: hovered ? 1 : 0, transition: "all 0.3s" }}>{p.category}</div>
           <h3 style={{ color: "#fff", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: 20, margin: 0 }}>{p.title}</h3>
           {p.desc && (
             <p style={{
@@ -200,7 +200,7 @@ function ProjectCard({ p, i, visible, onClick }) {
           )}
           <p style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'DM Sans',sans-serif", fontSize: 13, margin: "4px 0 0" }}>{p.year}</p>
         </div>
-        <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--color-primary)", display: "flex", alignItems: "center", justifyContent: "center", transform: hovered ? "scale(1)" : "scale(0)", transition: "transform 0.3s", color: "#fff", fontWeight: 700, flexShrink: 0 }}>→</div>
+        <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--color-primary, #0A1684)", display: "flex", alignItems: "center", justifyContent: "center", transform: hovered ? "scale(1)" : "scale(0)", transition: "transform 0.3s", color: "#fff", fontWeight: 700, flexShrink: 0 }}>→</div>
       </div>
 
       {orderedImages.length === 0 && <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontSize: 60, opacity: 0.1 }}>🏗️</div>}

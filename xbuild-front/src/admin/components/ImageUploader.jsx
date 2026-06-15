@@ -56,7 +56,7 @@ export function ImageUploader({ value, onChange, label = "Choisir une image", hi
           type="button"
           onClick={() => { setErr(""); inputRef.current?.click(); }}
           disabled={uploading}
-          style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"9px 16px", borderRadius:8, background:"rgba(245,91,31,0.15)", border:"1px solid rgba(245,91,31,0.3)", color:"var(--color-primary)", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:13, cursor: uploading ? "wait" : "pointer", transition:"all 0.15s" }}
+          style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"9px 16px", borderRadius:8, background:"rgba(245,91,31,0.15)", border:"1px solid rgba(245,91,31,0.3)", color:"var(--color-primary, #0A1684)", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:13, cursor: uploading ? "wait" : "pointer", transition:"all 0.15s" }}
         >
           <span>{uploading ? "⏳" : "📷"}</span>
           {uploading ? "Upload en cours…" : (value ? "Changer" : label)}
@@ -98,7 +98,7 @@ export function ImageUploader({ value, onChange, label = "Choisir une image", hi
         />
         {urlInput && (
           <button type="button" onClick={handleUrlSubmit}
-            style={{ padding:"9px 14px", borderRadius:8, background:"rgba(245,91,31,0.15)", border:"1px solid rgba(245,91,31,0.3)", color:"var(--color-primary)", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer" }}>
+            style={{ padding:"9px 14px", borderRadius:8, background:"rgba(245,91,31,0.15)", border:"1px solid rgba(245,91,31,0.3)", color:"var(--color-primary, #0A1684)", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer" }}>
             OK
           </button>
         )}
