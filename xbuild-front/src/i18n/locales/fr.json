@@ -1,0 +1,364 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "services": "Services",
+    "projects": "Projets",
+    "process": "Processus",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "welcome": "Bienvenue chez {{company}}",
+    "description": "Nous fournissons des services de construction et d'ingénierie premium avec plus de {{years}} ans d'expertise dans la réalisation de structures exceptionnelles.",
+    "ourServices": "Nos Services",
+    "viewProjects": "Voir les Projets",
+    "stats": {
+      "projects": "Projets Réalisés",
+      "clients": "Clients Satisfaits",
+      "experience": "Années d'Expérience",
+      "engineers": "Ingénieurs Experts"
+    }
+  },
+  "services": {
+    "tag": "Ce Que Nous Offrons",
+    "title": "Nos Services",
+    "subtitle": "Des solutions complètes pour vos projets : conception, planification, construction, rénovation, équipements techniques et maintenance. Une expertise pluridisciplinaire mobilisée à chaque étape pour garantir performance, qualité et sécurité.",
+    "serviceLabel": "Service",
+    "learnMore": "En Savoir Plus",
+    "contactCta": "Contactez-nous",
+    "ctaBanner": {
+      "title": "Prêts à construire votre avenir avec nous ?",
+      "desc": "Faites le premier pas vers un projet réussi : confiez-le à XBuild et profitez de notre expertise, de notre exigence de qualité et de solutions sur mesure conçues pour votre succès.",
+      "button": "Contactez-nous"
+    },
+    "items": [
+      {
+        "title": "Conception & Ingénierie",
+        "desc": "Nos services de conception et d'ingénierie couvrent chaque étape de votre projet, des études de faisabilité jusqu'à la planification détaillée de l'exécution. Nous réalisons des modélisations 2D/3D et des simulations techniques afin d'optimiser les performances avant le démarrage des travaux. Notre équipe pluridisciplinaire coordonne le gros œuvre, la structure, les réseaux et l'électricité pour des solutions économiques et livrées dans les délais.",
+        "features": [
+          "Études de faisabilité",
+          "Modélisation 2D/3D",
+          "Plans d'exécution détaillés",
+          "Coordination pluridisciplinaire"
+        ],
+        "icon": "📐",
+        "color": "#0A1684"
+      },
+      {
+        "title": "Planification des Bâtiments",
+        "desc": "Nous accompagnons votre projet du concept au blueprint final, avec une planification précise des délais, des budgets et des ressources. Chaque étape est anticipée pour garantir un déroulement fluide du chantier, de la conception jusqu'à la livraison clé en main.",
+        "features": [
+          "Calendrier de projet détaillé",
+          "Estimation budgétaire",
+          "Gestion des ressources",
+          "Suivi d'avancement"
+        ],
+        "icon": "🏗️",
+        "color": "#121315"
+      },
+      {
+        "title": "Contractant Général",
+        "desc": "En tant que contractant général, nous assurons la gestion complète de votre chantier : coordination des équipes, des sous-traitants et des fournisseurs, dans le respect des délais, du budget et des normes de qualité et de sécurité les plus strictes.",
+        "features": [
+          "Coordination des sous-traitants",
+          "Contrôle qualité",
+          "Respect des délais et budgets",
+          "Conformité sécurité"
+        ],
+        "icon": "🏛️",
+        "color": "#0A1684"
+      },
+      {
+        "title": "Rénovation & Modernisation",
+        "desc": "Nos équipes redonnent vie aux structures existantes grâce à des travaux de rénovation et de modernisation. Nous remplaçons les éléments obsolètes, améliorons l'efficacité énergétique et modernisons les espaces, tout en respectant les normes environnementales et de sécurité en vigueur.",
+        "features": [
+          "Réhabilitation de structures",
+          "Rénovation énergétique",
+          "Mise à niveau des installations",
+          "Respect des normes en vigueur"
+        ],
+        "icon": "🔨",
+        "color": "#121315"
+      },
+      {
+        "title": "Systèmes Électriques & Techniques",
+        "desc": "Nous concevons et installons des systèmes électriques et techniques complets, des tableaux de distribution aux réseaux de courants faibles. Nos solutions intègrent l'automatisation et la gestion technique du bâtiment afin d'optimiser la performance énergétique et le confort des occupants.",
+        "features": [
+          "Installations électriques",
+          "Tableaux et distribution",
+          "Automatisation du bâtiment",
+          "Tests et mise en service"
+        ],
+        "icon": "⚡",
+        "color": "#0A1684"
+      },
+      {
+        "title": "Maintenance & Support Technique",
+        "desc": "Nous proposons des programmes de maintenance préventive et corrective pour garantir la longévité et la fiabilité de vos installations. Nos experts assurent également un support technique et un conseil tout au long de votre projet, du concept jusqu'à l'exploitation.",
+        "features": [
+          "Maintenance préventive",
+          "Interventions correctives rapides",
+          "Inspections régulières",
+          "Conseil technique personnalisé"
+        ],
+        "icon": "🛠️",
+        "color": "#121315"
+      }
+    ]
+  },
+  "about": {
+    "tag": "À Propos de Notre Entreprise",
+    "title": "Nous Offrons la Qualité Sans Compromis",
+    "exploreMore": "Explorer Plus →",
+    "ceoLabel": "XBuild, PDG",
+    "industrialLabel": "Construction Industrielle",
+    "awardTitle": "Primé",
+    "awardSub": "Meilleur Constructeur Industriel",
+    "features": {
+      "satisfaction": "100% Satisfaction Garantie",
+      "certified": "Équipe d'Ingénieurs Certifiés",
+      "flexible": "Flexible & Rentable",
+      "safety": "Normes de Sécurité Avancées"
+    },
+    "highlights": [
+      {
+        "icon": "🏅",
+        "title": "Haute Qualité",
+        "subtitle": "Services Fiables"
+      },
+      {
+        "icon": "⚡",
+        "title": "Rapide & Flexible",
+        "subtitle": "Livraison de Projet"
+      }
+    ],
+    "callLabel": "Appelez-nous",
+    "consultTitle": "Planifiez votre consultation gratuite dès aujourd'hui !",
+    "consultCta": "Contactez-nous"
+  },
+  "projects": {
+    "tag": "Nos Projets Réalisés",
+    "title": "Nos Derniers Projets",
+    "items": [
+      {
+        "title": "Expansion Usine Acier",
+        "category": "Industriel"
+      },
+      {
+        "title": "Rénovation de Bâtiment",
+        "category": "Construction"
+      },
+      {
+        "title": "Ingénierie de Pont",
+        "category": "Civil"
+      },
+      {
+        "title": "Complexe d'Entrepôts",
+        "category": "Industriel"
+      },
+      {
+        "title": "Tour Urbaine",
+        "category": "Architecture"
+      },
+      {
+        "title": "Centrale Électrique",
+        "category": "Énergie"
+      }
+    ]
+  },
+  "process": {
+    "tag": "Processus de Travail",
+    "title": "Comment Ça Marche",
+    "description": "Notre processus de travail garantit que chaque projet est mené avec précision, de la première consultation à la livraison finale, dans le respect des délais et du budget.",
+    "steps": {
+      "planning": "Planification",
+      "development": "Développement",
+      "completion": "Achèvement"
+    },
+    "items": [
+      {
+        "title": "Consultation & Analyse",
+        "desc": "Nous commençons par bien comprendre vos besoins et objectifs grâce à une consultation approfondie, afin de recueillir toutes les informations nécessaires au projet.",
+        "icon": "🔍"
+      },
+      {
+        "title": "Conception & Planification",
+        "desc": "Notre équipe conçoit des solutions sur mesure, suivies d'une planification détaillée et d'une ingénierie de précision pour garantir la faisabilité du projet.",
+        "icon": "📐"
+      },
+      {
+        "title": "Mise en Œuvre & Exécution",
+        "desc": "Nous démarrons les travaux de construction et d'assemblage, en veillant à ce que chaque élément réponde précisément à vos exigences.",
+        "icon": "🏗️"
+      },
+      {
+        "title": "Tests & Livraison",
+        "desc": "Des contrôles qualité et tests finaux sont réalisés pour garantir le respect des normes les plus strictes avant la livraison du projet achevé.",
+        "icon": "✅"
+      }
+    ]
+  },
+  "stats": {
+    "tag": "Statut de l'Entreprise",
+    "title": "Nos Services Répondent aux Plus Hautes Normes.",
+    "description": "Avec plus de {{years}} ans d'expérience, XBuild continue de fixer la référence en qualité et innovation dans la construction industrielle.",
+    "learnMore": "En Savoir Plus →",
+    "features": {
+      "iso": "Certifié ISO",
+      "support": "Support 24/7",
+      "team": "Équipe d'Experts",
+      "safe": "Sûr & Sécurisé"
+    },
+    "items": [
+      {
+        "label": "Projets Réalisés"
+      },
+      {
+        "label": "Clients Actifs"
+      },
+      {
+        "label": "Prix Remportés"
+      }
+    ]
+  },
+  "testimonials": {
+    "tag": "Témoignages",
+    "title": "Ce Que Disent Nos Clients",
+    "items": [
+      {
+        "text": "XBuild a livré notre installation dans les délais et a dépassé chaque référence de qualité. Leur équipe d'ingénierie est vraiment de classe mondiale."
+      },
+      {
+        "text": "Travailler avec XBuild a été une expérience fluide. Professionnel, fiable et engagé envers l'excellence dans chaque détail."
+      },
+      {
+        "text": "Notre complexe industriel a été achevé sous le budget et avant le calendrier. Artisanat et gestion exceptionnels."
+      }
+    ]
+  },
+  "news": {
+    "tag": "Notre Blog",
+    "title": "Dernières Actualités & Articles",
+    "readMore": "Lire la Suite",
+    "featured": "EN VEDETTE",
+    "items": [
+      {
+        "tag": "Construction",
+        "date": "07 Juillet 2024",
+        "title": "Le Dernier Travail a Été Désapprouvé par le Superviseur",
+        "author": "Guy Hawkins"
+      },
+      {
+        "tag": "Bâtiment",
+        "date": "12 Août 2024",
+        "title": "Le Manager a Désapprouvé le Travail le Plus Récent",
+        "author": "Sarah Miller",
+        "featured": true
+      },
+      {
+        "tag": "Industrie",
+        "date": "20 Sep 2024",
+        "title": "Le Manager a Trouvé le Dernier Travail Insatisfaisant",
+        "author": "John Doe"
+      }
+    ],
+    "notFound": "Article introuvable",
+    "notFoundDesc": "Cet article n'existe pas ou a été supprimé.",
+    "noContent": "Le contenu de cet article sera bientôt disponible.",
+    "backToList": "Retour aux actualités",
+    "related": "À lire aussi"
+  },
+  "contact": {
+    "tag": "Prendre Contact",
+    "title": "Contactez-Nous Pour Toute Question",
+    "subtitle": "Nous Sommes Là Pour Vous Aider",
+    "description": "Vous avez un projet en tête ? Parlons-en. Notre équipe est prête à fournir les meilleures solutions de construction.",
+    "location": "Adresse du Bureau",
+    "email": "Envoyer un Email",
+    "phone": "Appel d'Urgence",
+    "hours": "Heures de Travail",
+    "formTitle": "Obtenir un Devis Gratuit",
+    "name": "Votre Nom",
+    "emailField": "Adresse Email",
+    "phoneField": "Numéro de Téléphone",
+    "message": "Votre Message",
+    "send": "Envoyer le Message →",
+    "success": "✓ Message envoyé ! Nous vous répondrons bientôt.",
+    "callUs": "Appelez-nous pour un devis"
+  },
+  "footer": {
+    "aboutTitle": "À Propos de l'Entreprise",
+    "quickLinks": "Liens Rapides",
+    "ourServices": "Nos Services",
+    "newsletter": "Newsletter",
+    "newsletterDesc": "Abonnez-vous pour recevoir les dernières nouvelles de XBuild.",
+    "subscribe": "S'abonner →",
+    "emailPlaceholder": "Votre email",
+    "copyright": "© Tous Droits Réservés 2024 par",
+    "links": {
+      "about": "À Propos",
+      "contact": "Contact",
+      "blog": "Blog & Actualités",
+      "faq": "FAQ",
+      "construction": "Construction",
+      "renovation": "Rénovation",
+      "materials": "Fourniture de Matériaux",
+      "management": "Gestion de Projet"
+    }
+  },
+  "navbar": {
+    "getQuote": "OBTENIR UN DEVIS →",
+    "admin": "Admin ↗"
+  },
+  "sidebar": {
+    "contactInfo": "Infos de Contact",
+    "getQuote": "Obtenir un Devis →"
+  },
+  "brands": [
+    "⚙️ Caterpillar",
+    "🔩 Bosch",
+    "⛏️ Komatsu",
+    "🏗️ Liebherr",
+    "🔧 Siemens"
+  ],
+  "loading": "Chargement...",
+  "admin": {
+    "langTab": "Langue",
+    "langFr": "🇫🇷 Français",
+    "langEn": "🇬🇧 English",
+    "titleFr": "Titre (FR)",
+    "titleEn": "Title (EN)",
+    "descFr": "Description (FR)",
+    "descEn": "Description (EN)",
+    "taglineFr": "Slogan FR",
+    "taglineEn": "Slogan EN",
+    "aboutFr": "À propos (FR)",
+    "aboutEn": "About (EN)",
+    "footerFr": "Footer (FR)",
+    "footerEn": "Footer (EN)"
+  },
+  "whyChooseUs": {
+    "tag": "Pourquoi Nous Choisir",
+    "title": "Pourquoi Nous Choisir ?",
+    "description": "Chez XBuild, nous sommes animés par l'excellence, l'innovation et une compréhension approfondie des enjeux de la construction. Forts de plus de 25 ans d'expertise, nous concevons et livrons des solutions performantes adaptées à vos besoins opérationnels. Notre engagement envers la qualité, la sécurité et la satisfaction client garantit la réussite durable de chaque projet.",
+    "imageLabel": "Excellence Industrielle",
+    "items": [
+      {
+        "icon": "🏆",
+        "title": "Expertise Reconnue",
+        "desc": "Plus de 25 ans d'expérience dans la construction, avec des solutions d'ingénierie éprouvées et fiables."
+      },
+      {
+        "icon": "📋",
+        "title": "Solutions Complètes",
+        "desc": "De la planification à l'exécution, nous assurons une gestion complète de vos projets de construction."
+      },
+      {
+        "icon": "🎯",
+        "title": "Approche Sur Mesure",
+        "desc": "Chaque solution est adaptée à vos besoins spécifiques, pour une efficacité et une satisfaction client maximales."
+      }
+    ]
+  }
+}
