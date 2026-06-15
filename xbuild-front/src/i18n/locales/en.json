@@ -309,11 +309,13 @@
   },
   "navbar": {
     "getQuote": "GET A QUOTE →",
-    "admin": "Admin ↗"
+    "admin": "Admin ↗",
+    "callUs": "Call Us"
   },
   "sidebar": {
     "contactInfo": "Contact Info",
-    "getQuote": "Get A Quote →"
+    "getQuote": "Get A Quote →",
+    "admin": "Administration"
   },
   "brands": [
     "⚙️ Caterpillar",

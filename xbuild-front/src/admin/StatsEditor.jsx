@@ -130,9 +130,9 @@ export default function StatsEditor() {
           <button key={tab.code} onClick={() => setLang(tab.code)} style={{
             padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif",
             fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid",
-            borderColor: lang===tab.code ? "var(--color-primary, #0A1684)" : "rgba(255,255,255,0.12)",
+            borderColor: lang===tab.code ? "var(--color-primary)" : "rgba(255,255,255,0.12)",
             background:  lang===tab.code ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)",
-            color:       lang===tab.code ? "var(--color-primary, #0A1684)" : "#aaa",
+            color:       lang===tab.code ? "var(--color-primary)" : "#aaa",
           }}>{tab.label}</button>
         ))}
       </div>
@@ -166,7 +166,7 @@ export default function StatsEditor() {
           <div style={{ display:"flex", gap:32, padding:"16px 20px", borderRadius:12, background:"var(--color-dark, #121315)", marginBottom:20, flexWrap:"wrap" }}>
             {form.statsItems.map((s, i) => (
               <div key={i} style={{ textAlign:"center" }}>
-                <div style={{ fontSize:32, fontWeight:900, color:"var(--color-primary, #0A1684)", fontFamily:"'DM Sans',sans-serif", lineHeight:1 }}>{s.value}{s.suffix}</div>
+                <div style={{ fontSize:32, fontWeight:900, color:"var(--color-primary)", fontFamily:"'DM Sans',sans-serif", lineHeight:1 }}>{s.value}{s.suffix}</div>
                 <div style={{ color:"#aaa", fontFamily:"'DM Sans',sans-serif", fontSize:13, marginTop:4 }}>{s[`label_${lang}`]}</div>
               </div>
             ))}
@@ -175,7 +175,7 @@ export default function StatsEditor() {
           {form.statsItems.map((item, i) => (
             <div key={i} style={{ marginBottom:14, padding:"16px", borderRadius:12, background:"rgba(0,0,0,0.2)", border:"1px solid rgba(255,255,255,0.07)" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
-                <span style={{ color:"var(--color-primary, #0A1684)", fontWeight:800, fontSize:13, fontFamily:"'DM Sans',sans-serif" }}>
+                <span style={{ color:"var(--color-primary)", fontWeight:800, fontSize:13, fontFamily:"'DM Sans',sans-serif" }}>
                   Compteur {i+1} — <span style={{ color:"#fff" }}>{item.value}{item.suffix}</span>
                 </span>
                 {form.statsItems.length > 1 && (
@@ -249,7 +249,7 @@ export default function StatsEditor() {
       {/* Floating save */}
       {dirty && (
         <div style={{ position:"fixed", bottom:24, right:24, zIndex:200, background:"#0a0c0f", border:"1px solid rgba(245,91,31,0.3)", borderRadius:14, padding:"14px 20px", display:"flex", alignItems:"center", gap:14, boxShadow:"0 8px 32px rgba(0,0,0,0.5)" }}>
-          <span style={{ color:"var(--color-primary, #0A1684)", fontSize:13, fontWeight:700, fontFamily:"'DM Sans',sans-serif" }}>⚠️ Non sauvegardé</span>
+          <span style={{ color:"var(--color-primary)", fontSize:13, fontWeight:700, fontFamily:"'DM Sans',sans-serif" }}>⚠️ Non sauvegardé</span>
           <Button variant="primary" onClick={save} disabled={saving}>
             {saving ? <><Spinner size={14} /> …</> : "💾 Sauvegarder"}
           </Button>

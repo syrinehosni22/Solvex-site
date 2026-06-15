@@ -30,7 +30,7 @@ export default function ProcessEditor() {
             <SectionHeading title={isEdit ? "Modifier l'étape" : "Nouvelle étape"} subtitle="Remplissez les champs dans les deux langues" />
             <div style={{ display:"flex", gap:8, marginBottom:16 }}>
               {LANG_TABS.map(tab => (
-                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
+                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary)":"#aaa" }}>{tab.label}</button>
               ))}
             </div>
             <Field label="Ordre d'affichage">
@@ -47,7 +47,7 @@ export default function ProcessEditor() {
                 <Input value={form.icon || ""} onChange={e => patch("icon", e.target.value)} placeholder="⚙️" />
                 <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
                   {ICON_SUGGESTIONS.map(ic => (
-                    <button key={ic} onClick={() => patch("icon", ic)} style={{ width:34, height:34, borderRadius:8, fontSize:18, border: form.icon === ic ? "2px solid var(--color-primary, #0A1684)" : "1px solid rgba(255,255,255,0.10)", background: form.icon === ic ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
+                    <button key={ic} onClick={() => patch("icon", ic)} style={{ width:34, height:34, borderRadius:8, fontSize:18, border: form.icon === ic ? "2px solid var(--color-primary)" : "1px solid rgba(255,255,255,0.10)", background: form.icon === ic ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
                   ))}
                 </div>
               </div>
@@ -56,7 +56,7 @@ export default function ProcessEditor() {
             <div style={{ marginTop:4, marginBottom:16, padding:"14px 16px", borderRadius:12, background:"rgba(0,0,0,0.25)", border:"1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ fontSize:11, color:"#555", fontWeight:700, letterSpacing:1, textTransform:"uppercase", marginBottom:10 }}>Aperçu</div>
               <div style={{ display:"flex", gap:16 }}>
-                <div style={{ width:52, height:52, flexShrink:0, borderRadius:10, background:"var(--color-primary, #0A1684)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:16 }}>{form.icon || `0${form.order||1}`}</div>
+                <div style={{ width:52, height:52, flexShrink:0, borderRadius:10, background:"var(--color-primary)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:16 }}>{form.icon || `0${form.order||1}`}</div>
                 <div>
                   <div style={{ fontWeight:800, color:"#fff", fontSize:15 }}>{form[`title_${lang}`] || "Titre de l'étape"}</div>
                   <div style={{ color:"#666", fontSize:13, marginTop:4, lineHeight:1.5 }}>{(form[`desc_${lang}`] || "Description…").slice(0, 80)}{(form[`desc_${lang}`] || "").length > 80 ? "…" : ""}</div>

@@ -39,15 +39,15 @@ export default function BlogPostPage() {
       {/* Page header */}
       <section style={{ background: "var(--color-dark, #121315)", paddingTop: 160, paddingBottom: 70, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.06 }}>
-          <svg width="100%" height="100%"><defs><pattern id="blogHeaderGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-primary, #0A1684)" strokeWidth="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#blogHeaderGrid)"/></svg>
+          <svg width="100%" height="100%"><defs><pattern id="blogHeaderGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-primary)" strokeWidth="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#blogHeaderGrid)"/></svg>
         </div>
         <div style={{ position: "absolute", top: -80, right: -80, width: 320, height: 320, borderRadius: "50%", background: "rgba(var(--color-primary-rgb, 10, 22, 132),0.10)" }} />
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: "#aaa", marginBottom: 16 }}>
             <Link to="/" style={{ color: "#aaa", textDecoration: "none" }}>{t("nav.home")}</Link>
-            <span style={{ color: "var(--color-primary, #0A1684)" }}>›</span>
+            <span style={{ color: "var(--color-primary)" }}>›</span>
             <Link to="/#news" style={{ color: "#aaa", textDecoration: "none" }}>{t("news.tag")}</Link>
-            {title && <><span style={{ color: "var(--color-primary, #0A1684)" }}>›</span><span style={{ color: "var(--color-primary, #0A1684)" }}>{title}</span></>}
+            {title && <><span style={{ color: "var(--color-primary)" }}>›</span><span style={{ color: "var(--color-primary)" }}>{title}</span></>}
           </div>
           {loading ? (
             <div style={{ height: 40 }} />
@@ -58,7 +58,7 @@ export default function BlogPostPage() {
           ) : (
             <>
               {tag && (
-                <div style={{ display: "inline-block", padding: "4px 12px", background: "var(--color-primary, #0A1684)", color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", borderRadius: 4, marginBottom: 14 }}>{tag}</div>
+                <div style={{ display: "inline-block", padding: "4px 12px", background: "var(--color-primary)", color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", borderRadius: 4, marginBottom: 14 }}>{tag}</div>
               )}
               <h1 style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: "clamp(28px,4vw,42px)", color: "#fff", margin: 0, lineHeight: 1.25 }}>
                 {title}
@@ -82,7 +82,7 @@ export default function BlogPostPage() {
               <p style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", marginBottom: 24 }}>
                 {t("news.notFoundDesc") || "Cet article n'existe pas ou a été supprimé."}
               </p>
-              <Link to="/#news" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "var(--color-primary, #0A1684)", color: "#fff", padding: "12px 28px", borderRadius: 4, fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
+              <Link to="/#news" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "var(--color-primary)", color: "#fff", padding: "12px 28px", borderRadius: 4, fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
                 ← {t("nav.blog")}
               </Link>
             </div>
@@ -101,7 +101,7 @@ export default function BlogPostPage() {
               </div>
 
               <div style={{ marginTop: 48 }}>
-                <Link to="/#news" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--color-primary, #0A1684)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
+                <Link to="/#news" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--color-primary)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
                   ← {t("news.backToList") || "Retour aux actualités"}
                 </Link>
               </div>
@@ -126,7 +126,7 @@ export default function BlogPostPage() {
                     display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36,
                   }}>{!r.image && "🏗️"}</div>
                   <div style={{ padding: "16px 18px" }}>
-                    {r.tag && <span style={{ background: "var(--color-primary, #0A1684)", color: "#fff", fontSize: 11, fontWeight: 700, padding: "3px 8px", borderRadius: 4 }}>{r.tag}</span>}
+                    {r.tag && <span style={{ background: "var(--color-primary)", color: "#fff", fontSize: 11, fontWeight: 700, padding: "3px 8px", borderRadius: 4 }}>{r.tag}</span>}
                     <h4 style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: 15, color: "var(--color-dark, #121315)", marginTop: 10, lineHeight: 1.4 }}>{r.title}</h4>
                   </div>
                 </Link>

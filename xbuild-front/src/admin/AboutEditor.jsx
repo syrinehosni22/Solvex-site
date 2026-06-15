@@ -82,9 +82,9 @@ export default function AboutEditor() {
           <button key={tab.code} onClick={() => setLang(tab.code)} style={{
             padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12,
             cursor:"pointer", border:"1px solid",
-            borderColor: lang===tab.code ? "var(--color-primary, #0A1684)" : "rgba(255,255,255,0.12)",
+            borderColor: lang===tab.code ? "var(--color-primary)" : "rgba(255,255,255,0.12)",
             background:  lang===tab.code ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)",
-            color:       lang===tab.code ? "var(--color-primary, #0A1684)" : "#aaa",
+            color:       lang===tab.code ? "var(--color-primary)" : "#aaa",
           }}>{tab.label}</button>
         ))}
       </div>
@@ -134,7 +134,7 @@ export default function AboutEditor() {
           {form.aboutHighlights.map((h, i) => (
             <div key={i} style={{ marginBottom:14, padding:"16px", borderRadius:12, background:"rgba(0,0,0,0.2)", border:"1px solid rgba(255,255,255,0.07)" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
-                <span style={{ color:"var(--color-primary, #0A1684)", fontWeight:800, fontSize:13, fontFamily:"'DM Sans',sans-serif" }}>Point fort {i+1}</span>
+                <span style={{ color:"var(--color-primary)", fontWeight:800, fontSize:13, fontFamily:"'DM Sans',sans-serif" }}>Point fort {i+1}</span>
                 {form.aboutHighlights.length > 1 && (
                   <button onClick={() => removeHighlight(i)} style={{ background:"rgba(239,68,68,0.1)", border:"1px solid rgba(239,68,68,0.2)", color:"#f87171", padding:"4px 10px", borderRadius:6, cursor:"pointer", fontSize:12, fontFamily:"'DM Sans',sans-serif", fontWeight:700 }}>
                     ✕ Supprimer
@@ -147,7 +147,7 @@ export default function AboutEditor() {
                     <Input value={h.icon||""} onChange={e => patchHighlight(i, "icon", e.target.value)} placeholder="🏅" />
                     <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
                       {ICON_SUGGESTIONS.slice(0,6).map(ic => (
-                        <button key={ic} onClick={() => patchHighlight(i, "icon", ic)} style={{ width:26, height:26, borderRadius:6, fontSize:14, border: h.icon===ic?"2px solid var(--color-primary, #0A1684)":"1px solid rgba(255,255,255,0.10)", background: h.icon===ic?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
+                        <button key={ic} onClick={() => patchHighlight(i, "icon", ic)} style={{ width:26, height:26, borderRadius:6, fontSize:14, border: h.icon===ic?"2px solid var(--color-primary)":"1px solid rgba(255,255,255,0.10)", background: h.icon===ic?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
                       ))}
                     </div>
                   </div>
@@ -226,7 +226,7 @@ export default function AboutEditor() {
           {form.whyItems.map((item, i) => (
             <div key={i} style={{ marginBottom:14, padding:"16px", borderRadius:12, background:"rgba(0,0,0,0.2)", border:"1px solid rgba(255,255,255,0.07)" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
-                <span style={{ color:"var(--color-primary, #0A1684)", fontWeight:800, fontSize:13, fontFamily:"'DM Sans',sans-serif" }}>Atout {i+1}</span>
+                <span style={{ color:"var(--color-primary)", fontWeight:800, fontSize:13, fontFamily:"'DM Sans',sans-serif" }}>Atout {i+1}</span>
                 {form.whyItems.length > 1 && (
                   <button onClick={() => removeWhyItem(i)} style={{ background:"rgba(239,68,68,0.1)", border:"1px solid rgba(239,68,68,0.2)", color:"#f87171", padding:"4px 10px", borderRadius:6, cursor:"pointer", fontSize:12, fontFamily:"'DM Sans',sans-serif", fontWeight:700 }}>
                     ✕ Supprimer
@@ -239,7 +239,7 @@ export default function AboutEditor() {
                     <Input value={item.icon||""} onChange={e => patchWhyItem(i, "icon", e.target.value)} placeholder="🏆" />
                     <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
                       {ICON_SUGGESTIONS.map(ic => (
-                        <button key={ic} onClick={() => patchWhyItem(i, "icon", ic)} style={{ width:26, height:26, borderRadius:6, fontSize:14, border: item.icon===ic?"2px solid var(--color-primary, #0A1684)":"1px solid rgba(255,255,255,0.10)", background: item.icon===ic?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
+                        <button key={ic} onClick={() => patchWhyItem(i, "icon", ic)} style={{ width:26, height:26, borderRadius:6, fontSize:14, border: item.icon===ic?"2px solid var(--color-primary)":"1px solid rgba(255,255,255,0.10)", background: item.icon===ic?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
                       ))}
                     </div>
                   </div>
@@ -260,7 +260,7 @@ export default function AboutEditor() {
       {/* Floating save */}
       {dirty && (
         <div style={{ position:"fixed", bottom:24, right:24, zIndex:200, background:"#0a0c0f", border:"1px solid rgba(245,91,31,0.3)", borderRadius:14, padding:"14px 20px", display:"flex", alignItems:"center", gap:14, boxShadow:"0 8px 32px rgba(0,0,0,0.5)" }}>
-          <span style={{ color:"var(--color-primary, #0A1684)", fontSize:13, fontWeight:700, fontFamily:"'DM Sans',sans-serif" }}>⚠️ Non sauvegardé</span>
+          <span style={{ color:"var(--color-primary)", fontSize:13, fontWeight:700, fontFamily:"'DM Sans',sans-serif" }}>⚠️ Non sauvegardé</span>
           <Button variant="primary" onClick={save} disabled={saving}>
             {saving ? <><Spinner size={14}/> …</> : "💾 Sauvegarder"}
           </Button>

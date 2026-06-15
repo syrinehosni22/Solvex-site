@@ -26,7 +26,7 @@ export default function Login() {
     return (
       <div style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", background:"#0b0d10" }}>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-        <div style={{ width:36, height:36, border:"3px solid rgba(245,91,31,0.2)", borderTopColor:"var(--color-primary, #0A1684)", borderRadius:"50%", animation:"spin 0.7s linear infinite" }} />
+        <div style={{ width:36, height:36, border:"3px solid rgba(245,91,31,0.2)", borderTopColor:"var(--color-primary)", borderRadius:"50%", animation:"spin 0.7s linear infinite" }} />
       </div>
     );
   }
@@ -61,7 +61,7 @@ export default function Login() {
         @keyframes shake  { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
         * { box-sizing:border-box; }
         input:-webkit-autofill { -webkit-box-shadow:0 0 0 30px #151719 inset!important; -webkit-text-fill-color:#fff!important; }
-        .lbtn:not(:disabled):hover { background:var(--color-primary, #0A1684)!important; transform:translateY(-1px); }
+        .lbtn:not(:disabled):hover { background:var(--color-primary)!important; transform:translateY(-1px); }
       `}</style>
 
       {/* Glows */}
@@ -69,7 +69,7 @@ export default function Login() {
       <div style={{ position:"absolute", bottom:"-25%", right:"-15%", width:600, height:600, borderRadius:"50%", background:"radial-gradient(circle, rgba(245,91,31,0.07), transparent 65%)", pointerEvents:"none" }} />
       {/* Grid */}
       <div style={{ position:"absolute", inset:0, opacity:0.03, pointerEvents:"none" }}>
-        <svg width="100%" height="100%"><defs><pattern id="g" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0L0 0 0 50" fill="none" stroke="var(--color-primary, #0A1684)" strokeWidth="0.7"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>
+        <svg width="100%" height="100%"><defs><pattern id="g" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0L0 0 0 50" fill="none" stroke="var(--color-primary)" strokeWidth="0.7"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>
       </div>
 
       <div style={{ width:"min(420px,100%)", position:"relative", zIndex:1, animation:"fadeIn 0.45s ease" }}>
@@ -82,9 +82,9 @@ export default function Login() {
                 const name = info.companyName || "XBuild";
                 const match = name.match(/build/i);
                 if (match) {
-                  return <>{name.slice(0, match.index)}<span style={{ color:"var(--color-primary, #0A1684)" }}>{match[0]}</span></>;
+                  return <>{name.slice(0, match.index)}<span style={{ color:"var(--color-primary)" }}>{match[0]}</span></>;
                 }
-                return <>{name.slice(0, -1)}<span style={{ color:"var(--color-primary, #0A1684)" }}>{name.slice(-1)}</span></>;
+                return <>{name.slice(0, -1)}<span style={{ color:"var(--color-primary)" }}>{name.slice(-1)}</span></>;
               })()}
             </div>
           </Link>
@@ -108,7 +108,7 @@ export default function Login() {
           <h2 style={{ margin:"0 0 6px", fontSize:21, fontWeight:900, color:"#fff" }}>Connexion</h2>
           {/* <p style={{ margin:"0 0 22px", color:"#555", fontSize:13, lineHeight:1.6 }}>
             Entrez le mot de passe défini dans{" "}
-            <code style={{ background:"rgba(255,255,255,0.08)", padding:"1px 6px", borderRadius:4, fontSize:12, color:"var(--color-primary, #0A1684)" }}>.env</code>
+            <code style={{ background:"rgba(255,255,255,0.08)", padding:"1px 6px", borderRadius:4, fontSize:12, color:"var(--color-primary)" }}>.env</code>
             {" → "}
             <code style={{ background:"rgba(255,255,255,0.08)", padding:"1px 6px", borderRadius:4, fontSize:12, color:"#aaa" }}>ADMIN_PASSWORD</code>
           </p> */}
@@ -156,7 +156,7 @@ export default function Login() {
               width:"100%", padding:"14px", borderRadius:10, border:"none",
               cursor: !password.trim() || loading ? "not-allowed" : "pointer",
               fontWeight:900, fontSize:15,
-              background: !password.trim() || loading ? "rgba(245,91,31,0.28)" : "var(--color-primary, #0A1684)",
+              background: !password.trim() || loading ? "rgba(245,91,31,0.28)" : "var(--color-primary)",
               color:"#fff", fontFamily:"'DM Sans',sans-serif",
               display:"flex", alignItems:"center", justifyContent:"center", gap:10,
               transition:"background 0.2s, transform 0.15s",

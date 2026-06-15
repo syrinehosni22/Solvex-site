@@ -1,11 +1,15 @@
+
 export default function GlobalStyles() {
   return (
     <style>{`
-      :root{
-  --color-primary:#0A1684;
-  --color-primary-rgb:10, 22, 132;
-  --color-primary-dark:#091372;
-  --color-dark:var(--color-dark, #121315);
+       :root{
+  --color-primary:#323F7C;
+  --color-primary-rgb:50, 63, 124;
+  --color-primary-dark:#2C376D;
+  --color-secondary:#EFAB02;
+  --color-secondary-rgb:239, 171, 2;
+  --color-secondary-dark:#CB9102;
+  --color-dark:#121315;
   --color-dark-rgb:18, 19, 21;
 }
       @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
@@ -18,8 +22,9 @@ export default function GlobalStyles() {
       @media(max-width:900px){
         .desktop-nav{display:none!important}
         .mobile-menu-btn{display:block!important}
-        .topbar-desktop{display:none!important}
-        .navbar-actions .get-quote-btn,.navbar-actions .admin-btn,.navbar-actions .sidebar-btn{display:none!important}
+        .navbar-white-panel,.navbar-accent{width:62%!important}
+        .navbar-content{padding-left:calc(62% + 30px)!important;padding-right:16px!important;justify-content:flex-end!important}
+        .navbar-actions .get-quote-btn,.navbar-actions .sidebar-btn,.navbar-actions > div{display:none!important}
         .hero-content{padding:140px 20px 80px 20px!important}
         .hero-stats-bar{padding:0!important;flex-wrap:wrap!important}
         .hero-stat-card{min-width:50%!important;flex:none!important;border-left:none!important;border-top:1px solid rgba(255,255,255,.2)!important}

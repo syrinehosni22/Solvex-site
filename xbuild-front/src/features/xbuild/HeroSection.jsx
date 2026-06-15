@@ -59,14 +59,14 @@ export default function HeroSection({ info }) {
         @keyframes statReveal{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
         @keyframes accentDrop{from{transform:scaleY(0);opacity:0}to{transform:scaleY(1);opacity:1}}
         .h-btn-primary{background:var(--color-primary, #0A1684);color:#fff;border:none;padding:16px 32px;font-weight:800;font-size:14px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .25s,transform .22s,box-shadow .25s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 100%,0 100%)}
-        .h-btn-primary:hover{background:var(--color-primary, #0A1684);transform:translateY(-3px);box-shadow:0 14px 36px rgba(245,91,31,.48)}
+        .h-btn-primary:hover{background:#d94b10;transform:translateY(-3px);box-shadow:0 14px 36px rgba(245,91,31,.48)}
         .h-btn-secondary{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.35);padding:14px 32px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color .25s,background .25s,transform .22s}
         .h-btn-secondary:hover{border-color:var(--color-primary, #0A1684);background:rgba(245,91,31,.12);transform:translateY(-3px)}
         .stat-card{transition:transform .3s,background .3s}.stat-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.13)!important}
       `}</style>
 
       <div style={{ position:"absolute", inset:0, backgroundImage:`url('${bgImage}')`, backgroundSize:"cover", backgroundPosition:"center", animation:"kenBurns 20s ease-in-out infinite alternate", transform:`translateY(${scrollY * 0.38}px)` }} />
-      <div style={{ position:"absolute", inset:0, background:"linear-gradient(108deg,rgba(10,10,14,.93) 46%,rgba(10,10,14,.58) 100%)", transform:`translateY(${scrollY * 0.1}px)` }} />
+      <div style={{ position:"absolute", inset:0, background:"linear-gradient(21deg,rgba(10,10,14,.93) 20%,rgba(10,10,14,.58) 60%)", transform:`translateY(${scrollY * 0.1}px)` }} />
       <div style={{ position:"absolute", left:0, top:0, bottom:0, width:5, background:"linear-gradient(to bottom,var(--color-primary, #0A1684),rgba(245,91,31,.25))", transformOrigin:"top", animation:"accentDrop 0.9s ease 0.1s both" }} />
 
       <div className="hero-content" style={{ position:"relative", flex:1, display:"flex", alignItems:"center", maxWidth:1200, margin:"0 auto", padding:"160px 48px 120px 64px", width:"100%", transform:`translateY(${scrollY * -0.07}px)` }}>

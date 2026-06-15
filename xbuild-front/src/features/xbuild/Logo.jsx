@@ -1,6 +1,6 @@
 /**
  * Logo component — affiche l'image logo si configurée,
- * sinon le texte stylisé XBUILD.
+ * sinon le texte stylisé du nom de l'entreprise.
  * Props:
  *   info       — objet info (companyName, logoImage)
  *   dark       — fond sombre (texte blanc) ou fond clair
@@ -8,9 +8,31 @@
  *   onClick    — callback optionnel
  */
 export default function Logo({ info = {}, dark = true, size = "md", onClick, style = {} }) {
-  const sizes = { sm: { img: 32, font: 20 }, md: { img: 44, font: 26 }, lg: { img: 60, font: 36 } };
+  // Tailles de l'image logo : plus grandes et plus larges pour un rendu
+  // proche d'un logo "horizontal" complet (icône + nom), sans cadre blanc.
+  const sizes = {
+    sm: { img: 38, font: 20 },
+    md: { img: 52, font: 26 },
+    lg: { img: 72, font: 36 },
+  };
   const { img: imgH, font: fontSize } = sizes[size] || sizes.md;
   const color = dark ? "#fff" : "var(--color-dark, #121315)";
+
+  // Pendant le chargement de /api/info, n'affiche rien plutôt que le nom par
+  // défaut "XBuild" — évite le flash du mauvais nom au premier rendu.
+  if (info.loaded === false) {
+    return (
+      <span
+        aria-hidden="true"
+        style={{
+          display: "inline-block",
+          width: info.logoImage ? imgH * 3.2 : fontSize * 4.2,
+          height: imgH,
+          ...style,
+        }}
+      />
+    );
+  }
 
   if (info.logoImage) {
     return (
@@ -18,28 +40,35 @@ export default function Logo({ info = {}, dark = true, size = "md", onClick, sty
         onClick={onClick}
         style={{
           display: "inline-flex", alignItems: "center", justifyContent: "center",
-          background: "#fff", borderRadius: 8,
-          padding: "6px 10px",
+          // Le logo (texte/icône foncés) a besoin d'un fond clair pour rester
+          // visible sur une navbar/footer sombre. Sur fond clair, pas besoin
+          // d'encart : le logo s'affiche directement.
+          background: dark ? "#fff" : "transparent",
+          borderRadius: dark ? 8 : 0,
+          padding: dark ? "8px 16px" : 0,
+          boxShadow: dark ? "0 2px 10px rgba(0,0,0,0.08)" : "none",
           cursor: onClick ? "pointer" : "default",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
           ...style,
         }}
       >
         <img
           src={info.logoImage}
           alt={info.companyName || "Logo"}
-          style={{ height: imgH, width: "auto", objectFit: "contain", display: "block" }}
+          style={{ height: imgH, width: "auto", maxWidth: imgH * 6, objectFit: "contain", display: "block" }}
         />
       </div>
     );
   }
+
+  const companyName = info.companyName || "XBuild";
 
   return (
     <span
       onClick={onClick}
       style={{ fontSize, fontWeight: 900, color, fontFamily: "'DM Sans',sans-serif", letterSpacing: -1, cursor: onClick ? "pointer" : "default", ...style }}
     >
-      {(info.companyName || "XBuild").replace(/build/i, "")}<span style={{ color: "var(--color-primary, #0A1684)" }}>{(info.companyName || "XBuild").match(/build/i)?.[0] || "BUILD"}</span>
+      {companyName.replace(/build/i, "")}
+      <span style={{ color: "var(--color-primary, #323F7C)" }}>{companyName.match(/build/i)?.[0] || "BUILD"}</span>
     </span>
   );
 }

@@ -240,7 +240,7 @@
   "news": {
     "tag": "Notre Blog",
     "title": "Dernières Actualités & Articles",
-    "readMore": "Lire la Suite",
+    "readMore": "Lire la Suite →",
     "featured": "EN VEDETTE",
     "items": [
       {
@@ -309,11 +309,13 @@
   },
   "navbar": {
     "getQuote": "OBTENIR UN DEVIS →",
-    "admin": "Admin ↗"
+    "admin": "Admin ↗",
+    "callUs": "Appelez-nous"
   },
   "sidebar": {
     "contactInfo": "Infos de Contact",
-    "getQuote": "Obtenir un Devis →"
+    "getQuote": "Obtenir un Devis →",
+    "admin": "Administration"
   },
   "brands": [
     "⚙️ Caterpillar",

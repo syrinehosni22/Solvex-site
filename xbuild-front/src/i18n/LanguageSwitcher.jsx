@@ -49,7 +49,7 @@ export default function LanguageSwitcher({ dark = true }) {
         }
         .ls-trigger:hover {
           background: ${dark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.07)"};
-          border-color: var(--color-primary, #0A1684);
+          border-color: var(--color-primary);
         }
         .ls-chevron {
           width: 14px; height: 14px; flex-shrink: 0;
@@ -78,11 +78,11 @@ export default function LanguageSwitcher({ dark = true }) {
         .ls-option:hover { background: ${hoverBg}; }
         .ls-option.selected {
           background: rgba(245,91,31,0.10);
-          color: var(--color-primary, #0A1684);
+          color: var(--color-primary);
           font-weight: 700;
         }
         .ls-check {
-          margin-left: auto; color: var(--color-primary, #0A1684);
+          margin-left: auto; color: var(--color-primary);
           font-size: 13px; font-weight: 700;
         }
         .ls-flag { font-size: 20px; line-height: 1; }

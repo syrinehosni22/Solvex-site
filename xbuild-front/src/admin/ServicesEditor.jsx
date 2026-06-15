@@ -6,7 +6,7 @@ import {
 } from "./components/UI";
 import { ImageUploader } from "./components/ImageUploader";
 
-const EMPTY = { order: 1, title_fr: "", title_en: "", desc_fr: "", desc_en: "", features_fr: [], features_en: [], icon: "🏗️", color: "var(--color-primary, #0A1684)", image: "" };
+const EMPTY = { order: 1, title_fr: "", title_en: "", desc_fr: "", desc_en: "", features_fr: [], features_en: [], icon: "🏗️", color: "var(--color-primary)", image: "" };
 const ICON_SUGGESTIONS = ["🏗️","🔨","🏛️","🧪","⚙️","🏠","🔧","🏢","🌉","⛏️","🔩","🛠️"];
 const LANG_TABS = [{ code:"fr", label:"🇫🇷 Français" }, { code:"en", label:"🇬🇧 English" }];
 
@@ -41,9 +41,9 @@ export default function ServicesEditor() {
                 <button key={tab.code} onClick={() => setLang(tab.code)} style={{
                   padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12,
                   cursor:"pointer", border:"1px solid",
-                  borderColor: lang === tab.code ? "var(--color-primary, #0A1684)" : "rgba(255,255,255,0.12)",
+                  borderColor: lang === tab.code ? "var(--color-primary)" : "rgba(255,255,255,0.12)",
                   background:  lang === tab.code ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)",
-                  color:       lang === tab.code ? "var(--color-primary, #0A1684)" : "#aaa",
+                  color:       lang === tab.code ? "var(--color-primary)" : "#aaa",
                 }}>{tab.label}</button>
               ))}
             </div>
@@ -67,7 +67,7 @@ export default function ServicesEditor() {
                 <Input value={form.icon} onChange={e => patch("icon", e.target.value)} placeholder="🏗️" />
                 <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
                   {ICON_SUGGESTIONS.map(ic => (
-                    <button key={ic} onClick={() => patch("icon", ic)} style={{ width:34, height:34, borderRadius:8, fontSize:18, border: form.icon === ic ? "2px solid var(--color-primary, #0A1684)" : "1px solid rgba(255,255,255,0.10)", background: form.icon === ic ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
+                    <button key={ic} onClick={() => patch("icon", ic)} style={{ width:34, height:34, borderRadius:8, fontSize:18, border: form.icon === ic ? "2px solid var(--color-primary)" : "1px solid rgba(255,255,255,0.10)", background: form.icon === ic ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
                   ))}
                 </div>
               </div>
@@ -77,7 +77,7 @@ export default function ServicesEditor() {
             </Field>
             <Field label="Couleur" hint="hex">
               <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-                <Input value={form.color} onChange={e => patch("color", e.target.value)} placeholder="var(--color-primary, #0A1684)" />
+                <Input value={form.color} onChange={e => patch("color", e.target.value)} placeholder="var(--color-primary)" />
                 <div style={{ width:38, height:38, borderRadius:8, background:form.color, border:"1px solid rgba(255,255,255,0.15)", flexShrink:0 }} />
               </div>
             </Field>
@@ -122,7 +122,7 @@ export default function ServicesEditor() {
                       {doc.title_en && <span style={{ color:"#555", fontWeight:400, fontSize:12, marginLeft:8 }}>/ {doc.title_en}</span>}
                     </div>
                     <div style={{ color:"#666", fontSize:12, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:240 }}>{doc.desc_fr || doc.desc || ""}</div>
-                    <Badge color={doc.color || "var(--color-primary, #0A1684)"} style={{ marginTop:4 }}>{doc.color || "var(--color-primary, #0A1684)"}</Badge>
+                    <Badge color={doc.color || "var(--color-primary)"} style={{ marginTop:4 }}>{doc.color || "var(--color-primary)"}</Badge>
                   </div>
                 </div>
                 <div style={{ display:"flex", gap:6, flexShrink:0 }}>
