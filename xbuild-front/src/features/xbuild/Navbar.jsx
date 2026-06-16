@@ -18,8 +18,10 @@ const STYLE = `
     .nb-desktop-nav { display: none !important; }
     .nb-actions-desktop { display: none !important; }
     .nb-hamburger { display: flex !important; }
-    .navbar-white-panel { width: 60% !important; }
-    .navbar-accent { width: calc(60% + 10px) !important; }
+    .navbar-white-panel { width: 70% !important; }
+    .navbar-accent { width: calc(70% + 10px) !important; }
+    .navbar-white-panel,
+    .navbar-accent { overflow: visible !important; }
   }
 `;
 
@@ -113,7 +115,6 @@ export default function Navbar({ active, info }) {
         background:"var(--color-dark, #121315)",
         transition:"box-shadow 0.3s",
         boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.45)" : "none",
-        overflow:"visible",
       }}>
 
         {/* ── TOP BAR: phone · email · language ── desktop only ─────────────── */}
@@ -158,10 +159,11 @@ export default function Navbar({ active, info }) {
         </div>
 
         {/* ── MAIN NAV BAR ─────────────────────────────────────────────────── */}
-        <div style={{ position:"relative", height:72 }}>
+        <div style={{ position:"relative", minHeight:72 }}>
           {/* Blue accent behind white logo panel */}
           <div className="navbar-accent" style={{
             position:"absolute", top:0, left:0, bottom:0, width:"calc(26% + 10px)",
+            minHeight:72,
             background:"var(--color-primary)",
             clipPath:"polygon(0 0, 100% 0, calc(100% - 70px) 100%, 0 100%)",
             zIndex:0,
@@ -169,6 +171,7 @@ export default function Navbar({ active, info }) {
           {/* White diagonal logo panel */}
           <div className="navbar-white-panel" style={{
             position:"absolute", top:0, left:0, bottom:0, width:"22%",
+            minHeight:72,
             background:"#fff",
             backgroundImage:"repeating-linear-gradient(135deg, rgba(0,0,0,0.025) 0px, rgba(0,0,0,0.025) 1px, transparent 1px, transparent 14px)",
             clipPath:"polygon(0 0, 100% 0, calc(100% - 70px) 100%, 0 100%)",
@@ -183,6 +186,7 @@ export default function Navbar({ active, info }) {
           {/* Desktop nav links — centered over the full bar width */}
           <nav className="nb-desktop-nav" style={{
             position:"absolute", left:0, right:0, top:0, bottom:0,
+            minHeight:72,
             zIndex:3,
             display:"flex", alignItems:"center", justifyContent:"center",
             gap:"clamp(12px, 2vw, 32px)",
@@ -208,6 +212,7 @@ export default function Navbar({ active, info }) {
           <div style={{
             position:"absolute", right:24, top:0, bottom:0, zIndex:4,
             display:"flex", alignItems:"center", gap:"clamp(6px, 1vw, 12px)",
+            minHeight:72,
           }}>
             <div className="nb-actions-desktop" style={{ gap:"clamp(6px, 1vw, 12px)", alignItems:"center" }}>
               <button onClick={() => setSidebarOpen(true)} style={{ background:"rgba(255,255,255,0.08)", border:"none", color:"#fff", width:40, height:40, borderRadius:8, cursor:"pointer", fontSize:16, flexShrink:0 }}>☰</button>
