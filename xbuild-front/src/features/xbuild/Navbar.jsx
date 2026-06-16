@@ -18,10 +18,10 @@ const STYLE = `
     .nb-desktop-nav { display: none !important; }
     .nb-actions-desktop { display: none !important; }
     .nb-hamburger { display: flex !important; }
-    .navbar-white-panel { width: 70% !important; }
+    .navbar-white-panel { width: 70% !important; padding-left: 12px !important; }
     .navbar-accent { width: calc(70% + 10px) !important; }
-    .navbar-white-panel,
-    .navbar-accent { overflow: visible !important; }
+    .navbar-white-panel button { white-space: nowrap; overflow: hidden; max-width: 100%; }
+    .navbar-white-panel img, .navbar-white-panel svg, .navbar-white-panel span { white-space: nowrap !important; flex-shrink: 1; min-width: 0; }
   }
 `;
 
@@ -176,9 +176,10 @@ export default function Navbar({ active, info }) {
             backgroundImage:"repeating-linear-gradient(135deg, rgba(0,0,0,0.025) 0px, rgba(0,0,0,0.025) 1px, transparent 1px, transparent 14px)",
             clipPath:"polygon(0 0, 100% 0, calc(100% - 70px) 100%, 0 100%)",
             display:"flex", alignItems:"center", paddingLeft:32,
+            overflow:"hidden",
             zIndex:1,
           }}>
-            <button onClick={() => scrollTo("#home")} style={{ background:"none", border:"none", cursor:"pointer", padding:0 }}>
+            <button onClick={() => scrollTo("#home")} style={{ background:"none", border:"none", cursor:"pointer", padding:0, flexShrink:0, whiteSpace:"nowrap" }}>
               <Logo info={info} dark={false} size="md" />
             </button>
           </div>
