@@ -218,69 +218,73 @@ export default function Navbar({ active, info }) {
           </div>
         </div>
 
-        {/* ── MOBILE DROPDOWN ──────────────────────────────────────────────── */}
-        {mobileOpen && (
-          <div style={{
-            background:"var(--color-dark, #121315)",
-            padding:"16px 20px 20px",
-            display:"flex", flexDirection:"column", gap:0,
-            borderTop:"1px solid rgba(255,255,255,0.08)",
-          }}>
-            {/* Nav links */}
-            {NAV_LINKS.map(link => (
-              <button key={link.key} onClick={() => scrollTo(link.href)} style={{
-                background:"none", border:"none", color:"#e8e8ec", textAlign:"left",
-                fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:14,
-                letterSpacing:1, textTransform:"uppercase", cursor:"pointer",
-                padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.07)",
-              }}>{link.label}</button>
-            ))}
-
-            {/* Contact row */}
-            <div style={{ display:"flex", flexDirection:"column", gap:10, marginTop:16 }}>
-              {info.phone && (
-                <a href={phoneHref} style={{
-                  display:"flex", alignItems:"center", gap:8,
-                  color:"#b0b4c0", fontFamily:"'DM Sans',sans-serif", fontSize:13,
-                  fontWeight:600, textDecoration:"none",
-                }}>
-                  <span>📞</span> {info.phone}
-                </a>
-              )}
-              {info.email && (
-                <a href={emailHref} style={{
-                  display:"flex", alignItems:"center", gap:8,
-                  color:"#b0b4c0", fontFamily:"'DM Sans',sans-serif", fontSize:13,
-                  fontWeight:600, textDecoration:"none",
-                }}>
-                  <span>✉️</span> {info.email}
-                </a>
-              )}
-            </div>
-
-            {/* Language + CTA */}
-            <div style={{ marginTop:16 }}><LanguageSwitcher dark={true} /></div>
-            <a href={phoneHref} style={{
-              marginTop:12, background:"var(--color-primary)", color:"#fff",
-              padding:"14px", borderRadius:8, fontFamily:"'DM Sans',sans-serif",
-              fontWeight:800, letterSpacing:1, textTransform:"uppercase",
-              fontSize:13, textAlign:"center", textDecoration:"none",
-            }}>
-              📞 {info.phone} →
-            </a>
-
-            {/* Admin access */}
-            <a href="/admin" style={{
-              marginTop:12, display:"flex", alignItems:"center", justifyContent:"center", gap:6,
-              color:"#555b6e", fontFamily:"'DM Sans',sans-serif", fontSize:12,
-              fontWeight:700, textDecoration:"none", letterSpacing:1, textTransform:"uppercase",
-              borderTop:"1px solid rgba(255,255,255,0.06)", paddingTop:14,
-            }}>
-              <span style={{ fontSize:13 }}>🔒</span> {t("sidebar.admin")} ↗
-            </a>
-          </div>
-        )}
       </header>
+
+      {/* ── MOBILE DROPDOWN — fixed sibling, never clipped by header ─────── */}
+      {mobileOpen && (
+        <div style={{
+          position:"fixed", top:72, left:0, right:0, zIndex:999,
+          background:"var(--color-dark, #121315)",
+          padding:"16px 20px 24px",
+          display:"flex", flexDirection:"column", gap:0,
+          borderTop:"1px solid rgba(255,255,255,0.08)",
+          boxShadow:"0 8px 32px rgba(0,0,0,0.45)",
+          overflowY:"auto", maxHeight:"calc(100vh - 72px)",
+        }}>
+          {/* Nav links */}
+          {NAV_LINKS.map(link => (
+            <button key={link.key} onClick={() => scrollTo(link.href)} style={{
+              background:"none", border:"none", color:"#e8e8ec", textAlign:"left",
+              fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:14,
+              letterSpacing:1, textTransform:"uppercase", cursor:"pointer",
+              padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.07)",
+            }}>{link.label}</button>
+          ))}
+
+          {/* Contact row */}
+          <div style={{ display:"flex", flexDirection:"column", gap:10, marginTop:16 }}>
+            {info.phone && (
+              <a href={phoneHref} style={{
+                display:"flex", alignItems:"center", gap:8,
+                color:"#b0b4c0", fontFamily:"'DM Sans',sans-serif", fontSize:13,
+                fontWeight:600, textDecoration:"none",
+              }}>
+                <span>📞</span> {info.phone}
+              </a>
+            )}
+            {info.email && (
+              <a href={emailHref} style={{
+                display:"flex", alignItems:"center", gap:8,
+                color:"#b0b4c0", fontFamily:"'DM Sans',sans-serif", fontSize:13,
+                fontWeight:600, textDecoration:"none",
+              }}>
+                <span>✉️</span> {info.email}
+              </a>
+            )}
+          </div>
+
+          {/* Language + CTA */}
+          <div style={{ marginTop:16 }}><LanguageSwitcher dark={true} /></div>
+          <a href={phoneHref} style={{
+            marginTop:12, background:"var(--color-primary)", color:"#fff",
+            padding:"14px", borderRadius:8, fontFamily:"'DM Sans',sans-serif",
+            fontWeight:800, letterSpacing:1, textTransform:"uppercase",
+            fontSize:13, textAlign:"center", textDecoration:"none",
+          }}>
+            📞 {info.phone} →
+          </a>
+
+          {/* Admin access */}
+          <a href="/admin" style={{
+            marginTop:12, display:"flex", alignItems:"center", justifyContent:"center", gap:6,
+            color:"#555b6e", fontFamily:"'DM Sans',sans-serif", fontSize:12,
+            fontWeight:700, textDecoration:"none", letterSpacing:1, textTransform:"uppercase",
+            borderTop:"1px solid rgba(255,255,255,0.06)", paddingTop:14,
+          }}>
+            <span style={{ fontSize:13 }}>🔒</span> {t("sidebar.admin")} ↗
+          </a>
+        </div>
+      )}
     </>
   );
 }
