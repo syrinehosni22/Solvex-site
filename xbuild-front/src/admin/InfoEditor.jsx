@@ -113,7 +113,7 @@ export default function InfoEditor() {
                 <span style={{ color: "#aaa", fontSize: 12, fontFamily: "'DM Sans',sans-serif" }}>Aperçu texte :</span>
                 <span style={{ fontSize: 20, fontWeight: 900, color: "#fff", fontFamily: "'DM Sans',sans-serif" }}>
                   {(() => {
-                    const n = form.companyName || "XBuild";
+                    const n = form.companyName;
                     const m = n.match(/build/i);
                     const pre = m ? n.slice(0, m.index) : n.slice(0, -1);
                     const suf = m ? m[0] : n.slice(-1);

@@ -58,11 +58,50 @@ export default function HeroSection({ info }) {
         @keyframes fadeSlideLeft{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
         @keyframes statReveal{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
         @keyframes accentDrop{from{transform:scaleY(0);opacity:0}to{transform:scaleY(1);opacity:1}}
-        .h-btn-primary{background:var(--color-primary, #0A1684);color:#fff;border:none;padding:16px 32px;font-weight:800;font-size:14px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .25s,transform .22s,box-shadow .25s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 100%,0 100%)}
+
+        /* ── Base button styles ── */
+        .h-btn-primary{
+          background:var(--color-primary, #0A1684);color:#fff;border:none;
+          padding:16px 32px;font-weight:800;font-size:14px;letter-spacing:1px;
+          text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;
+          transition:background .25s,transform .22s,box-shadow .25s;
+          text-decoration:none;display:inline-flex;align-items:center;
+          justify-content:center;gap:10px;
+          clip-path:polygon(0 0,calc(100% - 14px) 0,100% 100%,0 100%);
+          white-space:nowrap;
+        }
         .h-btn-primary:hover{background:#d94b10;transform:translateY(-3px);box-shadow:0 14px 36px rgba(245,91,31,.48)}
-        .h-btn-secondary{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.35);padding:14px 32px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color .25s,background .25s,transform .22s}
+        .h-btn-secondary{
+          background:transparent;color:#fff;border:2px solid rgba(255,255,255,.35);
+          padding:14px 32px;font-weight:700;font-size:14px;letter-spacing:1px;
+          text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;
+          transition:border-color .25s,background .25s,transform .22s;
+          white-space:nowrap;
+        }
         .h-btn-secondary:hover{border-color:var(--color-primary, #0A1684);background:rgba(245,91,31,.12);transform:translateY(-3px)}
         .stat-card{transition:transform .3s,background .3s}.stat-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.13)!important}
+
+        /* ── Tablet (≤ 800px) ── */
+        @media(max-width:800px){
+          .hero-btns{gap:12px!important;flex-wrap:wrap!important;}
+          .h-btn-primary,.h-btn-secondary{
+            padding:13px 22px!important;
+            font-size:13px!important;
+          }
+        }
+
+        /* ── Mobile (≤ 480px) ── */
+        @media(max-width:480px){
+          .hero-btns{flex-direction:column!important;gap:12px!important;width:100%!important;}
+          .h-btn-primary,.h-btn-secondary{
+            width:100%!important;
+            padding:15px 20px!important;
+            font-size:14px!important;
+            clip-path:none!important;
+            justify-content:center!important;
+            text-align:center!important;
+          }
+        }
       `}</style>
 
       <div style={{ position:"absolute", inset:0, backgroundImage:`url('${bgImage}')`, backgroundSize:"cover", backgroundPosition:"center", animation:"kenBurns 20s ease-in-out infinite alternate", transform:`translateY(${scrollY * 0.38}px)` }} />

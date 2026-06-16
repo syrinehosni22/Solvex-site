@@ -1,4 +1,3 @@
-
 export default function GlobalStyles() {
   return (
     <style>{`
@@ -14,12 +13,13 @@ export default function GlobalStyles() {
 }
       @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
       *{margin:0;padding:0;box-sizing:border-box}body{overflow-x:hidden}
+      header[style*="position:fixed"],header[style*='position:"fixed"']{height:88px!important;min-height:88px!important;max-height:88px!important;}
       @keyframes pulse{from{opacity:0.5}to{opacity:1}}
       @keyframes loader{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
       @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
       @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
       input::placeholder,textarea::placeholder{color:#aaa}
-      @media(max-width:900px){
+      @media(max-width:800px){
         .desktop-nav{display:none!important}
         .mobile-menu-btn{display:block!important}
         .navbar-white-panel,.navbar-accent{width:62%!important}
@@ -50,7 +50,7 @@ export default function GlobalStyles() {
         .about-features-grid{grid-template-columns:1fr!important}
         .stats-counts{flex-direction:column!important;gap:24px!important}
         .hero-btns{flex-direction:column!important;gap:12px!important}
-        .hero-btns button{width:100%!important;clip-path:none!important;text-align:center}
+        .hero-btns button,.hero-btns a{width:100%!important;clip-path:none!important;text-align:center!important;justify-content:center!important}
         .hero-stat-card{min-width:100%!important}
       }
     `}</style>

@@ -60,7 +60,7 @@ export default function Logo({ info = {}, dark = true, size = "md", onClick, sty
     );
   }
 
-  const companyName = info.companyName || "XBuild";
+  const companyName = info.companyName;
 
   return (
     <span
@@ -68,7 +68,7 @@ export default function Logo({ info = {}, dark = true, size = "md", onClick, sty
       style={{ fontSize, fontWeight: 900, color, fontFamily: "'DM Sans',sans-serif", letterSpacing: -1, cursor: onClick ? "pointer" : "default", ...style }}
     >
       {companyName.replace(/build/i, "")}
-      <span style={{ color: "var(--color-primary, #323F7C)" }}>{companyName.match(/build/i)?.[0] || "BUILD"}</span>
+      <span style={{ color: "var(--color-primary)" }}>{companyName.match(/build/i)?.[0] || "BUILD"}</span>
     </span>
   );
 }

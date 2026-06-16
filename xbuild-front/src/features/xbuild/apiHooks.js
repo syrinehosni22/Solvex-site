@@ -46,7 +46,7 @@ export function useApiItem(basePath, id) {
 }
 
 export const INFO_DEFAULT = {
-  companyName: "XBuild",
+  companyName: "",
   logoImage: "",           // URL image logo (si vide → texte stylisé)
   // ── Couleurs du thème (paramétrables, voir useThemeVars) ──
   primaryColor: "#0A1684", // couleur d'accent principale (boutons, liens, badges…)

@@ -20,7 +20,7 @@ function AdminLogo({ info }) {
   if (info.logoImage) {
     return <img src={info.logoImage} alt={info.companyName || "Logo"} style={{ height:32, width:"auto", objectFit:"contain" }} />;
   }
-  const name = info.companyName || "XBuild";
+  const name = info.companyName;
   const match = name.match(/build/i);
   const prefix = match ? name.slice(0, match.index) : name;
   const suffix = match ? match[0] : "";

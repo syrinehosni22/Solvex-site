@@ -79,7 +79,7 @@ export default function Login() {
           <Link to="/" style={{ textDecoration:"none" }}>
             <div style={{ fontSize:40, fontWeight:900, color:"#fff", letterSpacing:-1.5 }}>
               {(() => {
-                const name = info.companyName || "XBuild";
+                const name = info.companyName ;
                 const match = name.match(/build/i);
                 if (match) {
                   return <>{name.slice(0, match.index)}<span style={{ color:"var(--color-primary, #0A1684)" }}>{match[0]}</span></>;

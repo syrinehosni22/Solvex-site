@@ -52,7 +52,7 @@ export default function BlogEditor() {
                 <Input value={form.date||""} onChange={e => patch("date", e.target.value)} placeholder="01 Jan 2024" />
               </Field>
               <Field label="Auteur">
-                <Input value={form.author||""} onChange={e => patch("author", e.target.value)} placeholder="XBuild Team" />
+                <Input value={form.author||""} onChange={e => patch("author", e.target.value)} placeholder="Team" />
               </Field>
             </div>
             <Field label="Image de couverture">
