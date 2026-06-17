@@ -15,6 +15,14 @@ export default function ProcessEditor() {
 
   return (
     <div>
+      <style>{`
+        .editor-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .editor-grid.has-form { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 768px) {
+          .editor-grid.has-form { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
       <PageHeader icon="⚙️" title="Processus"
         subtitle={`${items.length} étape${items.length!==1?"s":""} — section « Notre Processus » du site`}
         actions={<>
@@ -24,13 +32,13 @@ export default function ProcessEditor() {
       />
       {error && <Alert type="error">{error}</Alert>}
 
-      <div style={{ display:"grid", gridTemplateColumns: editing ? "1fr 1fr" : "1fr", gap:20 }}>
+      <div className={`editor-grid ${editing ? "has-form" : ""}`}>
         {editing && (
           <Card>
             <SectionHeading title={isEdit ? "Modifier l'étape" : "Nouvelle étape"} subtitle="Remplissez les champs dans les deux langues" />
-            <div style={{ display:"flex", gap:8, marginBottom:16 }}>
+            <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" }}>
               {LANG_TABS.map(tab => (
-                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
+                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(10,22,132,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
               ))}
             </div>
             <Field label="Ordre d'affichage">
@@ -47,7 +55,7 @@ export default function ProcessEditor() {
                 <Input value={form.icon || ""} onChange={e => patch("icon", e.target.value)} placeholder="⚙️" />
                 <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
                   {ICON_SUGGESTIONS.map(ic => (
-                    <button key={ic} onClick={() => patch("icon", ic)} style={{ width:34, height:34, borderRadius:8, fontSize:18, border: form.icon === ic ? "2px solid var(--color-primary, #0A1684)" : "1px solid rgba(255,255,255,0.10)", background: form.icon === ic ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
+                    <button key={ic} onClick={() => patch("icon", ic)} style={{ width:34, height:34, borderRadius:8, fontSize:18, border: form.icon === ic ? "2px solid var(--color-primary, #0A1684)" : "1px solid rgba(255,255,255,0.10)", background: form.icon === ic ? "rgba(10,22,132,0.15)" : "rgba(255,255,255,0.04)", cursor:"pointer" }}>{ic}</button>
                   ))}
                 </div>
               </div>
@@ -64,7 +72,7 @@ export default function ProcessEditor() {
               </div>
             </div>
 
-            <div style={{ display:"flex", gap:10 }}>
+            <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
               <Button variant="primary" onClick={save} disabled={saving || (!form.title_fr && !form.title_en)}>
                 {saving ? <><Spinner size={14} /> Sauvegarde…</> : (isEdit ? "💾 Mettre à jour" : "✚ Créer")}
               </Button>

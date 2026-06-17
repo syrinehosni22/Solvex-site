@@ -12,13 +12,20 @@ const CAT = { fr:["Industriel","Construction","Civil","Architecture","Énergie",
 const YEAR_RANGE  = Array.from({ length:10 }, (_, i) => String(new Date().getFullYear() - i));
 const LANG_TABS   = [{ code:"fr", label:"🇫🇷 Français" }, { code:"en", label:"🇬🇧 English" }];
 
-
 export default function ProjectsEditor() {
   const { items, loading, saving, error, editing, form, isEdit, load, startCreate, startEdit, cancel, save, remove, patch } = useCrud("/api/projects", EMPTY);
   const [lang, setLang] = useState("fr");
 
   return (
     <div>
+      <style>{`
+        .editor-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .editor-grid.has-form { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 768px) {
+          .editor-grid.has-form { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
       <PageHeader icon="📁" title="Projets"
         subtitle={`${items.length} projet${items.length !== 1 ? "s" : ""} — affichés dans le portfolio`}
         actions={<>
@@ -28,13 +35,13 @@ export default function ProjectsEditor() {
       />
       {error && <Alert type="error">{error}</Alert>}
 
-      <div style={{ display:"grid", gridTemplateColumns: editing ? "1fr 1fr" : "1fr", gap:20 }}>
+      <div className={`editor-grid ${editing ? "has-form" : ""}`}>
         {editing && (
           <Card>
             <SectionHeading title={isEdit ? "Modifier le projet" : "Nouveau projet"} subtitle="Remplissez les champs dans les deux langues" />
-            <div style={{ display:"flex", gap:8, marginBottom:16 }}>
+            <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" }}>
               {LANG_TABS.map(tab => (
-                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
+                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(10,22,132,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
               ))}
             </div>
             <Field label={`Titre — ${lang==="fr"?"Français 🇫🇷":"English 🇬🇧"}`}>
@@ -54,32 +61,23 @@ export default function ProjectsEditor() {
             <Field label="Année">
               <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
                 {YEAR_RANGE.map(y => (
-                  <button key={y} onClick={() => patch("year", y)} style={{ padding:"6px 14px", borderRadius:8, fontSize:13, fontWeight:800, cursor:"pointer", border: form.year===y?"1px solid rgba(245,91,31,0.5)":"1px solid rgba(255,255,255,0.10)", background: form.year===y?"rgba(245,91,31,0.12)":"rgba(255,255,255,0.04)", color: form.year===y?"var(--color-primary, #0A1684)":"#888" }}>{y}</button>
+                  <button key={y} onClick={() => patch("year", y)} style={{ padding:"6px 12px", borderRadius:8, fontSize:13, fontWeight:800, cursor:"pointer", border: form.year===y?"1px solid rgba(245,91,31,0.5)":"1px solid rgba(255,255,255,0.10)", background: form.year===y?"rgba(245,91,31,0.12)":"rgba(255,255,255,0.04)", color: form.year===y?"var(--color-primary, #0A1684)":"#888" }}>{y}</button>
                 ))}
               </div>
             </Field>
-            <Field label="Images du projet (galerie)" hint="Ajoutez plusieurs images : elles défileront automatiquement sur la carte du projet. Choisissez celle qui doit apparaître en couverture (1ère image affichée).">
+            <Field label="Images du projet (galerie)" hint="Ajoutez plusieurs images. Choisissez la couverture (1ère image affichée).">
               {form.images.length > 0 && (
                 <div style={{ display:"flex", gap:10, flexWrap:"wrap", marginBottom:12 }}>
                   {form.images.map((img, gi) => (
-                    <div key={gi} style={{ position:"relative", width:96 }}>
-                      <div style={{
-                        borderRadius:8, overflow:"hidden", height:72,
-                        border: form.coverIndex === gi ? "2px solid var(--color-primary, #0A1684)" : "1px solid rgba(255,255,255,0.12)",
-                      }}>
+                    <div key={gi} style={{ position:"relative", width:88 }}>
+                      <div style={{ borderRadius:8, overflow:"hidden", height:66, border: form.coverIndex === gi ? "2px solid var(--color-primary, #0A1684)" : "1px solid rgba(255,255,255,0.12)" }}>
                         <img src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
                       </div>
-                      <div style={{ display:"flex", gap:4, marginTop:4 }}>
+                      <div style={{ display:"flex", gap:3, marginTop:4 }}>
                         <button
                           onClick={() => patch("coverIndex", gi)}
-                          title="Définir comme couverture"
-                          style={{
-                            flex:1, fontSize:11, fontWeight:700, padding:"4px 0", borderRadius:6, cursor:"pointer",
-                            border: form.coverIndex === gi ? "1px solid rgba(245,91,31,0.5)" : "1px solid rgba(255,255,255,0.10)",
-                            background: form.coverIndex === gi ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)",
-                            color: form.coverIndex === gi ? "var(--color-primary, #0A1684)" : "#888",
-                          }}
-                        >{form.coverIndex === gi ? "★ Couverture" : "☆"}</button>
+                          style={{ flex:1, fontSize:10, fontWeight:700, padding:"3px 0", borderRadius:5, cursor:"pointer", border: form.coverIndex === gi ? "1px solid rgba(245,91,31,0.5)" : "1px solid rgba(255,255,255,0.10)", background: form.coverIndex === gi ? "rgba(245,91,31,0.15)" : "rgba(255,255,255,0.04)", color: form.coverIndex === gi ? "var(--color-primary, #0A1684)" : "#888" }}
+                        >{form.coverIndex === gi ? "★" : "☆"}</button>
                         <button
                           onClick={() => {
                             const next = form.images.filter((_, idx) => idx !== gi);
@@ -89,20 +87,14 @@ export default function ProjectsEditor() {
                             patch("images", next);
                             patch("coverIndex", Math.min(nextCover, Math.max(next.length - 1, 0)));
                           }}
-                          title="Supprimer cette image"
-                          style={{ fontSize:11, fontWeight:700, padding:"4px 8px", borderRadius:6, cursor:"pointer", border:"1px solid rgba(239,68,68,0.2)", background:"rgba(239,68,68,0.1)", color:"#f87171" }}
+                          style={{ fontSize:10, fontWeight:700, padding:"3px 6px", borderRadius:5, cursor:"pointer", border:"1px solid rgba(239,68,68,0.2)", background:"rgba(239,68,68,0.1)", color:"#f87171" }}
                         >✕</button>
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-              <ImageUploader
-                value=""
-                onChange={v => { if (v) patch("images", [...form.images, v]); }}
-                label="+ Ajouter une image"
-                hint=""
-              />
+              <ImageUploader value="" onChange={v => { if (v) patch("images", [...form.images, v]); }} label="+ Ajouter une image" hint="" />
             </Field>
             <Field label="Couleur de fond" hint="si pas d'image">
               <div style={{ display:"flex", gap:10, alignItems:"center" }}>
@@ -115,7 +107,7 @@ export default function ProjectsEditor() {
                 ))}
               </div>
             </Field>
-            <div style={{ display:"flex", gap:10 }}>
+            <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
               <Button variant="primary" onClick={save} disabled={saving || (!form.title_fr && !form.title_en)}>
                 {saving ? <><Spinner size={14} /> Sauvegarde…</> : (isEdit ? "💾 Mettre à jour" : "✚ Créer")}
               </Button>
@@ -143,7 +135,7 @@ export default function ProjectsEditor() {
                   <div style={{ fontWeight:800, color:"#fff", fontSize:14, marginBottom:3 }}>
                     {doc.title_fr || "—"} {doc.title_en && <span style={{ color:"#555", fontWeight:400, fontSize:12 }}>/ {doc.title_en}</span>}
                   </div>
-                  <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+                  <div style={{ display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
                     <span style={{ color:"#666", fontSize:12 }}>{doc.category_fr || ""}</span>
                     <Badge color="var(--color-primary, #0A1684)">{doc.year}</Badge>
                   </div>

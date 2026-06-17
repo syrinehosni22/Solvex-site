@@ -3,7 +3,6 @@ import { useCrud } from "./components/useCrud";
 import { Alert, Button, Card, EmptyState, Field, Input, ListItem, PageHeader, SectionHeading, Spinner, Textarea } from "./components/UI";
 import { ImageUploader } from "./components/ImageUploader";
 
-
 const EMPTY = { order:1, name:"", role_fr:"", role_en:"", company:"", stars:5, text_fr:"", text_en:"", image:"" };
 const LANG_TABS = [{ code:"fr", label:"🇫🇷 Français" }, { code:"en", label:"🇬🇧 English" }];
 
@@ -13,6 +12,16 @@ export default function TestimonialsEditor() {
 
   return (
     <div>
+      <style>{`
+        .editor-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .editor-grid.has-form { grid-template-columns: 1fr 1fr; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        @media (max-width: 768px) {
+          .editor-grid.has-form { grid-template-columns: 1fr !important; }
+          .two-col { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
       <PageHeader icon="⭐" title="Témoignages"
         subtitle={`${items.length} témoignage${items.length!==1?"s":""} — section « Témoignages » du site`}
         actions={<>
@@ -22,17 +31,17 @@ export default function TestimonialsEditor() {
       />
       {error && <Alert type="error">{error}</Alert>}
 
-      <div style={{ display:"grid", gridTemplateColumns: editing ? "1fr 1fr" : "1fr", gap:20 }}>
+      <div className={`editor-grid ${editing ? "has-form" : ""}`}>
         {editing && (
           <Card>
             <SectionHeading title={isEdit ? "Modifier le témoignage" : "Nouveau témoignage"} subtitle="Remplissez les champs dans les deux langues" />
-            <div style={{ display:"flex", gap:8, marginBottom:16 }}>
+            <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" }}>
               {LANG_TABS.map(tab => (
-                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(245,91,31,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
+                <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"var(--color-primary, #0A1684)":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(10,22,132,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"var(--color-primary, #0A1684)":"#aaa" }}>{tab.label}</button>
               ))}
             </div>
 
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+            <div className="two-col">
               <Field label="Ordre d'affichage">
                 <Input type="number" value={form.order||1} onChange={e => patch("order", Number(e.target.value))} placeholder="1" />
               </Field>
@@ -44,7 +53,7 @@ export default function TestimonialsEditor() {
                 </div>
               </Field>
             </div>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+            <div className="two-col">
               <Field label="Nom du client">
                 <Input value={form.name||""} onChange={e => patch("name", e.target.value)} placeholder="John Doe" />
               </Field>
@@ -62,12 +71,11 @@ export default function TestimonialsEditor() {
               <ImageUploader value={form.image||""} onChange={v => patch("image", v)} />
             </Field>
 
-            {/* Preview */}
             <div style={{ marginTop:4, marginBottom:16, padding:"16px", borderRadius:12, background:"rgba(0,0,0,0.25)", border:"1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ fontSize:11, color:"#555", fontWeight:700, letterSpacing:1, textTransform:"uppercase", marginBottom:10 }}>Aperçu</div>
               <p style={{ color:"#ccc", fontStyle:"italic", fontSize:14, lineHeight:1.7, marginBottom:12 }}>"{form[`text_${lang}`] || "Texte du témoignage…"}"</p>
               <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <div style={{ width:40, height:40, borderRadius:"50%", background:"linear-gradient(135deg,var(--color-primary, #0A1684),#ff8c6b)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>👤</div>
+                <div style={{ width:40, height:40, borderRadius:"50%", background:"linear-gradient(135deg,var(--color-primary, #0A1684),#ff8c6b)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>👤</div>
                 <div>
                   <div style={{ fontWeight:800, color:"#fff", fontSize:14 }}>{form.name||"Nom du client"}</div>
                   <div style={{ color:"#aaa", fontSize:12 }}>{form[`role_${lang}`]||"Rôle"} — {form.company||"Entreprise"}</div>
@@ -78,7 +86,7 @@ export default function TestimonialsEditor() {
               </div>
             </div>
 
-            <div style={{ display:"flex", gap:10 }}>
+            <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
               <Button variant="primary" onClick={save} disabled={saving || !form.name}>
                 {saving ? <><Spinner size={14} /> Sauvegarde…</> : (isEdit ? "💾 Mettre à jour" : "✚ Créer")}
               </Button>

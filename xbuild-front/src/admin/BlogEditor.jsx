@@ -10,13 +10,22 @@ const today = new Date().toLocaleDateString("fr-FR", { day:"2-digit", month:"sho
 const EMPTY = { title_fr:"", title_en:"", tag_fr:"", tag_en:"", excerpt_fr:"", excerpt_en:"", content_fr:"", content_en:"", date:today, author:"", featured:false, image:"" };
 const LANG_TABS = [{ code:"fr", label:"🇫🇷 Français" }, { code:"en", label:"🇬🇧 English" }];
 
-
 export default function BlogEditor() {
   const { items, loading, saving, error, editing, form, isEdit, load, startCreate, startEdit, cancel, save, remove, patch } = useCrud("/api/blog", EMPTY);
   const [lang, setLang] = useState("fr");
 
   return (
     <div>
+      <style>{`
+        .editor-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .editor-grid.has-form { grid-template-columns: 1fr 1fr; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        @media (max-width: 768px) {
+          .editor-grid.has-form { grid-template-columns: 1fr !important; }
+          .two-col { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
       <PageHeader icon="📰" title="Blog / Actualités"
         subtitle={`${items.length} article${items.length!==1?"s":""} — section « Actualités » du site`}
         actions={<>
@@ -26,11 +35,11 @@ export default function BlogEditor() {
       />
       {error && <Alert type="error">{error}</Alert>}
 
-      <div style={{ display:"grid", gridTemplateColumns: editing ? "1fr 1fr" : "1fr", gap:20 }}>
+      <div className={`editor-grid ${editing ? "has-form" : ""}`}>
         {editing && (
           <Card>
             <SectionHeading title={isEdit ? "Modifier l'article" : "Nouvel article"} subtitle="Remplissez les champs dans les deux langues" />
-            <div style={{ display:"flex", gap:8, marginBottom:16 }}>
+            <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" }}>
               {LANG_TABS.map(tab => (
                 <button key={tab.code} onClick={() => setLang(tab.code)} style={{ padding:"7px 16px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:12, cursor:"pointer", border:"1px solid", borderColor: lang===tab.code?"#0A1684":"rgba(255,255,255,0.12)", background: lang===tab.code?"rgba(10,22,132,0.15)":"rgba(255,255,255,0.04)", color: lang===tab.code?"#0A1684":"#aaa" }}>{tab.label}</button>
               ))}
@@ -44,10 +53,10 @@ export default function BlogEditor() {
             <Field label={`Extrait — ${lang==="fr"?"Français":"English"}`}>
               <Textarea value={form[`excerpt_${lang}`]||""} onChange={e => patch(`excerpt_${lang}`, e.target.value)} placeholder={lang==="fr"?"Résumé de l'article…":"Article summary…"} rows={3} />
             </Field>
-            <Field label={`Contenu complet — ${lang==="fr"?"Français":"English"}`} hint="Affiché sur la page de l'article (« En savoir plus »). Les sauts de ligne séparent les paragraphes.">
+            <Field label={`Contenu complet — ${lang==="fr"?"Français":"English"}`} hint="Les sauts de ligne séparent les paragraphes.">
               <Textarea value={form[`content_${lang}`]||""} onChange={e => patch(`content_${lang}`, e.target.value)} placeholder={lang==="fr"?"Texte complet de l'article…":"Full article text…"} rows={8} />
             </Field>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+            <div className="two-col">
               <Field label="Date">
                 <Input value={form.date||""} onChange={e => patch("date", e.target.value)} placeholder="01 Jan 2024" />
               </Field>
@@ -63,7 +72,7 @@ export default function BlogEditor() {
                 {form.featured ? "⭐ Mis en avant" : "☆ Non mis en avant"}
               </button>
             </Field>
-            <div style={{ display:"flex", gap:10 }}>
+            <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
               <Button variant="primary" onClick={save} disabled={saving || (!form.title_fr && !form.title_en)}>
                 {saving ? <><Spinner size={14} /> Sauvegarde…</> : (isEdit ? "💾 Mettre à jour" : "✚ Créer")}
               </Button>
@@ -84,11 +93,11 @@ export default function BlogEditor() {
                   : <div style={{ width:44, height:44, borderRadius:8, background:"#16213e", display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, flexShrink:0 }}>🏗️</div>
                 }
                 <div style={{ minWidth:0 }}>
-                  <div style={{ fontWeight:800, color:"#fff", fontSize:14, marginBottom:3, display:"flex", gap:8, alignItems:"center" }}>
+                  <div style={{ fontWeight:800, color:"#fff", fontSize:14, marginBottom:3, display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
                     {doc.title_fr || "—"}
                     {doc.featured && <span style={{ fontSize:10, background:"rgba(10,22,132,0.2)", color:"#0A1684", padding:"2px 6px", borderRadius:4, fontWeight:700 }}>★</span>}
                   </div>
-                  <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+                  <div style={{ display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
                     <Badge color="#0A1684">{doc.tag_fr || "–"}</Badge>
                     <span style={{ color:"#555", fontSize:11 }}>📅 {doc.date}</span>
                   </div>
