@@ -47,7 +47,8 @@ export function useApiItem(basePath, id) {
 
 export const INFO_DEFAULT = {
   companyName: "",
-  logoImage: "",           // URL image logo (si vide → texte stylisé)
+  logoImage: "",           // URL image logo (navbar)
+  footerLogoImage: "",     // URL image logo footer (séparé) (si vide → texte stylisé)
   // ── Couleurs du thème (paramétrables, voir useThemeVars) ──
   primaryColor: "#0A1684", // couleur d'accent principale (boutons, liens, badges…)
   darkColor: "#121315",    // couleur sombre secondaire (fonds foncés, textes)

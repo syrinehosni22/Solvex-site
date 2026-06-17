@@ -13,7 +13,7 @@ const NAV = [
   { to:"/admin/stats",         label:"Statut",        icon:"📊" },
   { to:"/admin/testimonials",  label:"Témoignages",   icon:"⭐" },
   { to:"/admin/blog",          label:"Blog",          icon:"📰" },
-  { to:"/admin/devis",         label:"Devis",         icon:"📩" },
+  { to:"/admin/devis",         label:"Messages",      icon:"✉️" },
 ];
 
 function AdminLogo({ info }) {

@@ -6,7 +6,7 @@ import SectionTitle from "./SectionTitle";
 export default function ContactSection({ info }) {
   const { t } = useTranslation();
   const [ref, visible] = useIntersect();
-  const [form, setForm] = useState({ name:"", email:"", phone:"", service:"", message:"" });
+  const [form, setForm] = useState({ name:"", email:"", phone:"", subject:"", message:"" });
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
   const [errMsg, setErrMsg] = useState("");
 
@@ -14,20 +14,20 @@ export default function ContactSection({ info }) {
 
   const handleSubmit = async () => {
     if (!form.name || !form.email || !form.message) {
-      setErrMsg("Veuillez remplir les champs obligatoires (nom, email, message).");
+      setErrMsg(t("contact.errorRequired") || "Veuillez remplir les champs obligatoires (nom, email, message).");
       setStatus("error");
       return;
     }
     setStatus("sending"); setErrMsg("");
     try {
-      const res = await fetch("/api/devis", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, sentAt: new Date().toISOString() }),
       });
       if (!res.ok) throw new Error("Erreur serveur");
       setStatus("sent");
-      setForm({ name:"", email:"", phone:"", service:"", message:"" });
+      setForm({ name:"", email:"", phone:"", subject:"", message:"" });
       setTimeout(() => setStatus("idle"), 6000);
     } catch (e) {
       setErrMsg(e.message || "Une erreur est survenue. Veuillez réessayer.");
@@ -64,27 +64,30 @@ export default function ContactSection({ info }) {
               </div>
             ))}
 
-            {/* Call button — number from info */}
+            {/* Call button */}
             <a href={phoneHref}
-              style={{ display:"inline-flex", alignItems:"center", gap:12, background:"var(--color-primary, #0A1684)", color:"#fff", padding:"16px 32px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:800, fontSize:16, textDecoration:"none", boxShadow:"0 4px 20px rgba(245,91,31,0.35)", transition:"all 0.25s", marginTop:8 }}
+              style={{ display:"inline-flex", alignItems:"center", gap:12, background:"var(--color-primary, #0A1684)", color:"#fff", padding:"16px 32px", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontWeight:800, fontSize:16, textDecoration:"none", boxShadow:"0 4px 20px rgba(10,22,132,0.35)", transition:"all 0.25s", marginTop:8 }}
               onMouseEnter={e => { e.currentTarget.style.background="var(--color-primary-dark, #091372)"; e.currentTarget.style.transform="translateY(-2px)"; }}
               onMouseLeave={e => { e.currentTarget.style.background="var(--color-primary, #0A1684)"; e.currentTarget.style.transform="none"; }}
             >
               <span style={{ fontSize:22 }}>📞</span>
-              <span>{info.phone || "Appelez-nous"}</span>
+              <span>{info.phone || t("contact.callUs") || "Appelez-nous"}</span>
             </a>
           </div>
 
-          {/* Right: devis form */}
+          {/* Right: contact form */}
           <div style={{ background:"#fff", borderRadius:16, padding:40, boxShadow:"0 4px 40px rgba(0,0,0,0.08)", opacity: visible?1:0, transform: visible?"none":"translateX(40px)", transition:"all 0.8s 0.2s" }}>
-            <h3 style={{ fontFamily:"'DM Sans',sans-serif", fontWeight:800, fontSize:24, color:"var(--color-dark, #121315)", marginBottom:28 }}>
-              {t("contact.formTitle") || "Demandez un devis"}
+            <h3 style={{ fontFamily:"'DM Sans',sans-serif", fontWeight:800, fontSize:24, color:"var(--color-dark, #121315)", marginBottom:8 }}>
+              {t("contact.formTitle") || "Envoyez-nous un message"}
             </h3>
+            <p style={{ color:"#888", fontFamily:"'DM Sans',sans-serif", fontSize:14, lineHeight:1.6, marginBottom:24 }}>
+              {t("contact.formSubtitle") || "Nous vous répondrons dans les plus brefs délais."}
+            </p>
 
             {status === "sent" && (
               <div style={{ background:"rgba(34,197,94,0.1)", border:"1px solid rgba(34,197,94,0.3)", borderRadius:8, padding:"14px 18px", marginBottom:20, color:"#16a34a", fontFamily:"'DM Sans',sans-serif", fontWeight:600, display:"flex", gap:10, alignItems:"center" }}>
                 <span style={{ fontSize:20 }}>✅</span>
-                Votre demande de devis a bien été envoyée ! Nous vous contacterons rapidement.
+                {t("contact.success") || "Votre message a bien été envoyé ! Nous vous contacterons rapidement."}
               </div>
             )}
             {status === "error" && (
@@ -93,26 +96,40 @@ export default function ContactSection({ info }) {
               </div>
             )}
 
-            {/* Fields */}
-            {[
-              { key:"name",    placeholder:"Votre nom *",       type:"text"  },
-              { key:"email",   placeholder:"Votre email *",     type:"email" },
-              { key:"phone",   placeholder:"Votre téléphone",   type:"tel"   },
-              { key:"service", placeholder:"Service souhaité",  type:"text"  },
-            ].map(f => (
-              <input key={f.key} type={f.type} placeholder={f.placeholder} value={form[f.key]}
-                onChange={e => { setForm({ ...form, [f.key]: e.target.value }); setStatus("idle"); }}
-                style={{ width:"100%", padding:"14px 18px", marginBottom:14, border: status==="error" && !form[f.key] && ["name","email"].includes(f.key) ? "1px solid rgba(239,68,68,0.5)" : "1px solid #e0e0e0", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontSize:15, color:"var(--color-dark, #121315)", outline:"none", boxSizing:"border-box", background:"#f9f9f9" }}
+            {/* Ligne Nom + Email */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:0 }}>
+              <input type="text" placeholder={`${t("contact.name") || "Votre nom"} *`} value={form.name}
+                onChange={e => { setForm({ ...form, name: e.target.value }); setStatus("idle"); }}
+                style={{ width:"100%", padding:"14px 18px", marginBottom:14, border: status==="error" && !form.name ? "1px solid rgba(239,68,68,0.5)" : "1px solid #e0e0e0", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontSize:15, color:"var(--color-dark, #121315)", outline:"none", boxSizing:"border-box", background:"#f9f9f9" }}
               />
-            ))}
-            <textarea placeholder="Décrivez votre projet *" value={form.message}
-              onChange={e => { setForm({ ...form, message: e.target.value }); setStatus("idle"); }} rows={4}
+              <input type="email" placeholder={`${t("contact.emailField") || "Votre email"} *`} value={form.email}
+                onChange={e => { setForm({ ...form, email: e.target.value }); setStatus("idle"); }}
+                style={{ width:"100%", padding:"14px 18px", marginBottom:14, border: status==="error" && !form.email ? "1px solid rgba(239,68,68,0.5)" : "1px solid #e0e0e0", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontSize:15, color:"var(--color-dark, #121315)", outline:"none", boxSizing:"border-box", background:"#f9f9f9" }}
+              />
+            </div>
+
+            {/* Ligne Téléphone + Sujet */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+              <input type="tel" placeholder={t("contact.phoneField") || "Votre téléphone"} value={form.phone}
+                onChange={e => { setForm({ ...form, phone: e.target.value }); setStatus("idle"); }}
+                style={{ width:"100%", padding:"14px 18px", marginBottom:14, border:"1px solid #e0e0e0", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontSize:15, color:"var(--color-dark, #121315)", outline:"none", boxSizing:"border-box", background:"#f9f9f9" }}
+              />
+              <input type="text" placeholder={t("contact.subject") || "Sujet"} value={form.subject}
+                onChange={e => { setForm({ ...form, subject: e.target.value }); setStatus("idle"); }}
+                style={{ width:"100%", padding:"14px 18px", marginBottom:14, border:"1px solid #e0e0e0", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontSize:15, color:"var(--color-dark, #121315)", outline:"none", boxSizing:"border-box", background:"#f9f9f9" }}
+              />
+            </div>
+
+            <textarea placeholder={`${t("contact.message") || "Votre message"} *`} value={form.message}
+              onChange={e => { setForm({ ...form, message: e.target.value }); setStatus("idle"); }} rows={5}
               style={{ width:"100%", padding:"14px 18px", marginBottom:20, border: status==="error" && !form.message ? "1px solid rgba(239,68,68,0.5)" : "1px solid #e0e0e0", borderRadius:8, fontFamily:"'DM Sans',sans-serif", fontSize:15, color:"var(--color-dark, #121315)", outline:"none", resize:"vertical", boxSizing:"border-box", background:"#f9f9f9" }}
             />
             <button onClick={handleSubmit} disabled={status==="sending"}
               style={{ width:"100%", background: status==="sending" ? "#aaa" : "var(--color-primary, #0A1684)", color:"#fff", border:"none", padding:"16px 32px", borderRadius:8, fontWeight:800, fontSize:16, cursor: status==="sending" ? "not-allowed" : "pointer", fontFamily:"'DM Sans',sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:10, transition:"background 0.2s" }}
+              onMouseEnter={e => { if(status!=="sending") e.currentTarget.style.background="var(--color-primary-dark, #091372)"; }}
+              onMouseLeave={e => { if(status!=="sending") e.currentTarget.style.background="var(--color-primary, #0A1684)"; }}
             >
-              {status === "sending" ? "⏳ Envoi en cours…" : "📩 Envoyer ma demande de devis"}
+              {status === "sending" ? "⏳ Envoi en cours…" : `✉️ ${t("contact.send") || "Envoyer le message →"}`}
             </button>
             <p style={{ textAlign:"center", marginTop:14, color:"#aaa", fontSize:12, fontFamily:"'DM Sans',sans-serif" }}>
               * Champs obligatoires — Ou appelez directement le <a href={phoneHref} style={{ color:"var(--color-primary, #0A1684)", fontWeight:700, textDecoration:"none" }}>{info.phone}</a>

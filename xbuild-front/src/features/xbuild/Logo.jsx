@@ -8,18 +8,14 @@
  *   onClick    — callback optionnel
  */
 export default function Logo({ info = {}, dark = true, size = "md", onClick, style = {} }) {
-  // Tailles de l'image logo : plus grandes et plus larges pour un rendu
-  // proche d'un logo "horizontal" complet (icône + nom), sans cadre blanc.
   const sizes = {
-    sm: { img: 38, font: 20 },
-    md: { img: 52, font: 26 },
-    lg: { img: 72, font: 36 },
+    sm: { img: 38,  font: 20 },
+    md: { img: 64,  font: 28 },   // was 52/26 — bumped up
+    lg: { img: 88,  font: 38 },   // was 72/36 — bumped up
   };
   const { img: imgH, font: fontSize } = sizes[size] || sizes.md;
   const color = dark ? "#fff" : "var(--color-dark, #121315)";
 
-  // Pendant le chargement de /api/info, n'affiche rien plutôt que le nom par
-  // défaut "XBuild" — évite le flash du mauvais nom au premier rendu.
   if (info.loaded === false) {
     return (
       <span
@@ -40,9 +36,6 @@ export default function Logo({ info = {}, dark = true, size = "md", onClick, sty
         onClick={onClick}
         style={{
           display: "inline-flex", alignItems: "center", justifyContent: "center",
-          // Le logo (texte/icône foncés) a besoin d'un fond clair pour rester
-          // visible sur une navbar/footer sombre. Sur fond clair, pas besoin
-          // d'encart : le logo s'affiche directement.
           background: dark ? "#fff" : "transparent",
           borderRadius: dark ? 8 : 0,
           padding: dark ? "8px 16px" : 0,

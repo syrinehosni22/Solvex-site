@@ -209,12 +209,43 @@ app.delete("/api/testimonials/:id", requireAuth, async (req, res) => {
   catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// Devis / contact form
+// Contact messages (nouveau formulaire de contact)
+app.post("/api/contact", async (req, res) => {
+  try {
+    const doc = await db.devis.insert({ ...req.body, createdAt: new Date().toISOString(), read: false });
+    res.status(201).json(doc);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+app.get("/api/contact", requireAuth, async (_req, res) => {
+  try { res.json(await db.devis.find({}).sort({ createdAt: -1 })); }
+  catch (e) { res.status(500).json({ error: e.message }); }
+});
+app.put("/api/contact/:id/status", requireAuth, async (req, res) => {
+  try {
+    const { status, response } = req.body ?? {};
+    const doc = await db.devis.update(
+      { _id: req.params.id },
+      { $set: { status, response, read: true } },
+      { returnUpdatedDocs: true }
+    );
+    res.json(doc);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+app.put("/api/contact/:id/read", requireAuth, async (req, res) => {
+  try { res.json(await db.devis.update({ _id: req.params.id }, { $set: { read: true } }, { returnUpdatedDocs: true })); }
+  catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// Alias /api/devis → /api/contact (rétrocompatibilité)
 app.post("/api/devis", async (req, res) => {
   try {
     const doc = await db.devis.insert({ ...req.body, createdAt: new Date().toISOString(), read: false });
     res.status(201).json(doc);
   } catch (e) { res.status(500).json({ error: e.message }); }
+});
+app.get("/api/devis", requireAuth, async (_req, res) => {
+  try { res.json(await db.devis.find({}).sort({ createdAt: -1 })); }
+  catch (e) { res.status(500).json({ error: e.message }); }
 });
 app.put("/api/devis/:id/status", requireAuth, async (req, res) => {
   try {
@@ -226,11 +257,6 @@ app.put("/api/devis/:id/status", requireAuth, async (req, res) => {
     );
     res.json(doc);
   } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.get("/api/devis", requireAuth, async (_req, res) => {
-  try { res.json(await db.devis.find({}).sort({ createdAt: -1 })); }
-  catch (e) { res.status(500).json({ error: e.message }); }
 });
 app.put("/api/devis/:id/read", requireAuth, async (req, res) => {
   try { res.json(await db.devis.update({ _id: req.params.id }, { $set: { read: true } }, { returnUpdatedDocs: true })); }

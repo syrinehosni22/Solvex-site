@@ -278,14 +278,17 @@
     "email": "Send Email",
     "phone": "Call Emergency",
     "hours": "Working Hours",
-    "formTitle": "Get A Free Quote",
+    "formTitle": "Send Us a Message",
     "name": "Your Name",
     "emailField": "Email Address",
     "phoneField": "Phone Number",
     "message": "Your Message",
     "send": "Send Message →",
-    "success": "✓ Message sent! We'll get back to you shortly.",
-    "callUs": "Call Us for a Quote"
+    "success": "✓ Your message has been sent! We'll get back to you shortly.",
+    "callUs": "Call Us",
+    "formSubtitle": "We'll get back to you as soon as possible.",
+    "subject": "Subject",
+    "errorRequired": "Please fill in the required fields (name, email, message)."
   },
   "footer": {
     "aboutTitle": "About Company",

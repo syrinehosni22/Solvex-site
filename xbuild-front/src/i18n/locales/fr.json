@@ -278,14 +278,17 @@
     "email": "Envoyer un Email",
     "phone": "Appel d'Urgence",
     "hours": "Heures de Travail",
-    "formTitle": "Obtenir un Devis Gratuit",
+    "formTitle": "Envoyez-nous un message",
     "name": "Votre Nom",
     "emailField": "Adresse Email",
     "phoneField": "Numéro de Téléphone",
     "message": "Votre Message",
     "send": "Envoyer le Message →",
-    "success": "✓ Message envoyé ! Nous vous répondrons bientôt.",
-    "callUs": "Appelez-nous pour un devis"
+    "success": "✓ Votre message a bien été envoyé ! Nous vous contacterons rapidement.",
+    "callUs": "Appelez-nous",
+    "formSubtitle": "Nous vous répondrons dans les plus brefs délais.",
+    "subject": "Sujet",
+    "errorRequired": "Veuillez remplir les champs obligatoires (nom, email, message)."
   },
   "footer": {
     "aboutTitle": "À Propos de l'Entreprise",

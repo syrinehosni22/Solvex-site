@@ -106,8 +106,8 @@ export default function InfoEditor() {
             <Field label="Années d'expérience"><Input type="number" value={form.yearsExperience || ""} onChange={e => patch("yearsExperience", e.target.value)} placeholder="25" /></Field>
             <Field label="Nom du CEO"><Input value={form.ceoName || ""} onChange={e => patch("ceoName", e.target.value)} placeholder="Shikhon Islam" /></Field>
           </div>
-          <Field label="🖼️ Logo de l'entreprise">
-            <ImageUploader value={form.logoImage || ""} onChange={v => patch("logoImage", v)} label="Logo" hint="Remplace le texte XBUILD dans la navbar, footer et dashboard. Format PNG/SVG transparent recommandé. Hauteur max : 60px." />
+          <Field label="🖼️ Logo Navbar / Admin" hint="Affiché dans la barre de navigation et le dashboard.">
+            <ImageUploader value={form.logoImage || ""} onChange={v => patch("logoImage", v)} label="Logo Navbar" hint="Format PNG/SVG transparent recommandé. Hauteur affichée : 64px." />
             {!form.logoImage && (
               <div style={{ marginTop: 10, padding: "10px 16px", borderRadius: 8, background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.07)", display: "inline-flex", alignItems: "center", gap: 10 }}>
                 <span style={{ color: "#aaa", fontSize: 12, fontFamily: "'DM Sans',sans-serif" }}>Aperçu texte :</span>
@@ -120,6 +120,19 @@ export default function InfoEditor() {
                     return <>{pre}<span style={{ color: "var(--color-primary, #0A1684)" }}>{suf}</span></>;
                   })()}
                 </span>
+              </div>
+            )}
+          </Field>
+          <Field label="🖼️ Logo Footer" hint="Logo affiché dans le footer (section centrale). Si vide, utilise le logo navbar.">
+            <ImageUploader value={form.footerLogoImage || ""} onChange={v => patch("footerLogoImage", v)} label="Logo Footer" hint="Recommandé : version blanche/claire du logo pour fond sombre. PNG transparent. Hauteur affichée : 88px." />
+            {form.footerLogoImage && (
+              <div style={{ marginTop: 12, padding: "16px 20px", borderRadius: 10, background: "var(--color-dark, #121315)", border: "1px solid rgba(255,255,255,0.08)", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 200 }}>
+                <img src={form.footerLogoImage} alt="Footer logo preview" style={{ height: 56, width: "auto", maxWidth: 280, objectFit: "contain" }} />
+              </div>
+            )}
+            {!form.footerLogoImage && (
+              <div style={{ marginTop: 10, padding: "10px 16px", borderRadius: 8, background: "rgba(255,255,255,0.04)", border: "1px dashed rgba(255,255,255,0.12)", color: "#555", fontSize: 12, fontFamily: "'DM Sans',sans-serif" }}>
+                Non défini — utilise le logo navbar par défaut.
               </div>
             )}
           </Field>
