@@ -28,12 +28,18 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(UPLOADS_DIR));
 
+// ── Force all JSON responses through a plain serialization pass ───────────────
+// This guarantees Mongoose ObjectIds, DocumentArrays, etc. never reach React.
+app.set("json replacer", (_key, val) => {
+  if (val && typeof val === "object" && val.constructor?.name === "ObjectId") return val.toString();
+  return val;
+});
+
 await initDb();
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
 // Auth
-// Runtime password (can be changed without restart via API, falls back to .env)
 let runtimePassword = null;
 
 app.post("/api/auth/login", (req, res) => {
@@ -45,7 +51,6 @@ app.post("/api/auth/login", (req, res) => {
 });
 app.get("/api/auth/verify", requireAuth, (req, res) => res.json(req.user));
 
-// Change password (runtime — also remind user to update .env)
 app.post("/api/auth/change-password", requireAuth, (req, res) => {
   const { newPassword } = req.body ?? {};
   if (!newPassword || newPassword.length < 6)
@@ -209,7 +214,7 @@ app.delete("/api/testimonials/:id", requireAuth, async (req, res) => {
   catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// Contact messages (nouveau formulaire de contact)
+// Contact
 app.post("/api/contact", async (req, res) => {
   try {
     const doc = await db.devis.insert({ ...req.body, createdAt: new Date().toISOString(), read: false });
@@ -236,7 +241,7 @@ app.put("/api/contact/:id/read", requireAuth, async (req, res) => {
   catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// Alias /api/devis → /api/contact (rétrocompatibilité)
+// Devis (alias)
 app.post("/api/devis", async (req, res) => {
   try {
     const doc = await db.devis.insert({ ...req.body, createdAt: new Date().toISOString(), read: false });

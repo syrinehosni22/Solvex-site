@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { hexToRgb, darkenHex } from "./helpers";
 
+// Safely serialize any value coming from the API — converts objects with
+// a toString (like Mongoose ObjectId) to strings, so React never crashes.
+function safeSerialize(val) {
+  try { return JSON.parse(JSON.stringify(val)); } catch { return val; }
+}
+
 export function useApiList(path, fallback) {
   const [data, setData] = useState(fallback);
   useEffect(() => {
@@ -10,7 +16,8 @@ export function useApiList(path, fallback) {
         const res = await fetch(path);
         if (!res.ok) return;
         const json = await res.json();
-        if (!cancelled && Array.isArray(json) && json.length) setData(json);
+        const safe = safeSerialize(json);
+        if (!cancelled && Array.isArray(safe) && safe.length) setData(safe);
       } catch {}
     })();
     return () => { cancelled = true; };
@@ -18,8 +25,6 @@ export function useApiList(path, fallback) {
   return data;
 }
 
-// Fetches a single resource by id, e.g. useApiItem("/api/blog", "abc123")
-// Returns { data, loading, error }
 export function useApiItem(basePath, id) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,7 +38,7 @@ export function useApiItem(basePath, id) {
         const res = await fetch(`${basePath}/${id}`);
         if (!res.ok) throw new Error("not found");
         const json = await res.json();
-        if (!cancelled) setData(json);
+        if (!cancelled) setData(safeSerialize(json));
       } catch (e) {
         if (!cancelled) setError(e.message || "error");
       } finally {
@@ -47,11 +52,10 @@ export function useApiItem(basePath, id) {
 
 export const INFO_DEFAULT = {
   companyName: "",
-  logoImage: "",           // URL image logo (navbar)
-  footerLogoImage: "",     // URL image logo footer (séparé) (si vide → texte stylisé)
-  // ── Couleurs du thème (paramétrables, voir useThemeVars) ──
-  primaryColor: "#0A1684", // couleur d'accent principale (boutons, liens, badges…)
-  darkColor: "#121315",    // couleur sombre secondaire (fonds foncés, textes)
+  logoImage: "",
+  footerLogoImage: "",
+  primaryColor: "#0A1684",
+  darkColor: "#121315",
   tagline_fr: "Nous Construisons & Gérons Vos Chantiers",
   tagline_en: "We Build & Construction Site Management",
   about_fr: "Nous fournissons des services de construction et d'ingénierie de premier plan depuis plus de 25 ans.",
@@ -75,7 +79,6 @@ export const INFO_DEFAULT = {
   socialYoutube:  "#",  socialYoutubeActive:  true,
   socialLinkedin: "#",  socialLinkedinActive: true,
 
-  // ── Section "À propos" (Qui sommes-nous) ──
   aboutTag_fr: "À Propos de Notre Entreprise",
   aboutTag_en: "About Our Company",
   aboutTitle_fr: "Nous Offrons la Qualité Sans Compromis",
@@ -90,7 +93,6 @@ export const INFO_DEFAULT = {
   consultTitle_en: "Plan your free consultation today!",
   consultCta_fr: "Contactez-nous", consultCta_en: "Contact Us",
 
-  // ── Section "Pourquoi nous choisir" ──
   whyTag_fr: "Pourquoi Nous Choisir",
   whyTag_en: "Why Choose Us",
   whyTitle_fr: "Pourquoi Nous Choisir ?",
@@ -110,18 +112,24 @@ export function useInfo() {
   useEffect(() => {
     fetch("/api/info")
       .then(r => r.json())
-      .then(d => setInfo({
-        ...INFO_DEFAULT, ...d,
-        heroStats: { ...INFO_DEFAULT.heroStats, ...(d.heroStats || {}) },
-      }))
+      .then(d => {
+        const safe = safeSerialize(d);
+        setInfo({
+          ...INFO_DEFAULT,
+          ...safe,
+          heroStats: { ...INFO_DEFAULT.heroStats, ...(safe.heroStats || {}) },
+          // Ensure arrays are always arrays
+          aboutHighlights: Array.isArray(safe.aboutHighlights) ? safe.aboutHighlights : INFO_DEFAULT.aboutHighlights,
+          whyItems:        Array.isArray(safe.whyItems)        ? safe.whyItems        : INFO_DEFAULT.whyItems,
+          statsItems:      Array.isArray(safe.statsItems)      ? safe.statsItems      : [],
+          statsBadges:     Array.isArray(safe.statsBadges)     ? safe.statsBadges     : [],
+        });
+      })
       .catch(() => {});
   }, []);
   return info;
 }
 
-// Applique les couleurs du thème (depuis /api/info) comme variables CSS globales
-// sur <html>, afin que tout le design (site + admin) reste cohérent et que la
-// couleur principale soit modifiable depuis l'admin sans toucher au code.
 export function useThemeVars(info) {
   useEffect(() => {
     const root = document.documentElement;
