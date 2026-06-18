@@ -143,7 +143,8 @@ async function migrateProjects() {
   // Backfill images[] from legacy image field
   await ProjectModel.updateMany(
     { images: { $exists: false }, image: { $exists: true, $ne: "" } },
-    [{ $set: { images: ["$image"] } }]
+    [{ $set: { images: ["$image"] } }],
+    { updatePipeline: true }
   );
   // Ensure coverIndex exists
   await ProjectModel.updateMany(
