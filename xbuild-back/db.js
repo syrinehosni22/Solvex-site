@@ -69,8 +69,10 @@ function toPlainArr(docs) {
 function buildFilter(query = {}) {
   const filter = { ...query };
   if (filter._id && typeof filter._id === "string") {
-    try { filter._id = new mongoose.Types.ObjectId(filter._id); }
-    catch { /* invalid id → no match */ filter._id = null; }
+    if (mongoose.Types.ObjectId.isValid(filter._id)) {
+      filter._id = new mongoose.Types.ObjectId(filter._id);
+    }
+    // else leave as string — findOne/deleteOne will simply find nothing (no crash)
   }
   return filter;
 }
