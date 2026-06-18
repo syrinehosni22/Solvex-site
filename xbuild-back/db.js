@@ -1,7 +1,11 @@
 import Datastore from "nedb-promises";
 import { SEED_PROJECTS, SEED_SERVICES, SEED_PROCESS, SEED_BLOG, SEED_TESTIMONIALS } from "./seed.js";
 
-const mk = (name) => Datastore.create({ filename: new URL(`./data/${name}.db`, import.meta.url).pathname, autoload: true });
+const mk = (name) =>
+  Datastore.create({
+    filename: new URL(`./data/${name}.db`, import.meta.url).pathname,
+    autoload: true,
+  });
 
 const services     = mk("services");
 const projects     = mk("projects");
@@ -11,20 +15,32 @@ const blog         = mk("blog");
 const testimonials = mk("testimonials");
 const devis        = mk("devis");
 
-async function seedIfEmpty(store, docs) {
-  const count = await store.count({});
-  if (count > 0) return;
-  await store.insert(docs);
+// ─── Ensure unique indexes ────────────────────────────────────────────────────
+async function ensureIndexes() {
+  await services.ensureIndex({ fieldName: "title_fr", unique: true });
+  await projects.ensureIndex({ fieldName: "title_fr", unique: true });
+  await blog.ensureIndex    ({ fieldName: "title_fr", unique: true });
+  await process.ensureIndex ({ fieldName: "title_fr", unique: true });
+  await testimonials.ensureIndex({ fieldName: "author", unique: true });
 }
 
-// Backfill missing fields (order, icon, color, features_fr/en…) on services that
-// already exist in the DB but were created before these fields were introduced.
-// Matches existing docs to SEED_SERVICES by title_fr, and only fills in fields
-// that are currently empty/missing — it never overwrites content already edited
-// in the admin.
+// ─── Upsert-based seeding (replaces seedIfEmpty) ──────────────────────────────
+// Inserts each doc only if no existing doc matches on `keyField`.
+// This is idempotent: safe to re-run on every boot, never creates duplicates.
+async function upsertSeed(store, docs, keyField) {
+  for (const doc of docs) {
+    const query = { [keyField]: doc[keyField] };
+    const existing = await store.findOne(query);
+    if (!existing) {
+      await store.insert(doc);
+    }
+  }
+}
+
+// ─── Migrations ───────────────────────────────────────────────────────────────
 async function migrateServices() {
   const existing = await services.find({});
-  if (existing.length === 0) return; // nothing to migrate, seedIfEmpty will handle it
+  if (existing.length === 0) return;
 
   for (const doc of existing) {
     const seedMatch = SEED_SERVICES.find(s => s.title_fr === doc.title_fr);
@@ -33,24 +49,18 @@ async function migrateServices() {
     const patch = {};
     for (const key of ["order", "icon", "color", "features_fr", "features_en"]) {
       const current = doc[key];
-      const isMissing = current === undefined || current === null ||
+      const isMissing =
+        current === undefined ||
+        current === null ||
         (Array.isArray(current) && current.length === 0);
-      if (isMissing && seedMatch[key] !== undefined) {
-        patch[key] = seedMatch[key];
-      }
+      if (isMissing && seedMatch[key] !== undefined) patch[key] = seedMatch[key];
     }
-
     if (Object.keys(patch).length > 0) {
       await services.update({ _id: doc._id }, { $set: patch }, {});
     }
   }
 }
 
-// Backfill the new gallery fields (images[], coverIndex) on existing projects:
-// - if a project already has a single legacy "image" but no "images" gallery,
-//   seed "images" with that single image so it keeps displaying.
-// - ensure "coverIndex" defaults to 0.
-// Never overwrites images/coverIndex that were already set.
 async function migrateProjects() {
   const existing = await projects.find({});
   for (const doc of existing) {
@@ -67,9 +77,6 @@ async function migrateProjects() {
   }
 }
 
-// Backfill the new full-article fields (content_fr/content_en) on existing blog
-// posts that were created before the blog detail page existed. Matches by
-// title_fr and only fills in content if currently missing/empty.
 async function migrateBlog() {
   const existing = await blog.find({});
   if (existing.length === 0) return;
@@ -88,15 +95,44 @@ async function migrateBlog() {
   }
 }
 
+// ─── Remove duplicate docs keeping only the first inserted ───────────────────
+async function deduplicateCollection(store, keyField) {
+  const all = await store.find({});
+  const seen = new Map();
+  for (const doc of all) {
+    const key = doc[keyField];
+    if (seen.has(key)) {
+      await store.remove({ _id: doc._id }, {});
+      console.warn(`[dedup] Removed duplicate "${key}" in ${store.filename}`);
+    } else {
+      seen.set(key, doc._id);
+    }
+  }
+}
+
+// ─── Entry point ──────────────────────────────────────────────────────────────
 export async function initDb() {
-  await seedIfEmpty(services,     SEED_SERVICES);
+  // 1. Clean up any existing duplicates from past boots
+  await deduplicateCollection(services,     "title_fr");
+  await deduplicateCollection(projects,     "title_fr");
+  await deduplicateCollection(blog,         "title_fr");
+  await deduplicateCollection(process,      "title_fr");
+  await deduplicateCollection(testimonials, "author");
+
+  // 2. Enforce uniqueness at DB level going forward
+  await ensureIndexes();
+
+  // 3. Seed missing entries (idempotent)
+  await upsertSeed(services,     SEED_SERVICES,     "title_fr");
+  await upsertSeed(projects,     SEED_PROJECTS,     "title_fr");
+  await upsertSeed(process,      SEED_PROCESS,      "title_fr");
+  await upsertSeed(blog,         SEED_BLOG,         "title_fr");
+  await upsertSeed(testimonials, SEED_TESTIMONIALS, "author");
+
+  // 4. Backfill new fields on older docs
   await migrateServices();
-  await seedIfEmpty(projects,     SEED_PROJECTS);
   await migrateProjects();
-  await seedIfEmpty(process,      SEED_PROCESS);
-  await seedIfEmpty(blog,         SEED_BLOG);
   await migrateBlog();
-  await seedIfEmpty(testimonials, SEED_TESTIMONIALS);
 }
 
 export const db = { services, projects, info, process, blog, testimonials, devis };
