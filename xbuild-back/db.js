@@ -33,9 +33,7 @@ export async function connectDb() {
 
 // ─── Generic schema (flexible, mirrors NeDB's schemaless approach) ─────────────
 function flexModel(name) {
-  // Use Mixed type for maximum flexibility — same as NeDB
   const schema = new mongoose.Schema({}, { strict: false, timestamps: false });
-  // Avoid re-compiling on hot-reload (nodemon)
   return mongoose.models[name] || mongoose.model(name, schema, name.toLowerCase());
 }
 
@@ -47,42 +45,67 @@ const BlogModel        = flexModel("Blog");
 const TestimonialModel = flexModel("Testimonial");
 const DevisModel       = flexModel("Devis");
 
-// ─── Adapter ──────────────────────────────────────────────────────────────────
-// Wraps a Mongoose Model so it exposes the exact same API that index.js calls.
-// NeDB uses `_id` as a plain string; Mongoose uses ObjectId.
-// We normalise by always converting _id → string in returned documents.
+// ─── Serialization ────────────────────────────────────────────────────────────
+// Recursively convert ObjectIds → strings so React never receives a
+// non-serialisable object as a child (fixes React error #300).
+function deepSerialize(val) {
+  if (val === null || val === undefined) return val;
+
+  // ObjectId → string
+  if (val instanceof mongoose.Types.ObjectId) return val.toString();
+
+  // Array
+  if (Array.isArray(val)) return val.map(deepSerialize);
+
+  // Date → keep as-is (JSON.stringify handles it fine)
+  if (val instanceof Date) return val;
+
+  // Buffer → skip
+  if (Buffer.isBuffer(val)) return val;
+
+  // Plain object
+  if (typeof val === "object") {
+    const out = {};
+    for (const [k, v] of Object.entries(val)) {
+      if (k === "__v") continue;
+      out[k] = deepSerialize(v);
+    }
+    if (out._id && typeof out._id !== "string") out._id = String(out._id);
+    return out;
+  }
+
+  // Primitives
+  return val;
+}
 
 function toPlain(doc) {
   if (!doc) return null;
-  const obj = doc.toObject ? doc.toObject() : { ...doc };
-  if (obj._id) obj._id = obj._id.toString();
-  delete obj.__v;
-  return obj;
+  const obj = doc.toObject ? doc.toObject({ versionKey: false }) : JSON.parse(JSON.stringify(doc));
+  return deepSerialize(obj);
 }
 
 function toPlainArr(docs) {
   return docs.map(toPlain);
 }
 
-// Build a Mongoose filter from an NeDB-style query.
-// The only special case used in index.js is `{ _id: someString }`.
+// ─── Filter builder ───────────────────────────────────────────────────────────
 function buildFilter(query = {}) {
   const filter = { ...query };
   if (filter._id && typeof filter._id === "string") {
     if (mongoose.Types.ObjectId.isValid(filter._id)) {
       filter._id = new mongoose.Types.ObjectId(filter._id);
     }
-    // else leave as string — findOne/deleteOne will simply find nothing (no crash)
+    // else leave as string — query will simply find nothing (no crash)
   }
   return filter;
 }
 
+// ─── Adapter ──────────────────────────────────────────────────────────────────
 function makeAdapter(Model) {
   return {
     // ── find(query).sort(sortObj) ────────────────────────────────────────────
     find(query = {}) {
       const filter = buildFilter(query);
-      // Return a thenable that also has .sort()
       let sortObj = null;
       const thenable = {
         sort(s) { sortObj = s; return thenable; },
@@ -109,12 +132,10 @@ function makeAdapter(Model) {
     },
 
     // ── update(query, update, opts) ──────────────────────────────────────────
-    // Supports: { $set: {...} }
-    // opts.returnUpdatedDocs → return updated document (NeDB behaviour)
     async update(query, update, opts = {}) {
       const filter = buildFilter(query);
       const updated = await Model.findOneAndUpdate(filter, update, {
-        new: true,           // return the updated doc
+        new: true,
         runValidators: false,
       }).exec();
       if (opts.returnUpdatedDocs) return toPlain(updated);
@@ -127,12 +148,12 @@ function makeAdapter(Model) {
       return { numRemoved: result.deletedCount };
     },
 
-    // ── ensureIndex — no-op; Mongoose handles indexes at schema level ─────────
+    // ── ensureIndex — no-op ──────────────────────────────────────────────────
     async ensureIndex() {},
   };
 }
 
-// ─── Seeding (idempotent upsert, same logic as the NeDB version) ─────────────
+// ─── Seeding (idempotent) ─────────────────────────────────────────────────────
 async function upsertSeed(Model, docs, keyField) {
   for (const doc of docs) {
     const filter = { [keyField]: doc[keyField] };
@@ -142,13 +163,11 @@ async function upsertSeed(Model, docs, keyField) {
 
 // ─── Migrations ───────────────────────────────────────────────────────────────
 async function migrateProjects() {
-  // Backfill images[] from legacy image field
   await ProjectModel.updateMany(
     { images: { $exists: false }, image: { $exists: true, $ne: "" } },
     [{ $set: { images: ["$image"] } }],
     { updatePipeline: true }
   );
-  // Ensure coverIndex exists
   await ProjectModel.updateMany(
     { coverIndex: { $exists: false } },
     { $set: { coverIndex: 0 } }
@@ -159,20 +178,18 @@ async function migrateProjects() {
 export async function initDb() {
   await connectDb();
 
-  // Seed all collections (idempotent)
   await upsertSeed(ServiceModel,     SEED_SERVICES,     "title_fr");
   await upsertSeed(ProjectModel,     SEED_PROJECTS,     "title_fr");
   await upsertSeed(ProcessModel,     SEED_PROCESS,      "title_fr");
   await upsertSeed(BlogModel,        SEED_BLOG,         "title_fr");
   await upsertSeed(TestimonialModel, SEED_TESTIMONIALS, "author");
 
-  // Backfill new fields on older docs
   await migrateProjects();
 
   console.log("✅ DB seeded & migrations applied");
 }
 
-// ─── Exported db object (same shape as before) ───────────────────────────────
+// ─── Exported db object ───────────────────────────────────────────────────────
 export const db = {
   services:     makeAdapter(ServiceModel),
   projects:     makeAdapter(ProjectModel),
