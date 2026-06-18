@@ -29,7 +29,7 @@
     "contactCta": "Contactez-nous",
     "ctaBanner": {
       "title": "Prêts à construire votre avenir avec nous ?",
-      "desc": "Faites le premier pas vers un projet réussi : confiez-le à XBuild et profitez de notre expertise, de notre exigence de qualité et de solutions sur mesure conçues pour votre succès.",
+      "desc": "Faites le premier pas vers un projet réussi : confiez-le à Solvex et profitez de notre expertise, de notre exigence de qualité et de solutions sur mesure conçues pour votre succès.",
       "button": "Contactez-nous"
     },
     "items": [
@@ -111,7 +111,7 @@
     "tag": "À Propos de Notre Entreprise",
     "title": "Nous Offrons la Qualité Sans Compromis",
     "exploreMore": "Explorer Plus →",
-    "ceoLabel": "XBuild, PDG",
+    "ceoLabel": "Solvex, PDG",
     "industrialLabel": "Construction Industrielle",
     "awardTitle": "Primé",
     "awardSub": "Meilleur Constructeur Industriel",
@@ -202,7 +202,7 @@
   "stats": {
     "tag": "Statut de l'Entreprise",
     "title": "Nos Services Répondent aux Plus Hautes Normes.",
-    "description": "Avec plus de {{years}} ans d'expérience, XBuild continue de fixer la référence en qualité et innovation dans la construction industrielle.",
+    "description": "Avec plus de {{years}} ans d'expérience, Solvex continue de fixer la référence en qualité et innovation dans la construction industrielle.",
     "learnMore": "En Savoir Plus →",
     "features": {
       "iso": "Certifié ISO",
@@ -227,10 +227,10 @@
     "title": "Ce Que Disent Nos Clients",
     "items": [
       {
-        "text": "XBuild a livré notre installation dans les délais et a dépassé chaque référence de qualité. Leur équipe d'ingénierie est vraiment de classe mondiale."
+        "text": "Solvex a livré notre installation dans les délais et a dépassé chaque référence de qualité. Leur équipe d'ingénierie est vraiment de classe mondiale."
       },
       {
-        "text": "Travailler avec XBuild a été une expérience fluide. Professionnel, fiable et engagé envers l'excellence dans chaque détail."
+        "text": "Travailler avec Solvex a été une expérience fluide. Professionnel, fiable et engagé envers l'excellence dans chaque détail."
       },
       {
         "text": "Notre complexe industriel a été achevé sous le budget et avant le calendrier. Artisanat et gestion exceptionnels."
@@ -295,7 +295,7 @@
     "quickLinks": "Liens Rapides",
     "ourServices": "Nos Services",
     "newsletter": "Newsletter",
-    "newsletterDesc": "Abonnez-vous pour recevoir les dernières nouvelles de XBuild.",
+    "newsletterDesc": "Abonnez-vous pour recevoir les dernières nouvelles de Solvex.",
     "subscribe": "S'abonner →",
     "emailPlaceholder": "Votre email",
     "copyright": "© Tous Droits Réservés 2024 par",
@@ -346,7 +346,7 @@
   "whyChooseUs": {
     "tag": "Pourquoi Nous Choisir",
     "title": "Pourquoi Nous Choisir ?",
-    "description": "Chez XBuild, nous sommes animés par l'excellence, l'innovation et une compréhension approfondie des enjeux de la construction. Forts de plus de 25 ans d'expertise, nous concevons et livrons des solutions performantes adaptées à vos besoins opérationnels. Notre engagement envers la qualité, la sécurité et la satisfaction client garantit la réussite durable de chaque projet.",
+    "description": "Chez Solvex, nous sommes animés par l'excellence, l'innovation et une compréhension approfondie des enjeux de la construction. Forts de plus de 25 ans d'expertise, nous concevons et livrons des solutions performantes adaptées à vos besoins opérationnels. Notre engagement envers la qualité, la sécurité et la satisfaction client garantit la réussite durable de chaque projet.",
     "imageLabel": "Excellence Industrielle",
     "items": [
       {

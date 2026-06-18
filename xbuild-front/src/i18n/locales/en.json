@@ -29,7 +29,7 @@
     "contactCta": "Contact Us",
     "ctaBanner": {
       "title": "Ready to build your future with us?",
-      "desc": "Take the first step toward a successful project: partner with XBuild and benefit from our expertise, our commitment to quality, and tailor-made solutions designed for your success.",
+      "desc": "Take the first step toward a successful project: partner with Solvex and benefit from our expertise, our commitment to quality, and tailor-made solutions designed for your success.",
       "button": "Contact Us"
     },
     "items": [
@@ -202,7 +202,7 @@
   "stats": {
     "tag": "Company Status",
     "title": "Our Services Meet The Highest Standards.",
-    "description": "With over {{years}} years of experience, XBuild continues to set the benchmark for industrial construction quality and innovation.",
+    "description": "With over {{years}} years of experience, Solvex continues to set the benchmark for industrial construction quality and innovation.",
     "learnMore": "Learn More →",
     "features": {
       "iso": "ISO Certified",
@@ -227,10 +227,10 @@
     "title": "What Our Clients Say",
     "items": [
       {
-        "text": "XBuild delivered our facility on time and exceeded every quality benchmark. Their engineering team is truly world-class."
+        "text": "Solvex delivered our facility on time and exceeded every quality benchmark. Their engineering team is truly world-class."
       },
       {
-        "text": "Working with XBuild was a seamless experience. Professional, reliable, and committed to excellence in every detail."
+        "text": "Working with Solvex was a seamless experience. Professional, reliable, and committed to excellence in every detail."
       },
       {
         "text": "Our industrial complex was completed under budget and ahead of schedule. Exceptional craftsmanship and management."
@@ -295,7 +295,7 @@
     "quickLinks": "Quick Link",
     "ourServices": "Our Services",
     "newsletter": "Newsletter",
-    "newsletterDesc": "Subscribe to get the latest news from XBuild.",
+    "newsletterDesc": "Subscribe to get the latest news from Solvex.",
     "subscribe": "Subscribe →",
     "emailPlaceholder": "Your email",
     "copyright": "© All Copyright 2024 by",
@@ -346,7 +346,7 @@
   "whyChooseUs": {
     "tag": "Why Choose Us",
     "title": "Why Choose Us?",
-    "description": "At XBuild, we are driven by excellence, innovation and a deep understanding of construction challenges. With over 25 years of expertise, we design and deliver high-performance solutions tailored to your operational needs. Our commitment to quality, safety and client satisfaction ensures the lasting success of every project.",
+    "description": "At Solvex, we are driven by excellence, innovation and a deep understanding of construction challenges. With over 25 years of expertise, we design and deliver high-performance solutions tailored to your operational needs. Our commitment to quality, safety and client satisfaction ensures the lasting success of every project.",
     "imageLabel": "Industrial Excellence",
     "items": [
       {
