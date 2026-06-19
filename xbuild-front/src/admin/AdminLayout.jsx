@@ -11,8 +11,8 @@ const NAV = [
   { to:"/admin/projects",      label:"Projets",       icon:"📁" },
   { to:"/admin/process",       label:"Processus",     icon:"🔄" },
   { to:"/admin/stats",         label:"Statut",        icon:"📊" },
-  { to:"/admin/testimonials",  label:"Témoignages",   icon:"⭐" },
-  { to:"/admin/blog",          label:"Blog",          icon:"📰" },
+  // { to:"/admin/testimonials",  label:"Témoignages",   icon:"⭐" },
+  // { to:"/admin/blog",          label:"Blog",          icon:"📰" },
   { to:"/admin/devis",         label:"Messages",      icon:"✉️" },
 ];
 

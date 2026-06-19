@@ -45,7 +45,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="projects" element={<ProjectsEditor />} />
               <Route path="process" element={<ProcessEditor />} />
               {/* <Route path="testimonials" element={<TestimonialsEditor />} /> */}
-              <Route path="blog" element={<BlogEditor />} />
+              {/* <Route path="blog" element={<BlogEditor />} /> */}
               <Route path="stats" element={<StatsEditor />} />
               <Route path="devis" element={<DevisManager />} />
             </Route>

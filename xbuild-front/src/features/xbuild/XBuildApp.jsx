@@ -65,7 +65,7 @@ useThemeVars(info);
       <ProcessSection />
       <StatsSection info={info} />
       {/* <TestimonialsSection /> */}
-      <NewsSection />
+      {/* <NewsSection /> */}
       <ContactSection info={info} />
       <BrandsSection />
       <Footer info={info} />
