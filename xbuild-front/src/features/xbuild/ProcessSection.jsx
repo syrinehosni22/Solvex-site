@@ -40,9 +40,7 @@ export default function ProcessSection() {
               transition: `all 0.6s ${i * 0.12}s`,
             }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-                <div style={{ width: 56, height: 56, borderRadius: 14, background: "rgba(245,91,31,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <IconDisplay icon={step.icon} size={26} />
-                </div>
+                  <IconDisplay icon={step.icon} size={56} />
                 <span style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 36, color: "rgba(18,19,21,0.08)", lineHeight: 1 }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>

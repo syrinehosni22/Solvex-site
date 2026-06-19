@@ -64,12 +64,8 @@ export default function ServicesSection() {
                 transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
               }}
             >
-              <div style={{
-                width: 64, height: 64, borderRadius: 14, marginBottom: 24,
-                background: hovered === i ? (s.color || "var(--color-primary, #0A1684)") : "rgba(245,91,31,0.1)",
-                display: "flex", alignItems: "center", justifyContent: "center", transition: "background 0.3s",
-              }}>
-                <IconDisplay icon={s.icon} size={30} />
+              <div style={{ marginBottom: 24 }}>
+                <IconDisplay icon={s.icon} size={64} />
               </div>
               <Link to={`/services#service-${i + 1}`} style={{ textDecoration: "none" }}>
                 <h3 style={{ fontSize: 19, fontWeight: 800, marginBottom: 12, color: "var(--color-dark, #121315)", fontFamily: "'DM Sans',sans-serif" }}>{s.title}</h3>
