@@ -105,7 +105,7 @@ export default function HeroSection({ info }) {
       `}</style>
 
       <div style={{ position:"absolute", inset:0, backgroundImage:`url('${bgImage}')`, backgroundSize:"cover", backgroundPosition:"center", animation:"kenBurns 20s ease-in-out infinite alternate", transform:`translateY(${scrollY * 0.38}px)` }} />
-      <div style={{ position:"absolute", inset:0, background:"linear-gradient(21deg,rgba(10,10,14,.93) 20%,rgba(10,10,14,.58) 60%)", transform:`translateY(${scrollY * 0.1}px)` }} />
+      <div style={{ position:"absolute", inset:0, background:"linear-gradient(21deg,rgba(10, 10, 12, 0.34) 20%,rgba(10,10,14,.58) 60%)", transform:`translateY(${scrollY * 0.1}px)` }} />
       <div style={{ position:"absolute", left:0, top:0, bottom:0, width:5, background:"linear-gradient(to bottom,var(--color-primary, #0A1684),rgba(245,91,31,.25))", transformOrigin:"top", animation:"accentDrop 0.9s ease 0.1s both" }} />
 
       <div className="hero-content" style={{ position:"relative", flex:1, display:"flex", alignItems:"center", maxWidth:1200, margin:"0 auto", padding:"160px 48px 120px 64px", width:"100%", transform:`translateY(${scrollY * -0.07}px)` }}>
