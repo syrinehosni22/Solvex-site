@@ -11,6 +11,13 @@ function truncate(text, max = 110) {
   return text.length > max ? text.slice(0, max).trim() + "…" : text;
 }
 
+function IconDisplay({ icon, size = 30 }) {
+  if (icon && (icon.startsWith("/uploads/") || icon.startsWith("http"))) {
+    return <img src={icon} alt="" style={{ width: size, height: size, objectFit: "contain", display: "block" }} />;
+  }
+  return <span style={{ fontSize: size * 0.9, lineHeight: 1 }}>{icon || "⚙️"}</span>;
+}
+
 export default function ServicesSection() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
@@ -22,13 +29,11 @@ export default function ServicesSection() {
     ? apiServices.map(s => ({ ...s, title: loc(s, "title", lang), desc: loc(s, "desc", lang) }))
     : t("services.items", { returnObjects: true });
 
-  // Adapt the number of grid columns to how many services there are,
-  // so the cards stay well-balanced whether there are 1, 2, 4 or 6+ services.
   const count = services.length || 1;
   let desktopCols;
   if (count <= 1) desktopCols = 1;
   else if (count === 2) desktopCols = 2;
-  else if (count === 4) desktopCols = 2; // 2x2 grid looks more balanced than 3+1
+  else if (count === 4) desktopCols = 2;
   else desktopCols = 3;
   const tabletCols = count <= 1 ? 1 : 2;
 
@@ -42,22 +47,15 @@ export default function ServicesSection() {
             {t("services.subtitle")}
           </p>
         </div>
-
         <style>{`
           .services-grid { grid-template-columns: repeat(${desktopCols}, 1fr); }
-          @media (max-width: 900px) {
-            .services-grid { grid-template-columns: repeat(${tabletCols}, 1fr) !important; }
-          }
-          @media (max-width: 560px) {
-            .services-grid { grid-template-columns: 1fr !important; }
-          }
+          @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(${tabletCols}, 1fr) !important; } }
+          @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr !important; } }
         `}</style>
         <div className="services-grid" style={{ display: "grid", gap: 24, marginTop: 56 }}>
           {services.map((s, i) => (
-            <div
-              key={i}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
+            <div key={i}
+              onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
               style={{
                 background: "#fff", borderRadius: 16, padding: "36px 32px",
                 boxShadow: hovered === i ? "0 20px 60px rgba(0,0,0,0.1)" : "0 4px 24px rgba(0,0,0,0.05)",
@@ -69,25 +67,15 @@ export default function ServicesSection() {
               <div style={{
                 width: 64, height: 64, borderRadius: 14, marginBottom: 24,
                 background: hovered === i ? (s.color || "var(--color-primary, #0A1684)") : "rgba(245,91,31,0.1)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 30, transition: "background 0.3s",
+                display: "flex", alignItems: "center", justifyContent: "center", transition: "background 0.3s",
               }}>
-                <span>{s.icon}</span>
+                <IconDisplay icon={s.icon} size={30} />
               </div>
               <Link to={`/services#service-${i + 1}`} style={{ textDecoration: "none" }}>
                 <h3 style={{ fontSize: 19, fontWeight: 800, marginBottom: 12, color: "var(--color-dark, #121315)", fontFamily: "'DM Sans',sans-serif" }}>{s.title}</h3>
               </Link>
-              <p style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>
-                {truncate(s.desc)}
-              </p>
-              <Link
-                to={`/services#service-${i + 1}`}
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  color: "var(--color-primary, #0A1684)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14,
-                  textDecoration: "none",
-                }}
-              >
+              <p style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>{truncate(s.desc)}</p>
+              <Link to={`/services#service-${i + 1}`} style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--color-primary, #0A1684)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
                 {t("services.learnMore")} <span>→</span>
               </Link>
             </div>

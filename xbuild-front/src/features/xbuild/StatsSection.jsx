@@ -4,17 +4,19 @@ import { useCountUp, useIntersect } from "./hooks";
 import { loc } from "./helpers";
 import SectionTitle from "./SectionTitle";
 
-// ── Single animated counter — hooks called at component level, never in a loop
+function IconDisplay({ icon, size = 20 }) {
+  if (icon && (icon.startsWith("/uploads/") || icon.startsWith("http"))) {
+    return <img src={icon} alt="" style={{ width: size, height: size, objectFit: "contain", display: "block" }} />;
+  }
+  return <span style={{ fontSize: size * 0.9, lineHeight: 1 }}>{icon || "✓"}</span>;
+}
+
 function StatCounter({ value, suffix, label, visible }) {
   const count = useCountUp(parseFloat(value) || 0, 2000, visible);
   return (
     <div>
-      <div style={{ fontSize: 40, fontWeight: 900, color: "var(--color-primary, #0A1684)", fontFamily: "'DM Sans',sans-serif" }}>
-        {count}{suffix}
-      </div>
-      <div style={{ color: "#aaa", fontFamily: "'DM Sans',sans-serif", fontSize: 14 }}>
-        {label}
-      </div>
+      <div style={{ fontSize: 40, fontWeight: 900, color: "var(--color-primary, #0A1684)", fontFamily: "'DM Sans',sans-serif" }}>{count}{suffix}</div>
+      <div style={{ color: "#aaa", fontFamily: "'DM Sans',sans-serif", fontSize: 14 }}>{label}</div>
     </div>
   );
 }
@@ -27,8 +29,7 @@ export default function StatsSection({ info }) {
   const statsItems = info.statsItems && info.statsItems.length > 0
     ? info.statsItems
     : STATIC_STATS.map((s, i) => ({
-        value: String(s.value),
-        suffix: s.suffix,
+        value: String(s.value), suffix: s.suffix,
         label_fr: t(`stats.items.${i}.label`, { defaultValue: s.label || "" }),
         label_en: t(`stats.items.${i}.label`, { defaultValue: s.label || "" }),
       }));
@@ -54,38 +55,21 @@ export default function StatsSection({ info }) {
           <rect width="100%" height="100%" fill="url(#grid2)" />
         </svg>
       </div>
-
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px" }}>
         <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
-
-          {/* Left */}
           <div>
             <SectionTitle tag={sectionTag} title={sectionTitle} dark />
-            <p style={{ color: "#aaa", fontFamily: "'DM Sans',sans-serif", fontSize: 16, lineHeight: 1.8, marginBottom: 40 }}>
-              {sectionDesc}
-            </p>
-
+            <p style={{ color: "#aaa", fontFamily: "'DM Sans',sans-serif", fontSize: 16, lineHeight: 1.8, marginBottom: 40 }}>{sectionDesc}</p>
             <div className="stats-counts" style={{ display: "flex", gap: 40, marginBottom: 40, flexWrap: "wrap" }}>
               {statsItems.map((s, i) => (
-                <StatCounter
-                  key={i}
-                  value={s.value}
-                  suffix={s.suffix}
-                  label={s[`label_${lang}`] || s.label_fr}
-                  visible={visible}
-                />
+                <StatCounter key={i} value={s.value} suffix={s.suffix} label={s[`label_${lang}`] || s.label_fr} visible={visible} />
               ))}
             </div>
-
-            <button
-              onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
-              style={{ background: "var(--color-primary, #0A1684)", color: "#fff", border: "none", padding: "14px 32px", borderRadius: 4, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}
-            >
+            <button onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
+              style={{ background: "var(--color-primary, #0A1684)", color: "#fff", border: "none", padding: "14px 32px", borderRadius: 4, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>
               {t("stats.learnMore")}
             </button>
           </div>
-
-          {/* Right */}
           <div style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateX(40px)", transition: "all 0.8s 0.2s" }}>
             {info.statsImage ? (
               <div style={{ borderRadius: 16, overflow: "hidden", height: 360 }}>
@@ -97,10 +81,8 @@ export default function StatsSection({ info }) {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                   {badges.map((b, i) => (
                     <div key={i} style={{ background: "rgba(245,91,31,0.1)", border: "1px solid rgba(245,91,31,0.2)", borderRadius: 8, padding: "12px 16px", display: "flex", alignItems: "center", gap: 10 }}>
-                      <span style={{ fontSize: 20 }}>{b.icon}</span>
-                      <span style={{ color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 600 }}>
-                        {b[`label_${lang}`] || b.label_fr}
-                      </span>
+                      <IconDisplay icon={b.icon} size={20} />
+                      <span style={{ color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 600 }}>{b[`label_${lang}`] || b.label_fr}</span>
                     </div>
                   ))}
                 </div>
