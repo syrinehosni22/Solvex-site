@@ -102,10 +102,52 @@ export default function HeroSection({ info }) {
             text-align:center!important;
           }
         }
+
+        /* ── Hero image responsiveness ── */
+        .hero-bg-image{
+          position:absolute;inset:0;
+          background-size:cover;
+          background-position:center center;
+          background-repeat:no-repeat;
+          animation:kenBurns 20s ease-in-out infinite alternate;
+          will-change:transform;
+        }
+        @media(max-width:800px){
+          .hero-bg-image{
+            background-position:60% center !important;
+            transform:none !important;
+          }
+          .hero-bg-overlay{transform:none !important;}
+          .hero-content{
+            padding:120px 24px 80px 24px !important;
+            transform:none !important;
+          }
+          .hero-stats-bar{padding:0 24px !important;}
+        }
+        @media(max-width:480px){
+          .hero-bg-image{
+            background-position:65% center !important;
+            transform:none !important;
+          }
+          .hero-bg-overlay{transform:none !important;}
+          .hero-content{
+            padding:100px 20px 60px 20px !important;
+            transform:none !important;
+          }
+          .hero-stats-bar{
+            padding:0 16px !important;
+            flex-direction:column !important;
+          }
+          .hero-stat-card{
+            border-left:none !important;
+            border-top:1px solid rgba(255,255,255,.2) !important;
+          }
+          .hero-stat-card:first-child{border-top:none !important;}
+        }
       `}</style>
 
-      <div style={{ position:"absolute", inset:0, backgroundImage:`url('${bgImage}')`, backgroundSize:"cover", backgroundPosition:"center", animation:"kenBurns 20s ease-in-out infinite alternate", transform:`translateY(${scrollY * 0.38}px)` }} />
-      <div style={{ position:"absolute", inset:0, background:"linear-gradient(21deg,rgba(10, 10, 12, 0.34) 20%,rgba(10,10,14,.58) 60%)", transform:`translateY(${scrollY * 0.1}px)` }} />
+      <div className="hero-bg-image" style={{ backgroundImage:`url('${bgImage}')`, transform:`translateY(${scrollY * 0.38}px)` }} />
+      <div className="hero-bg-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(21deg,rgba(10, 10, 12, 0.34) 20%,rgba(10,10,14,.58) 60%)", transform:`translateY(${scrollY * 0.1}px)` }} />
       <div style={{ position:"absolute", left:0, top:0, bottom:0, width:5, background:"linear-gradient(to bottom,var(--color-primary, #0A1684),rgba(245,91,31,.25))", transformOrigin:"top", animation:"accentDrop 0.9s ease 0.1s both" }} />
 
       <div className="hero-content" style={{ position:"relative", flex:1, display:"flex", alignItems:"center", maxWidth:1200, margin:"0 auto", padding:"160px 48px 120px 64px", width:"100%", transform:`translateY(${scrollY * -0.07}px)` }}>
@@ -137,7 +179,7 @@ export default function HeroSection({ info }) {
       <div style={{ position:"relative", background:"var(--color-primary, #0A1684)", width:"100%" }}>
         <div className="hero-stats-bar" style={{ maxWidth:1200, margin:"0 auto", padding:"0 64px", display:"flex", alignItems:"stretch", flexWrap:"wrap" }}>
           {stats.map((s, i) => (
-            <div key={i} className="stat-card hero-stat-card" style={{ flex:1, padding:"28px 24px", display:"flex", alignItems:"center", gap:16, borderLeft: i===0?"none":"1px solid rgba(255,255,255,.2)", animation:`statReveal 0.7s ease ${0.92+i*0.13}s both` }}>
+            <div key={i} className="stat-card hero-stat-card" style={{ flex:1, padding:"28px 24px", display:"flex", alignItems:"center", gap:16, borderLeft: i===0?"none":"1px solid rgba(255,255,255,.2)", borderTop:"none", animation:`statReveal 0.7s ease ${0.92+i*0.13}s both` }}>
               <div style={{ width:48, height:48, borderRadius:"50%", background:"rgba(255,255,255,.2)", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
                 <span style={{ fontSize:22 }}>{s.icon}</span>
               </div>
