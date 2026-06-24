@@ -41,7 +41,6 @@ export default function ServiceRow({ service, index, t, onContact, id }) {
       <div style={{ order: isEven ? 2 : 1 }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 14, color: accent, fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>
           <IconDisplay icon={service.icon} size={28} />
-          {t("services.serviceLabel")} {number}
         </div>
         <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: "clamp(22px,2.4vw,30px)", color: "var(--color-dark, #121315)", marginBottom: 16, lineHeight: 1.2 }}>{service.title}</h3>
         <p style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 15, lineHeight: 1.8, marginBottom: 24 }}>{service.desc}</p>

@@ -21,10 +21,46 @@ export default function Footer({ info }) {
   ];
 
   const socials = [
-    { label:"f",  key:"socialFacebook", href: info.socialFacebook },
-    { label:"𝕏",  key:"socialTwitter",  href: info.socialTwitter },
-    { label:"▶",  key:"socialYoutube",  href: info.socialYoutube },
-    { label:"in", key:"socialLinkedin", href: info.socialLinkedin },
+    {
+      key: "socialFacebook", href: info.socialFacebook, color: "#1877F2",
+      icon: (
+        <svg viewBox="0 0 36 36" width="36" height="36">
+          <circle cx="18" cy="18" r="18" fill="#1877F2"/>
+          <text x="20" y="26" textAnchor="middle" fill="#fff" fontFamily="Georgia, serif" fontWeight="900" fontSize="22">f</text>
+        </svg>
+      ),
+    },
+    {
+      key: "socialTwitter", href: info.socialTwitter, color: "#000",
+      icon: (
+        <svg viewBox="0 0 36 36" width="36" height="36">
+          <circle cx="18" cy="18" r="18" fill="#000"/>
+          <path d="M20.5 10h2.8l-6 6.8 7 9.2H20l-4.3-5.7-5 5.7H8l6.4-7.3L7.8 10h5.5l3.9 5.2zm-1 13.5 1.2 1.5H22l-6.3-8.3-1.2-1.5H13l6.5 8.3z" fill="#fff"/>
+        </svg>
+      ),
+    },
+    {
+      key: "socialYoutube", href: info.socialYoutube, color: "#FF0000",
+      icon: (
+        <svg viewBox="0 0 36 36" width="36" height="36">
+          <circle cx="18" cy="18" r="18" fill="#FF0000"/>
+          <rect x="7" y="12" width="22" height="12" rx="3" fill="#fff"/>
+          <polygon points="15,14.5 15,21.5 23,18" fill="#FF0000"/>
+        </svg>
+      ),
+    },
+    {
+      key: "socialLinkedin", href: info.socialLinkedin, color: "#0A66C2",
+      icon: (
+        <svg viewBox="0 0 36 36" width="36" height="36">
+          <circle cx="18" cy="18" r="18" fill="#0A66C2"/>
+          <circle cx="12" cy="12" r="2" fill="#fff"/>
+          <rect x="10" y="15" width="4" height="12" rx="1" fill="#fff"/>
+          <rect x="17" y="15" width="4" height="12" rx="1" fill="#fff"/>
+          <path d="M21 19.5c0-2 1-3 2.5-3s2.5 1 2.5 3V27h4v-7.5c0-4-2-6-5-6-1.5 0-3 .8-4 2V15h-4v12h4z" fill="#fff"/>
+        </svg>
+      ),
+    },
   ].filter(s => info[`${s.key}Active`] !== false);
 
   // Use dedicated footer logo if set, otherwise fall back to main logo
@@ -101,7 +137,7 @@ export default function Footer({ info }) {
 
       {/* ── MAIN FOOTER CONTENT ───────────────────────────────────────────── */}
       <div style={{ maxWidth:1400, margin:"0 auto", padding:"60px 24px" }}>
-        <div className="footer-bottom-grid" style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:48 }}>
+        <div className="footer-bottom-grid" style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr", gap:48 }}>
           <div>
             <h5 style={{ fontFamily:"'DM Sans',sans-serif", fontWeight:800, fontSize:18, marginBottom:20 }}>{t("footer.aboutTitle")}</h5>
             <p style={{ color:"#666", fontFamily:"'DM Sans',sans-serif", fontSize:14, lineHeight:1.8, marginBottom:24 }}>{loc(info,"footerAbout",lang)}</p>
@@ -109,10 +145,10 @@ export default function Footer({ info }) {
               <div style={{ display:"flex", gap:10 }}>
                 {socials.map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noreferrer"
-                    style={{ width:36, height:36, borderRadius:"50%", background:"rgba(255,255,255,0.06)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:700, color:"#fff", textDecoration:"none" }}
-                    onMouseEnter={e => e.currentTarget.style.background="var(--color-primary)"}
-                    onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.06)"}
-                  >{s.label}</a>
+                    style={{ display:"flex", alignItems:"center", justifyContent:"center", textDecoration:"none", transition:"transform 0.2s, opacity 0.2s", borderRadius:"50%", overflow:"hidden" }}
+                    onMouseEnter={e => { e.currentTarget.style.transform="scale(1.12)"; e.currentTarget.style.opacity="0.85"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform="scale(1)"; e.currentTarget.style.opacity="1"; }}
+                  >{s.icon}</a>
                 ))}
               </div>
             )}
@@ -134,15 +170,6 @@ export default function Footer({ info }) {
               </ul>
             </div>
           ))}
-
-          <div>
-            <h5 style={{ fontFamily:"'DM Sans',sans-serif", fontWeight:800, fontSize:18, marginBottom:20 }}>{t("footer.newsletter")}</h5>
-            <p style={{ color:"#666", fontFamily:"'DM Sans',sans-serif", fontSize:14, lineHeight:1.7, marginBottom:20 }}>{t("footer.newsletterDesc", { company: info.companyName })}</p>
-            <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-              <input placeholder={t("footer.emailPlaceholder")} type="email" style={{ padding:"12px 16px", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:6, color:"#fff", fontFamily:"'DM Sans',sans-serif", fontSize:14, outline:"none" }} />
-              <button style={{ background:"var(--color-primary)", color:"#fff", border:"none", padding:"12px 20px", borderRadius:6, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:14 }}>{t("footer.subscribe")}</button>
-            </div>
-          </div>
         </div>
       </div>
 

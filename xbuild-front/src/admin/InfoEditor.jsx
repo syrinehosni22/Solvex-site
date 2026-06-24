@@ -173,8 +173,8 @@ export default function InfoEditor() {
           <Field label={`Texte À propos — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`}>
             <Textarea value={form[`about_${lang}`] || ""} onChange={e => patch(`about_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Décrivez votre entreprise…" : "Describe your company…"} rows={5} />
           </Field>
-          <Field label={`Texte footer — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`}>
-            <Textarea value={form[`footerAbout_${lang}`] || ""} onChange={e => patch(`footerAbout_${lang}`, e.target.value)} rows={2} />
+          <Field label={`📝 Texte "À propos" du footer — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`} hint="Affiché dans la colonne À propos du footer du site.">
+            <Textarea value={form[`footerAbout_${lang}`] || ""} onChange={e => patch(`footerAbout_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Votre partenaire de confiance pour tous vos projets de construction…" : "Your trusted partner for all your construction projects…"} rows={3} />
           </Field>
           <Field label="📸 Photo section À Propos">
             <ImageUploader value={form.aboutImage || ""} onChange={v => patch("aboutImage", v)} label="About" hint="Photo affichée à droite dans la section À Propos. Recommandé : 800×900px." />

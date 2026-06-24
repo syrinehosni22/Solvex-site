@@ -58,7 +58,7 @@ export default function Navbar({ active, info }) {
   };
 
   const phoneHref = info.phone ? `tel:${info.phone.replace(/\s+/g, "")}` : "#";
-  const emailHref = info.email ? `mailto:${info.email}` : "#";
+  const emailHref = `mailto:contact@solvex-industry.com?cc=aardhaouisolvex@gmail.com`;
 
   const socials = [
     { label: "f",  key: "socialFacebook", href: info.socialFacebook },

@@ -90,21 +90,13 @@ export default function AboutSection({ info }) {
                   ? <img src={info.aboutImage} alt="About" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
                   : <div style={{ textAlign: "center" }}><div style={{ fontSize: 80 }}>🏗️</div><p style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", marginTop: 16 }}>{t("about.industrialLabel")}</p></div>
                 }
-                <div style={{ position: "absolute", bottom: 24, right: 24, width: 56, height: 56, borderRadius: "50%", background: "var(--color-primary, #0A1684)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 0 0 8px rgba(245,91,31,0.2)", zIndex: 1 }}>
-                  <span style={{ color: "#fff", fontSize: 20, marginLeft: 4 }}>▶</span>
-                </div>
+    
               </div>
               <div style={{ position: "absolute", top: -20, left: -20, background: "var(--color-primary, #0A1684)", borderRadius: 12, padding: "16px 20px", boxShadow: "0 12px 40px rgba(245,91,31,0.3)", zIndex: 2 }}>
                 <div style={{ color: "#fff", fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 32, lineHeight: 1 }}>{info.yearsExperience}</div>
                 <div style={{ color: "rgba(255,255,255,0.8)", fontFamily: "'DM Sans',sans-serif", fontSize: 12, marginTop: 4 }}>{t("hero.stats.experience")}</div>
               </div>
-              <div style={{ position: "absolute", bottom: -20, left: 40, background: "#fff", borderRadius: 12, padding: "16px 20px", boxShadow: "0 12px 40px rgba(0,0,0,0.1)", display: "flex", gap: 12, alignItems: "center", zIndex: 2 }}>
-                <div style={{ fontSize: 28 }}>🏆</div>
-                <div>
-                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: 14, color: "var(--color-dark, #121315)" }}>{awardTitle}</div>
-                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: "#666" }}>{awardSub}</div>
-                </div>
-              </div>
+              
             </div>
 
           </div>

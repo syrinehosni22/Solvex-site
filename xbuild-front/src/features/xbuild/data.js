@@ -4,7 +4,6 @@ export const NAV_LINKS_KEYS = [
   { key: "services", href: "#services" },
   { key: "projects", href: "#projects" },
   { key: "process",  href: "#process" },
-  { key: "blog",     href: "#news" },
   { key: "contact",  href: "#contact" },
 ];
 

@@ -71,7 +71,9 @@ app.get("/api/info", async (_req, res) => {
     let doc = await db.info.findOne({});
     if (!doc) doc = {
       companyName: "", logoImage: "", tagline_fr: "Nous Construisons & Gérons Vos Chantiers", tagline_en: "We Build & Construction Site Management",
-      about_fr: "", about_en: "", footerAbout_fr: "", footerAbout_en: "",
+      about_fr: "", about_en: "",
+      footerAbout_fr: "Votre partenaire de confiance pour tous vos projets de construction et de rénovation. Excellence, qualité et professionnalisme depuis plus de 25 ans.",
+      footerAbout_en: "Your trusted partner for all your construction and renovation projects. Excellence, quality and professionalism for over 25 years.",
       heroDesc_fr: "", heroDesc_en: "",
       heroStats: { projects: "45K+", clients: "25K+", engineers: "120+" },
       yearsExperience: 25, ceoName: "Shikhon Islam",

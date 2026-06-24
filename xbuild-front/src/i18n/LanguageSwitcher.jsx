@@ -1,9 +1,42 @@
 import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
 
+/* ── SVG flags — work on all OS including Windows ── */
+function FlagFR({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" style={{ borderRadius: "50%", flexShrink: 0, display: "block" }}>
+      <circle cx="10" cy="10" r="10" fill="#fff"/>
+      <path d="M0 10 A10 10 0 0 1 6.67 0.55 L6.67 19.45 A10 10 0 0 1 0 10Z" fill="#002395"/>
+      <path d="M13.33 0.55 A10 10 0 0 1 13.33 19.45 L13.33 0.55Z" fill="#fff"/>
+      <path d="M13.33 0.55 A10 10 0 0 1 20 10 A10 10 0 0 1 13.33 19.45 L13.33 0.55Z" fill="#ED2939"/>
+    </svg>
+  );
+}
+
+function FlagGB({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" style={{ borderRadius: "50%", flexShrink: 0, display: "block" }}>
+      <circle cx="10" cy="10" r="10" fill="#012169"/>
+      {/* White diagonals */}
+      <line x1="0" y1="0" x2="20" y2="20" stroke="#fff" strokeWidth="4"/>
+      <line x1="20" y1="0" x2="0" y2="20" stroke="#fff" strokeWidth="4"/>
+      {/* Red diagonals */}
+      <line x1="0" y1="0" x2="20" y2="20" stroke="#C8102E" strokeWidth="2.4"/>
+      <line x1="20" y1="0" x2="0" y2="20" stroke="#C8102E" strokeWidth="2.4"/>
+      {/* White cross */}
+      <rect x="8.5" y="0" width="3" height="20" fill="#fff"/>
+      <rect x="0" y="8.5" width="20" height="3" fill="#fff"/>
+      {/* Red cross */}
+      <rect x="9" y="0" width="2" height="20" fill="#C8102E"/>
+      <rect x="0" y="9" width="20" height="2" fill="#C8102E"/>
+      <circle cx="10" cy="10" r="10" fill="none" stroke="#012169" strokeWidth="0"/>
+    </svg>
+  );
+}
+
 const LANGUAGES = [
-  { code: "fr", flag: "🇫🇷", name: "Français", short: "FR" },
-  { code: "en", flag: "🇬🇧", name: "English",  short: "EN" },
+  { code: "fr", Flag: FlagFR, name: "Français", short: "FR" },
+  { code: "en", Flag: FlagGB, name: "English",  short: "EN" },
 ];
 
 export default function LanguageSwitcher({ dark = true }) {
@@ -18,17 +51,16 @@ export default function LanguageSwitcher({ dark = true }) {
     setOpen(false);
   };
 
-  // Close on outside click
   useEffect(() => {
     const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const textColor  = dark ? "#fff"                        : "var(--color-dark, #121315)";
-  const dropBg     = dark ? "#1c1e23"                     : "#fff";
+  const textColor  = dark ? "#fff"                            : "var(--color-dark, #121315)";
+  const dropBg     = dark ? "#1c1e23"                         : "#fff";
   const dropBorder = dark ? "1px solid rgba(255,255,255,0.08)" : "1px solid #e8e8e8";
-  const hoverBg    = dark ? "rgba(255,255,255,0.06)"      : "rgba(0,0,0,0.04)";
+  const hoverBg    = dark ? "rgba(255,255,255,0.06)"          : "rgba(0,0,0,0.04)";
 
   return (
     <div ref={ref} style={{ position: "relative", zIndex: 2000 }}>
@@ -85,17 +117,12 @@ export default function LanguageSwitcher({ dark = true }) {
           margin-left: auto; color: var(--color-primary, #0A1684);
           font-size: 13px; font-weight: 700;
         }
-        .ls-flag { font-size: 20px; line-height: 1; }
         .ls-name { font-size: 13px; font-weight: 500; }
-        .ls-divider {
-          height: 1px; margin: 0;
-          background: ${dark ? "rgba(255,255,255,0.05)" : "#f0f0f0"};
-        }
       `}</style>
 
       {/* Trigger button */}
       <button className="ls-trigger" onClick={() => setOpen((o) => !o)}>
-        <span className="ls-flag">{current.flag}</span>
+        <current.Flag size={20} />
         <span style={{ letterSpacing: 0.5 }}>{current.short}</span>
         <svg className={`ls-chevron${open ? " open" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="6 9 12 15 18 9" />
@@ -105,7 +132,6 @@ export default function LanguageSwitcher({ dark = true }) {
       {/* Dropdown */}
       {open && (
         <div className="ls-dropdown">
-          {/* Header label */}
           <div style={{
             padding: "8px 14px 6px",
             fontSize: 10, fontWeight: 700, letterSpacing: 2,
@@ -125,7 +151,7 @@ export default function LanguageSwitcher({ dark = true }) {
                 className={`ls-option${isSelected ? " selected" : ""}`}
                 onClick={() => change(lang.code)}
               >
-                <span className="ls-flag">{lang.flag}</span>
+                <lang.Flag size={22} />
                 <span className="ls-name">{lang.name}</span>
                 {isSelected && <span className="ls-check">✓</span>}
               </button>

@@ -42,7 +42,6 @@ export default function HeroSection({ info }) {
     { value: heroStats.projects  || "45K+", label: t("hero.stats.projects"),   icon: "🏗️" },
     { value: heroStats.clients   || "25K+", label: t("hero.stats.clients"),    icon: "😊" },
     { value: `${info.yearsExperience}+`,    label: t("hero.stats.experience"), icon: "⭐" },
-    { value: heroStats.engineers || "120+", label: t("hero.stats.engineers"),  icon: "👷" },
   ];
 
   const cs = { transition: "opacity 0.9s, transform 0.9s", opacity: visible ? 1 : 0, transform: visible ? "translateY(0px)" : "translateY(18px)" };
@@ -168,10 +167,6 @@ export default function HeroSection({ info }) {
           </div>
           <div className="hero-btns" style={{ ...cs, transitionDelay: visible?"0.24s":"0s", display:"flex", gap:16, flexWrap:"wrap", alignItems:"center" }}>
             <button className="h-btn-secondary" onClick={() => scrollTo("#services")}>{t("hero.ourServices")}</button>
-            <a className="h-btn-primary" href={phoneHref}>
-              <span style={{ fontSize:18 }}>📞</span>
-              {info.phone || "Appelez-nous"}
-            </a>
           </div>
         </div>
       </div>
