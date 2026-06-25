@@ -150,6 +150,15 @@ export default function InfoEditor() {
           <Field label="📸 Image de fond (Hero)" hint="">
             <ImageUploader value={form.heroImage || ""} onChange={v => patch("heroImage", v)} label="Hero" hint="Image plein écran derrière le texte principal. Recommandé : 1920×1080px." />
           </Field>
+          <Field label="📱 Image de fond Mobile (Hero)" hint="Affichée uniquement sur mobile (< 480px). Si vide, l'image desktop est utilisée.">
+            <ImageUploader value={form.heroImageMobile || ""} onChange={v => patch("heroImageMobile", v)} label="Hero Mobile" hint="Version recadrée pour mobile. Recommandé : portrait 768×1024px, sujet centré." />
+            {form.heroImageMobile && (
+              <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 10 }}>
+                <img src={form.heroImageMobile} alt="Hero mobile preview" style={{ height: 80, width: "auto", maxWidth: 120, objectFit: "cover", borderRadius: 6, border: "1px solid rgba(0,0,0,0.1)" }} />
+                <button onClick={() => patch("heroImageMobile", "")} style={{ fontSize: 12, color: "#e53e3e", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>✕ Supprimer</button>
+              </div>
+            )}
+          </Field>
           <SectionHeading title="📊 Statistiques Hero" subtitle="Chiffres dans la bande orange" />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
             <Field label="Projets réalisés"><Input value={form.heroStats?.projects || ""} onChange={e => patchStats("projects", e.target.value)} placeholder="45K+" /></Field>

@@ -66,6 +66,7 @@ export const INFO_DEFAULT = {
   heroDesc_en: "Innovative construction solutions for your most ambitious projects.",
   heroStats: { projects: "45K+", clients: "25K+", engineers: "120+" },
   heroImage:  "",
+  heroImageMobile: "",
   aboutImage: "",
   statsImage: "",
   yearsExperience: 25,

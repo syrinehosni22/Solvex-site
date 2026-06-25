@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { loc } from "./helpers";
 
 const FALLBACK_BG = "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=80";
+const FALLBACK_BG_MOBILE = FALLBACK_BG;
 
 export default function HeroSection({ info }) {
   const { t, i18n } = useTranslation();
@@ -13,6 +14,7 @@ export default function HeroSection({ info }) {
   const fullText = loc(info, "tagline", lang);
   const phoneHref = info.phone ? `tel:${info.phone.replace(/\s+/g, "")}` : "#";
   const bgImage = info.heroImage || FALLBACK_BG;
+  const bgImageMobile = info.heroImageMobile || bgImage;
 
   useEffect(() => {
     setTyped("");
@@ -125,7 +127,8 @@ export default function HeroSection({ info }) {
         }
         @media(max-width:480px){
           .hero-bg-image{
-            background-position:65% center !important;
+            background-image:var(--hero-bg-mobile) !important;
+            background-position:center center !important;
             transform:none !important;
           }
           .hero-bg-overlay{transform:none !important;}
@@ -145,7 +148,7 @@ export default function HeroSection({ info }) {
         }
       `}</style>
 
-      <div className="hero-bg-image" style={{ backgroundImage:`url('${bgImage}')`, transform:`translateY(${scrollY * 0.38}px)` }} />
+      <div className="hero-bg-image" style={{ backgroundImage:`url('${bgImage}')`, "--hero-bg-mobile":`url('${bgImageMobile}')`, transform:`translateY(${scrollY * 0.38}px)` }} />
       <div className="hero-bg-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(21deg,rgba(10, 10, 12, 0.34) 20%,rgba(10,10,14,.58) 60%)", transform:`translateY(${scrollY * 0.1}px)` }} />
       <div style={{ position:"absolute", left:0, top:0, bottom:0, width:5, background:"linear-gradient(to bottom,var(--color-primary, #0A1684),rgba(245,91,31,.25))", transformOrigin:"top", animation:"accentDrop 0.9s ease 0.1s both" }} />
 
