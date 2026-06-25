@@ -11,10 +11,9 @@ export default function Footer({ info }) {
   const services = useApiList("/api/services", []);
 
   const quickLinks = [
-    { label: t("footer.links.about"),   href: "#about" },
-    { label: t("footer.links.contact"), href: "#contact" },
-    { label: t("footer.links.blog"),    href: "#news" },
-    { label: t("footer.links.faq"),     href: "#" },
+    { label: t("footer.links.about"),    href: "#about" },
+    { label: t("footer.links.contact"),  href: "#contact" },
+    { label: t("footer.links.services"), href: "#services" },
   ];
   const serviceLinks = services.length > 0
     ? services.map(s => ({ label: s[`title_${lang}`] || s.title_fr || s.title || "", href: "#services" }))

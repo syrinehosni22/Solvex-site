@@ -307,7 +307,8 @@
       "construction": "Construction",
       "renovation": "Rénovation",
       "materials": "Fourniture de Matériaux",
-      "management": "Gestion de Projet"
+      "management": "Gestion de Projet",
+      "services": "Nos Services"
     }
   },
   "navbar": {
