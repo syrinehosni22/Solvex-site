@@ -58,7 +58,7 @@ export default function Navbar({ active, info }) {
   };
 
   const phoneHref = info.phone ? `tel:${info.phone.replace(/\s+/g, "")}` : "#";
-  const emailHref = `mailto:contact@solvex-industry.com?cc=aardhaouisolvex@gmail.com`;
+  const emailHref = info.email ? `mailto:${info.email}` : "#";
 
   const socials = [
     { label: "f",  key: "socialFacebook", href: info.socialFacebook },
@@ -108,14 +108,6 @@ export default function Navbar({ active, info }) {
       </div>
 
       <div style={{ marginTop: 16 }}><LanguageSwitcher dark={true} /></div>
-      <a href={phoneHref} style={{
-        marginTop: 12, background: "var(--color-primary)", color: "#fff",
-        padding: "14px", borderRadius: 8, fontFamily: "'DM Sans',sans-serif",
-        fontWeight: 800, letterSpacing: 1, textTransform: "uppercase",
-        fontSize: 13, textAlign: "center", textDecoration: "none",
-      }}>
-        📞 {info.phone} →
-      </a>
 
       <a href="/admin" style={{
         marginTop: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
