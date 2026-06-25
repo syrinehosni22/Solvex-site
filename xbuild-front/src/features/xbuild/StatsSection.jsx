@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { STATIC_STATS } from "./data";
 import { useCountUp, useIntersect } from "./hooks";
 import { loc } from "./helpers";
@@ -23,7 +22,6 @@ function StatCounter({ value, suffix, label, visible }) {
 }
 
 export default function StatsSection({ info }) {
-  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const [ref, visible] = useIntersect();
@@ -51,7 +49,7 @@ export default function StatsSection({ info }) {
 
   return (
     <section ref={ref} style={{ padding: "80px 0", background: "var(--color-dark, #121315)", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, opacity: 0.05 }}>
+      <div style={{ position: "absolute", inset: 0, opacity: 0.05, pointerEvents: "none" }}>
         <svg width="100%" height="100%">
           <defs><pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-primary, #0A1684)" strokeWidth="0.5" /></pattern></defs>
           <rect width="100%" height="100%" fill="url(#grid2)" />
@@ -67,7 +65,7 @@ export default function StatsSection({ info }) {
                 <StatCounter key={i} value={s.value} suffix={s.suffix} label={s[`label_${lang}`] || s.label_fr} visible={visible} />
               ))}
             </div>
-            <button onClick={() => navigate("/services")}
+            <button onClick={() => window.location.href = '/services'}
               style={{ background: "var(--color-primary, #0A1684)", color: "#fff", border: "none", padding: "14px 32px", borderRadius: 4, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>
               {t("stats.learnMore")}
             </button>
