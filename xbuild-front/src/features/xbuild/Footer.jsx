@@ -1,11 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { loc } from "./helpers";
 import Logo from "./Logo";
+import { useApiList } from "./apiHooks";
 
 export default function Footer({ info }) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const scrollTo = (href) => document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+
+  const services = useApiList("/api/services", []);
 
   const quickLinks = [
     { label: t("footer.links.about"),   href: "#about" },
@@ -13,12 +16,14 @@ export default function Footer({ info }) {
     { label: t("footer.links.blog"),    href: "#news" },
     { label: t("footer.links.faq"),     href: "#" },
   ];
-  const serviceLinks = [
-    { label: t("footer.links.construction"), href: "#services" },
-    { label: t("footer.links.renovation"),   href: "#services" },
-    { label: t("footer.links.materials"),    href: "#services" },
-    { label: t("footer.links.management"),   href: "#process" },
-  ];
+  const serviceLinks = services.length > 0
+    ? services.map(s => ({ label: s[`title_${lang}`] || s.title_fr || s.title || "", href: "#services" }))
+    : [
+        { label: t("footer.links.construction"), href: "#services" },
+        { label: t("footer.links.renovation"),   href: "#services" },
+        { label: t("footer.links.materials"),    href: "#services" },
+        { label: t("footer.links.management"),   href: "#process" },
+      ];
 
   const socials = [
     {
