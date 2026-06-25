@@ -150,9 +150,6 @@ export default function Navbar({ active, info }) {
             <span style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 14 }}>{item.text}</span>
           </div>
         ))}
-        <a href={phoneHref} style={{ marginTop: 24, background: "var(--color-primary)", color: "#fff", border: "none", padding: "12px 28px", borderRadius: 4, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", width: "100%", display: "block", textAlign: "center", textDecoration: "none" }}>
-          📞 {info.phone || t("sidebar.getQuote")}
-        </a>
         {socials.length > 0 && (
           <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
             {socials.map((s, i) => (
