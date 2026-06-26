@@ -5,18 +5,26 @@ export default function Preloader({ done, info = {} }) {
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 9999, background: "var(--color-dark, #121315)", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", transition: "opacity 0.6s, visibility 0.6s", opacity: done ? 0 : 1, visibility: done ? "hidden" : "visible" }}>
 
-      {info.preloaderLogo ? (
-        <img src={info.preloaderLogo} alt={info.companyName || "Logo"}
-          style={{ height: 100, width: "auto", maxWidth: 280, objectFit: "contain", marginBottom: 24, animation: "pulse 1.5s ease-in-out infinite alternate" }}
-        />
-      ) : (
-        <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, marginBottom: 24 }}>
+
+        {/* Logo image */}
+        {info.preloaderLogo && (
+          <img
+            src={info.preloaderLogo}
+            alt={info.companyName || "Logo"}
+            style={{ height: 90, width: "auto", maxWidth: 240, objectFit: "contain", animation: "pulse 1.5s ease-in-out infinite alternate" }}
+          />
+        )}
+
+        {/* Nom animé lettre par lettre */}
+        <div style={{ display: "flex", gap: 4 }}>
           {(info.companyName || "Solvex").toUpperCase().split("").map((l, i) => (
             <span key={i} style={{ fontSize: 48, fontWeight: 900, color: i % 2 === 0 ? "var(--color-primary, #0A1684)" : "#fff", fontFamily: "'DM Sans',sans-serif", animation: `pulse 1s ${i * 0.1}s infinite alternate` }}>{l}</span>
           ))}
         </div>
-      )}
+      </div>
 
+      {/* Barre de chargement */}
       <div style={{ width: 60, height: 4, background: "#333", borderRadius: 2, overflow: "hidden" }}>
         <div style={{ height: "100%", background: "var(--color-primary, #0A1684)", animation: "loader 1.5s ease-in-out infinite" }} />
       </div>
