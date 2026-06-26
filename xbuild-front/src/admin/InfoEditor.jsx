@@ -15,6 +15,28 @@ function Toggle({ value, onChange }) {
   );
 }
 
+/* ── BrandEditor — réutilisable pour Brands et Partenaires ───────────── */
+function BrandEditor({ items = [], onChange, addLabel = "+ Ajouter", accentColor = "rgba(245,91,31,0.07)", accentBorder = "rgba(245,91,31,0.4)", accentText = "var(--color-primary,#0A1684)" }) {
+  const update = (i, field, val) => { const u = [...items]; u[i] = { ...(typeof u[i] === "string" ? { name: u[i], logo: "" } : u[i]), [field]: val }; onChange(u); };
+  const remove = (i) => { const u = [...items]; u.splice(i, 1); onChange(u); };
+  const add = () => onChange([...items, { name: "", logo: "" }]);
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {items.map((item, i) => {
+        const b = typeof item === "string" ? { name: item, logo: "" } : item;
+        return (
+          <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 10, alignItems: "center", background: "rgba(0,0,0,0.02)", border: "1px solid #eee", borderRadius: 8, padding: "12px 14px" }}>
+            <Field label="Nom"><Input value={b.name || ""} onChange={e => update(i, "name", e.target.value)} placeholder="ex: Bosch" /></Field>
+            <Field label="Logo (optionnel)"><ImageUploader value={b.logo || ""} onChange={v => update(i, "logo", v)} label="Logo" hint="PNG transparent recommandé." /></Field>
+            <button onClick={() => remove(i)} style={{ background: "none", border: "1px solid #fca5a5", color: "#ef4444", borderRadius: 6, padding: "6px 10px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 13, alignSelf: "center", marginTop: 18 }}>✕</button>
+          </div>
+        );
+      })}
+      <button onClick={add} style={{ background: accentColor, border: `1.5px dashed ${accentBorder}`, color: accentText, borderRadius: 8, padding: "12px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14 }}>{addLabel}</button>
+    </div>
+  );
+}
+
 /* ── Main component ──────────────────────────────────────────────────── */
 export default function InfoEditor() {
   const [form, setForm] = useState(INFO_DEFAULT);
@@ -25,7 +47,6 @@ export default function InfoEditor() {
   const [dirty, setDirty] = useState(false);
   const [lang, setLang] = useState("fr");
 
-  // Password change state
   const [pwdForm, setPwdForm] = useState({ current: "", next: "", confirm: "" });
   const [pwdSaving, setPwdSaving] = useState(false);
   const [pwdError, setPwdError] = useState("");
@@ -59,9 +80,7 @@ export default function InfoEditor() {
     if (pwdForm.next !== pwdForm.confirm) { setPwdError("Les deux nouveaux mots de passe ne correspondent pas."); return; }
     setPwdSaving(true);
     try {
-      // Verify current password by attempting login
       await apiFetch("/api/auth/login", { method: "POST", body: JSON.stringify({ password: pwdForm.current }) });
-      // Change password via dedicated endpoint
       await apiFetch("/api/auth/change-password", { method: "POST", auth: true, body: JSON.stringify({ newPassword: pwdForm.next }) });
       setPwdSuccess(true);
       setPwdForm({ current: "", next: "", confirm: "" });
@@ -79,7 +98,7 @@ export default function InfoEditor() {
   return (
     <div>
       <PageHeader icon="⚙️" title="Informations & Site"
-        subtitle="Hero, À propos, images, coordonnées, réseaux sociaux, mot de passe"
+        subtitle="Hero, À propos, images, coordonnées, réseaux sociaux, marques, partenaires"
         actions={
           <Button variant="primary" onClick={save} disabled={saving || !dirty}>
             {saving ? <><Spinner size={14} /> Sauvegarde…</> : "💾 Sauvegarder"}
@@ -106,6 +125,8 @@ export default function InfoEditor() {
             <Field label="Années d'expérience"><Input type="number" value={form.yearsExperience || ""} onChange={e => patch("yearsExperience", e.target.value)} placeholder="25" /></Field>
             <Field label="Nom du CEO"><Input value={form.ceoName || ""} onChange={e => patch("ceoName", e.target.value)} placeholder="Shikhon Islam" /></Field>
           </div>
+
+          {/* Logo Navbar */}
           <Field label="🖼️ Logo Navbar / Admin" hint="Affiché dans la barre de navigation et le dashboard.">
             <ImageUploader value={form.logoImage || ""} onChange={v => patch("logoImage", v)} label="Logo Navbar" hint="Format PNG/SVG transparent recommandé. Hauteur affichée : 64px." />
             {!form.logoImage && (
@@ -123,7 +144,9 @@ export default function InfoEditor() {
               </div>
             )}
           </Field>
-          <Field label="🖼️ Logo Footer" hint="Logo affiché dans le footer (section centrale). Si vide, utilise le logo navbar.">
+
+          {/* Logo Footer */}
+          <Field label="🖼️ Logo Footer" hint="Logo affiché dans le footer. Si vide, utilise le logo navbar.">
             <ImageUploader value={form.footerLogoImage || ""} onChange={v => patch("footerLogoImage", v)} label="Logo Footer" hint="Recommandé : version blanche/claire du logo pour fond sombre. PNG transparent. Hauteur affichée : 88px." />
             {form.footerLogoImage && (
               <div style={{ marginTop: 12, padding: "16px 20px", borderRadius: 10, background: "var(--color-dark, #121315)", border: "1px solid rgba(255,255,255,0.08)", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 200 }}>
@@ -136,52 +159,84 @@ export default function InfoEditor() {
               </div>
             )}
           </Field>
+
+          {/* Logo Preloader */}
+          <Field label="⏳ Logo Écran de chargement" hint="Affiché au démarrage du site. Si vide, le nom de l'entreprise animé est affiché.">
+            <ImageUploader value={form.preloaderLogo || ""} onChange={v => patch("preloaderLogo", v)} label="Logo Preloader" hint="Recommandé : version blanche/claire sur fond sombre. PNG/SVG transparent. Hauteur affichée : 100px." />
+            {form.preloaderLogo && (
+              <div style={{ marginTop: 12, padding: "24px 32px", borderRadius: 10, background: "#121315", border: "1px solid rgba(255,255,255,0.08)", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 200 }}>
+                <img src={form.preloaderLogo} alt="Preloader logo preview" style={{ height: 80, width: "auto", maxWidth: 240, objectFit: "contain" }} />
+              </div>
+            )}
+            {form.preloaderLogo && (
+              <button onClick={() => patch("preloaderLogo", "")} style={{ marginTop: 8, fontSize: 12, color: "#e53e3e", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>✕ Supprimer</button>
+            )}
+          </Field>
         </Card>
 
-        {/* ── Hero Section ── */}
+        {/* ── Couleurs ── */}
         <Card>
-          <SectionHeading title="🎯 Hero Section" subtitle="Bannière principale du site" />
-          <Field label={`Slogan — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`}>
-            <Input value={form[`tagline_${lang}`] || ""} onChange={e => patch(`tagline_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Nous Construisons…" : "We Build…"} />
+          <SectionHeading title="🎨 Couleurs du thème" subtitle="Appliquées immédiatement sur tout le site et l'admin" />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 10 }}>
+            <Field label="Couleur principale">
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <input type="color" value={form.primaryColor || "#0A1684"} onChange={e => patch("primaryColor", e.target.value)} style={{ width: 44, height: 40, padding: 0, border: "1px solid rgba(255,255,255,0.10)", borderRadius: 8, background: "transparent", cursor: "pointer" }} />
+                <Input value={form.primaryColor || ""} onChange={e => patch("primaryColor", e.target.value)} placeholder="#0A1684" />
+              </div>
+            </Field>
+            <Field label="Couleur sombre">
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <input type="color" value={form.darkColor || "#121315"} onChange={e => patch("darkColor", e.target.value)} style={{ width: 44, height: 40, padding: 0, border: "1px solid rgba(255,255,255,0.10)", borderRadius: 8, background: "transparent", cursor: "pointer" }} />
+                <Input value={form.darkColor || ""} onChange={e => patch("darkColor", e.target.value)} placeholder="#121315" />
+              </div>
+            </Field>
+          </div>
+        </Card>
+
+        {/* ── Hero ── */}
+        <Card>
+          <SectionHeading title="🏠 Section Hero" subtitle="Image de fond, textes et statistiques affichés sur la page d'accueil" />
+          <Field label={`Accroche principale — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`}>
+            <Input value={form[`tagline_${lang}`] || ""} onChange={e => patch(`tagline_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Nous Construisons & Gérons Vos Chantiers" : "We Build & Manage Your Sites"} />
           </Field>
           <Field label={`Description Hero — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`}>
-            <Textarea value={form[`heroDesc_${lang}`] || ""} onChange={e => patch(`heroDesc_${lang}`, e.target.value)} rows={3} placeholder={lang === "fr" ? "Description sous le slogan…" : "Description under the tagline…"} />
+            <Textarea value={form[`heroDesc_${lang}`] || ""} onChange={e => patch(`heroDesc_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Sous-titre affiché sous l'accroche…" : "Subtitle displayed under the tagline…"} rows={3} />
           </Field>
           <Field label="📸 Image de fond (Hero)" hint="">
             <ImageUploader value={form.heroImage || ""} onChange={v => patch("heroImage", v)} label="Hero" hint="Image plein écran derrière le texte principal. Recommandé : 1920×1080px." />
           </Field>
-          <SectionHeading title="📊 Statistiques Hero" subtitle="Chiffres dans la bande orange" />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
-            <Field label="Projets réalisés"><Input value={form.heroStats?.projects || ""} onChange={e => patchStats("projects", e.target.value)} placeholder="45K+" /></Field>
-            <Field label="Clients satisfaits"><Input value={form.heroStats?.clients || ""} onChange={e => patchStats("clients", e.target.value)} placeholder="25K+" /></Field>
-            <Field label="Ingénieurs"><Input value={form.heroStats?.engineers || ""} onChange={e => patchStats("engineers", e.target.value)} placeholder="120+" /></Field>
-          </div>
-          {/* Stats preview */}
-          <div style={{ padding: "14px 20px", borderRadius: 10, background: "var(--color-primary, #0A1684)", display: "flex", gap: 24, flexWrap: "wrap", marginTop: 4 }}>
-            {[{ v: form.heroStats?.projects || "45K+", l: "Projets", ic: "🏗️" }, { v: form.heroStats?.clients || "25K+", l: "Clients", ic: "😊" }, { v: `${form.yearsExperience || 25}+`, l: "Ans", ic: "⭐" }, { v: form.heroStats?.engineers || "120+", l: "Ingénieurs", ic: "👷" }].map((s, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 18 }}>{s.ic}</span>
-                <div><div style={{ color: "#fff", fontWeight: 900, fontSize: 20, lineHeight: 1 }}>{s.v}</div><div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10 }}>{s.l}</div></div>
+          <Field label="📱 Image de fond Mobile (Hero)" hint="Affichée uniquement sur mobile (< 480px). Si vide, l'image desktop est utilisée.">
+            <ImageUploader value={form.heroImageMobile || ""} onChange={v => patch("heroImageMobile", v)} label="Hero Mobile" hint="Version recadrée pour mobile. Recommandé : portrait 768×1024px, sujet centré." />
+            {form.heroImageMobile && (
+              <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 10 }}>
+                <img src={form.heroImageMobile} alt="Hero mobile preview" style={{ height: 80, width: "auto", maxWidth: 120, objectFit: "cover", borderRadius: 6, border: "1px solid rgba(0,0,0,0.1)" }} />
+                <button onClick={() => patch("heroImageMobile", "")} style={{ fontSize: 12, color: "#e53e3e", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>✕ Supprimer</button>
               </div>
-            ))}
+            )}
+          </Field>
+          <SectionHeading title="📊 Statistiques Hero" subtitle="Chiffres affichés dans le bandeau sous le texte principal" />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 10 }}>
+            <Field label="Projets"><Input value={form.heroStats?.projects || ""} onChange={e => patchStats("projects", e.target.value)} placeholder="45K+" /></Field>
+            <Field label="Clients"><Input value={form.heroStats?.clients || ""} onChange={e => patchStats("clients", e.target.value)} placeholder="25K+" /></Field>
+            <Field label="Ingénieurs"><Input value={form.heroStats?.engineers || ""} onChange={e => patchStats("engineers", e.target.value)} placeholder="120+" /></Field>
           </div>
         </Card>
 
-        {/* ── À propos ── */}
+        {/* ── À Propos ── */}
         <Card>
-          <SectionHeading title="📖 Section À Propos" />
+          <SectionHeading title="ℹ️ Section À Propos" />
           <Field label={`Texte À propos — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`}>
             <Textarea value={form[`about_${lang}`] || ""} onChange={e => patch(`about_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Décrivez votre entreprise…" : "Describe your company…"} rows={5} />
           </Field>
           <Field label={`📝 Texte "À propos" du footer — ${lang === "fr" ? "Français 🇫🇷" : "English 🇬🇧"}`} hint="Affiché dans la colonne À propos du footer du site.">
-            <Textarea value={form[`footerAbout_${lang}`] || ""} onChange={e => patch(`footerAbout_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Votre partenaire de confiance pour tous vos projets de construction…" : "Your trusted partner for all your construction projects…"} rows={3} />
+            <Textarea value={form[`footerAbout_${lang}`] || ""} onChange={e => patch(`footerAbout_${lang}`, e.target.value)} placeholder={lang === "fr" ? "Votre partenaire de confiance…" : "Your trusted partner…"} rows={3} />
           </Field>
           <Field label="📸 Photo section À Propos">
             <ImageUploader value={form.aboutImage || ""} onChange={v => patch("aboutImage", v)} label="About" hint="Photo affichée à droite dans la section À Propos. Recommandé : 800×900px." />
           </Field>
         </Card>
 
-        {/* ── Stats section ── */}
+        {/* ── Stats ── */}
         <Card>
           <SectionHeading title="📊 Section Statistiques" />
           <Field label="📸 Photo section Statistiques">
@@ -191,42 +246,28 @@ export default function InfoEditor() {
 
         {/* ── Brands ── */}
         <Card>
-          <SectionHeading title="🏷️ Marques (Bandeau bas de page)" subtitle="Bandeau défilant en bas du site." />
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {(form.brands || []).map((brand, i) => {
-              const b = typeof brand === "string" ? { name: brand, logo: "" } : brand;
-              const updateBrand = (field, val) => { const u = [...(form.brands||[])]; u[i]={...b,[field]:val}; patch("brands",u); };
-              const removeBrand = () => { const u = [...(form.brands||[])]; u.splice(i,1); patch("brands",u); };
-              return (
-                <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr 1fr auto", gap:10, alignItems:"center", background:"rgba(0,0,0,0.02)", border:"1px solid #eee", borderRadius:8, padding:"12px 14px" }}>
-                  <Field label="Nom"><Input value={b.name||""} onChange={e=>updateBrand("name",e.target.value)} placeholder="ex: Bosch"/></Field>
-                  <Field label="Logo (optionnel)"><ImageUploader value={b.logo||""} onChange={v=>updateBrand("logo",v)} label="Logo" hint="PNG transparent recommandé."/></Field>
-                  <button onClick={removeBrand} style={{ background:"none", border:"1px solid #fca5a5", color:"#ef4444", borderRadius:6, padding:"6px 10px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:13, alignSelf:"center", marginTop:18 }}>✕</button>
-                </div>
-              );
-            })}
-            <button onClick={()=>patch("brands",[...(form.brands||[]),{name:"",logo:""}])} style={{ background:"rgba(245,91,31,0.07)", border:"1.5px dashed rgba(245,91,31,0.4)", color:"var(--color-primary,#0A1684)", borderRadius:8, padding:"12px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:14 }}>+ Ajouter une marque</button>
-          </div>
+          <SectionHeading title="🏷️ Marques (Bandeau bas de page)" subtitle="Bandeau défilant affiché en bas du site." />
+          <BrandEditor
+            items={form.brands || []}
+            onChange={v => patch("brands", v)}
+            addLabel="+ Ajouter une marque"
+            accentColor="rgba(245,91,31,0.07)"
+            accentBorder="rgba(245,91,31,0.4)"
+            accentText="var(--color-primary,#0A1684)"
+          />
         </Card>
 
         {/* ── Partenaires ── */}
         <Card>
           <SectionHeading title="🤝 Nos Partenaires (Section après Stats)" subtitle="Section indépendante affichée après les statistiques." />
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {(form.partners || []).map((partner, i) => {
-              const p = typeof partner === "string" ? { name: partner, logo: "" } : partner;
-              const updatePartner = (field, val) => { const u = [...(form.partners||[])]; u[i]={...p,[field]:val}; patch("partners",u); };
-              const removePartner = () => { const u = [...(form.partners||[])]; u.splice(i,1); patch("partners",u); };
-              return (
-                <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr 1fr auto", gap:10, alignItems:"center", background:"rgba(0,0,0,0.02)", border:"1px solid #eee", borderRadius:8, padding:"12px 14px" }}>
-                  <Field label="Nom"><Input value={p.name||""} onChange={e=>updatePartner("name",e.target.value)} placeholder="ex: Partenaire"/></Field>
-                  <Field label="Logo (optionnel)"><ImageUploader value={p.logo||""} onChange={v=>updatePartner("logo",v)} label="Logo" hint="PNG transparent recommandé."/></Field>
-                  <button onClick={removePartner} style={{ background:"none", border:"1px solid #fca5a5", color:"#ef4444", borderRadius:6, padding:"6px 10px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:13, alignSelf:"center", marginTop:18 }}>✕</button>
-                </div>
-              );
-            })}
-            <button onClick={()=>patch("partners",[...(form.partners||[]),{name:"",logo:""}])} style={{ background:"rgba(10,102,194,0.07)", border:"1.5px dashed rgba(10,102,194,0.4)", color:"#0A66C2", borderRadius:8, padding:"12px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:14 }}>+ Ajouter un partenaire</button>
-          </div>
+          <BrandEditor
+            items={form.partners || []}
+            onChange={v => patch("partners", v)}
+            addLabel="+ Ajouter un partenaire"
+            accentColor="rgba(10,102,194,0.07)"
+            accentBorder="rgba(10,102,194,0.4)"
+            accentText="#0A66C2"
+          />
         </Card>
 
         {/* ── Coordonnées ── */}
@@ -292,25 +333,7 @@ export default function InfoEditor() {
             ⚠️ Pour un changement permanent, mettez également à jour <code style={{ background: "rgba(255,255,255,0.08)", padding: "2px 6px", borderRadius: 4 }}>ADMIN_PASSWORD</code> dans le fichier <code style={{ background: "rgba(255,255,255,0.08)", padding: "2px 6px", borderRadius: 4 }}>.env</code> du serveur.
           </p>
         </Card>
-        <Card>
-          <SectionHeading title="🎨 Couleurs du thème" subtitle="Appliquées immédiatement sur tout le site et l'admin" />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 10 }}>
-            <Field label="Couleur principale">
-              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <input type="color" value={form.primaryColor || "#0A1684"} onChange={e => patch("primaryColor", e.target.value)}
-                  style={{ width: 44, height: 40, padding: 0, border: "1px solid rgba(255,255,255,0.10)", borderRadius: 8, background: "transparent", cursor: "pointer" }} />
-                <Input value={form.primaryColor || ""} onChange={e => patch("primaryColor", e.target.value)} placeholder="#0A1684" />
-              </div>
-            </Field>
-            <Field label="Couleur sombre">
-              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <input type="color" value={form.darkColor || "#121315"} onChange={e => patch("darkColor", e.target.value)}
-                  style={{ width: 44, height: 40, padding: 0, border: "1px solid rgba(255,255,255,0.10)", borderRadius: 8, background: "transparent", cursor: "pointer" }} />
-                <Input value={form.darkColor || ""} onChange={e => patch("darkColor", e.target.value)} placeholder="#121315" />
-              </div>
-            </Field>
-          </div>
-        </Card>
+
       </div>
 
       {/* Floating save */}

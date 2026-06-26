@@ -51,9 +51,10 @@ export function useApiItem(basePath, id) {
 }
 
 export const INFO_DEFAULT = {
-  companyName: "Solvex",
+  companyName: "",
   logoImage: "",
   footerLogoImage: "",
+  preloaderLogo: "",
   primaryColor: "#0A1684",
   darkColor: "#121315",
   tagline_fr: "Nous Construisons & Gérons Vos Chantiers",
@@ -62,15 +63,6 @@ export const INFO_DEFAULT = {
   about_en: "We provide premium construction and engineering services for over 25 years.",
   footerAbout_fr: "Votre partenaire de confiance pour tous vos projets de construction et de rénovation. Excellence, qualité et professionnalisme depuis plus de 25 ans.",
   footerAbout_en: "Your trusted partner for all your construction and renovation projects. Excellence, quality and professionalism for over 25 years.",
-  brands: [
-    { name: "Caterpillar", logo: "" }, { name: "Bosch", logo: "" },
-    { name: "Siemens", logo: "" }, { name: "Hilti", logo: "" },
-    { name: "DeWalt", logo: "" }, { name: "3M", logo: "" },
-  ],
-  partners: [
-    { name: "Partenaire 1", logo: "" }, { name: "Partenaire 2", logo: "" },
-    { name: "Partenaire 3", logo: "" }, { name: "Partenaire 4", logo: "" },
-  ],
   heroDesc_fr: "Des solutions de construction innovantes pour vos projets les plus ambitieux.",
   heroDesc_en: "Innovative construction solutions for your most ambitious projects.",
   heroStats: { projects: "45K+", clients: "25K+", engineers: "120+" },

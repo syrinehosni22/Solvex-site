@@ -83,7 +83,7 @@ app.get("/api/info", async (_req, res) => {
       socialTwitter: "#",  socialTwitterActive: true,
       socialYoutube: "#",  socialYoutubeActive: true,
       socialLinkedin: "#", socialLinkedinActive: true,
-      heroImage: "", aboutImage: "", statsImage: "",
+      heroImage: "", aboutImage: "", statsImage: "", preloaderLogo: "",
       statsTitle_fr: "Nos Services Répondent aux Plus Hautes Normes.",
       statsTitle_en: "Our Services Meet the Highest Standards.",
       statsTag_fr: "Statut de l'Entreprise",
