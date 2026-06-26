@@ -15,6 +15,7 @@ import TestimonialsSection from "./TestimonialsSection";
 import NewsSection from "./NewsSection";
 import ContactSection from "./ContactSection";
 import BrandsSection from "./BrandsSection";
+import PartnersSection from "./PartnersSection";
 import Footer from "./Footer";
 import BackToTop from "./BackToTop";
 import { useInfo, useThemeVars } from "./apiHooks";
@@ -59,6 +60,7 @@ useThemeVars(info);
       <Preloader done={loaded} info={info} />
       <Navbar active={activeSection} info={info} />
       <HeroSection info={info} />
+      <PartnersSection info={info} />
       <ServicesSection />
       <AboutSection info={info} />
       <ProjectsSection />
@@ -67,7 +69,7 @@ useThemeVars(info);
       {/* <TestimonialsSection /> */}
       {/* <NewsSection /> */}
       <ContactSection info={info} />
-      <BrandsSection info={info} />
+      <BrandsSection />
       <Footer info={info} />
       <BackToTop />
     </>

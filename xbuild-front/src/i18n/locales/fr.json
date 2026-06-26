@@ -366,5 +366,9 @@
         "desc": "Chaque solution est adaptée à vos besoins spécifiques, pour une efficacité et une satisfaction client maximales."
       }
     ]
+  },
+  "partners": {
+    "tag": "Partenaires",
+    "title": "Nos Partenaires"
   }
 }

@@ -51,7 +51,7 @@ export function useApiItem(basePath, id) {
 }
 
 export const INFO_DEFAULT = {
-  companyName: "",
+  companyName: "Solvex",
   logoImage: "",
   footerLogoImage: "",
   primaryColor: "#0A1684",

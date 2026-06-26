@@ -1,11 +1,9 @@
 export default function BrandsSection({ info = {} }) {
   const brands = (info.brands && info.brands.length > 0)
     ? info.brands
-    : [
-        { name: "Caterpillar" }, { name: "Bosch" }, { name: "Siemens" },
-        { name: "Hilti" }, { name: "DeWalt" }, { name: "3M" },
-        { name: "Schneider Electric" }, { name: "ABB" },
-      ];
+    : null; // don't show fallback — wait for real data
+
+  if (!brands) return null;
 
   const items = [...brands, ...brands];
 
@@ -24,7 +22,7 @@ export default function BrandsSection({ info = {} }) {
               {logo
                 ? (
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <img src={logo} alt={name} style={{ height: 36, maxWidth: 80, objectFit: "contain", filter: "grayscale(100%) opacity(0.5)", transition: "filter 0.3s" }}
+                    <img src={logo} alt={name} style={{ height: 56, maxWidth: 130, objectFit: "contain", filter: "grayscale(100%) opacity(0.5)", transition: "filter 0.3s" }}
                       onMouseEnter={e => e.currentTarget.style.filter = "grayscale(0%) opacity(1)"}
                       onMouseLeave={e => e.currentTarget.style.filter = "grayscale(100%) opacity(0.5)"}
                     />
