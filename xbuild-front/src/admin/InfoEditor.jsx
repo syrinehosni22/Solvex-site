@@ -17,18 +17,23 @@ function Toggle({ value, onChange }) {
 
 /* ── BrandEditor — réutilisable pour Brands et Partenaires ───────────── */
 function BrandEditor({ items = [], onChange, addLabel = "+ Ajouter", accentColor = "rgba(245,91,31,0.07)", accentBorder = "rgba(245,91,31,0.4)", accentText = "var(--color-primary,#0A1684)" }) {
-  const update = (i, field, val) => { const u = [...items]; u[i] = { ...(typeof u[i] === "string" ? { name: u[i], logo: "" } : u[i]), [field]: val }; onChange(u); };
+  const update = (i, field, val) => { const u = [...items]; u[i] = { ...(typeof u[i] === "string" ? { name: u[i], logo: "", link: "" } : u[i]), [field]: val }; onChange(u); };
   const remove = (i) => { const u = [...items]; u.splice(i, 1); onChange(u); };
-  const add = () => onChange([...items, { name: "", logo: "" }]);
+  const add = () => onChange([...items, { name: "", logo: "", link: "" }]);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {items.map((item, i) => {
-        const b = typeof item === "string" ? { name: item, logo: "" } : item;
+        const b = typeof item === "string" ? { name: item, logo: "", link: "" } : { link: "", ...item };
         return (
-          <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 10, alignItems: "center", background: "rgba(0,0,0,0.02)", border: "1px solid #eee", borderRadius: 8, padding: "12px 14px" }}>
-            <Field label="Nom"><Input value={b.name || ""} onChange={e => update(i, "name", e.target.value)} placeholder="ex: Bosch" /></Field>
-            <Field label="Logo (optionnel)"><ImageUploader value={b.logo || ""} onChange={v => update(i, "logo", v)} label="Logo" hint="PNG transparent recommandé." /></Field>
-            <button onClick={() => remove(i)} style={{ background: "none", border: "1px solid #fca5a5", color: "#ef4444", borderRadius: 6, padding: "6px 10px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 13, alignSelf: "center", marginTop: 18 }}>✕</button>
+          <div key={i} style={{ display: "flex", flexDirection: "column", gap: 8, background: "rgba(0,0,0,0.02)", border: "1px solid #eee", borderRadius: 8, padding: "12px 14px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 10, alignItems: "center" }}>
+              <Field label="Nom"><Input value={b.name || ""} onChange={e => update(i, "name", e.target.value)} placeholder="ex: Bosch" /></Field>
+              <Field label="Logo (optionnel)"><ImageUploader value={b.logo || ""} onChange={v => update(i, "logo", v)} label="Logo" hint="PNG transparent recommandé." /></Field>
+              <button onClick={() => remove(i)} style={{ background: "none", border: "1px solid #fca5a5", color: "#ef4444", borderRadius: 6, padding: "6px 10px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 13, alignSelf: "center", marginTop: 18 }}>✕</button>
+            </div>
+            <Field label="🔗 Lien (optionnel)" hint="URL ouverte au clic sur le logo/nom. Ex: https://www.bosch.com">
+              <Input value={b.link || ""} onChange={e => update(i, "link", e.target.value)} placeholder="https://www.exemple.com" />
+            </Field>
           </div>
         );
       })}
