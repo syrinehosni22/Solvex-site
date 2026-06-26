@@ -189,44 +189,50 @@ export default function InfoEditor() {
           </Field>
         </Card>
 
-        {/* ── Brands / Partenaires ── */}
+        {/* ── Brands ── */}
         <Card>
-          <SectionHeading title="🏷️ Marques & Partenaires" subtitle="Bandeau défilant — chaque marque peut avoir un logo ou juste un nom texte." />
+          <SectionHeading title="🏷️ Marques (Bandeau bas de page)" subtitle="Bandeau défilant en bas du site." />
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {(form.brands || []).map((brand, i) => {
               const b = typeof brand === "string" ? { name: brand, logo: "" } : brand;
-              const updateBrand = (field, val) => {
-                const updated = [...(form.brands || [])];
-                updated[i] = { ...b, [field]: val };
-                patch("brands", updated);
-              };
-              const removeBrand = () => {
-                const updated = [...(form.brands || [])];
-                updated.splice(i, 1);
-                patch("brands", updated);
-              };
+              const updateBrand = (field, val) => { const u = [...(form.brands||[])]; u[i]={...b,[field]:val}; patch("brands",u); };
+              const removeBrand = () => { const u = [...(form.brands||[])]; u.splice(i,1); patch("brands",u); };
               return (
-                <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 10, alignItems: "center", background: "rgba(0,0,0,0.02)", border: "1px solid #eee", borderRadius: 8, padding: "12px 14px" }}>
-                  <Field label="Nom de la marque">
-                    <Input value={b.name || ""} onChange={e => updateBrand("name", e.target.value)} placeholder="ex: Bosch" />
-                  </Field>
-                  <Field label="Logo (optionnel)">
-                    <ImageUploader value={b.logo || ""} onChange={v => updateBrand("logo", v)} label="Logo" hint="PNG transparent recommandé. Max 5Mo." preview="contain" height={60} />
-                  </Field>
-                  <button onClick={removeBrand} style={{ background: "none", border: "1px solid #fca5a5", color: "#ef4444", borderRadius: 6, padding: "6px 10px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 13, alignSelf: "center", marginTop: 18 }}>✕</button>
+                <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr 1fr auto", gap:10, alignItems:"center", background:"rgba(0,0,0,0.02)", border:"1px solid #eee", borderRadius:8, padding:"12px 14px" }}>
+                  <Field label="Nom"><Input value={b.name||""} onChange={e=>updateBrand("name",e.target.value)} placeholder="ex: Bosch"/></Field>
+                  <Field label="Logo (optionnel)"><ImageUploader value={b.logo||""} onChange={v=>updateBrand("logo",v)} label="Logo" hint="PNG transparent recommandé."/></Field>
+                  <button onClick={removeBrand} style={{ background:"none", border:"1px solid #fca5a5", color:"#ef4444", borderRadius:6, padding:"6px 10px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:13, alignSelf:"center", marginTop:18 }}>✕</button>
                 </div>
               );
             })}
-            <button
-              onClick={() => patch("brands", [...(form.brands || []), { name: "", logo: "" }])}
-              style={{ background: "rgba(245,91,31,0.07)", border: "1.5px dashed rgba(245,91,31,0.4)", color: "var(--color-primary, #0A1684)", borderRadius: 8, padding: "12px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14 }}
-            >+ Ajouter une marque</button>
+            <button onClick={()=>patch("brands",[...(form.brands||[]),{name:"",logo:""}])} style={{ background:"rgba(245,91,31,0.07)", border:"1.5px dashed rgba(245,91,31,0.4)", color:"var(--color-primary,#0A1684)", borderRadius:8, padding:"12px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:14 }}>+ Ajouter une marque</button>
+          </div>
+        </Card>
+
+        {/* ── Partenaires ── */}
+        <Card>
+          <SectionHeading title="🤝 Nos Partenaires (Section après Stats)" subtitle="Section indépendante affichée après les statistiques." />
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {(form.partners || []).map((partner, i) => {
+              const p = typeof partner === "string" ? { name: partner, logo: "" } : partner;
+              const updatePartner = (field, val) => { const u = [...(form.partners||[])]; u[i]={...p,[field]:val}; patch("partners",u); };
+              const removePartner = () => { const u = [...(form.partners||[])]; u.splice(i,1); patch("partners",u); };
+              return (
+                <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr 1fr auto", gap:10, alignItems:"center", background:"rgba(0,0,0,0.02)", border:"1px solid #eee", borderRadius:8, padding:"12px 14px" }}>
+                  <Field label="Nom"><Input value={p.name||""} onChange={e=>updatePartner("name",e.target.value)} placeholder="ex: Partenaire"/></Field>
+                  <Field label="Logo (optionnel)"><ImageUploader value={p.logo||""} onChange={v=>updatePartner("logo",v)} label="Logo" hint="PNG transparent recommandé."/></Field>
+                  <button onClick={removePartner} style={{ background:"none", border:"1px solid #fca5a5", color:"#ef4444", borderRadius:6, padding:"6px 10px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:13, alignSelf:"center", marginTop:18 }}>✕</button>
+                </div>
+              );
+            })}
+            <button onClick={()=>patch("partners",[...(form.partners||[]),{name:"",logo:""}])} style={{ background:"rgba(10,102,194,0.07)", border:"1.5px dashed rgba(10,102,194,0.4)", color:"#0A66C2", borderRadius:8, padding:"12px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontWeight:700, fontSize:14 }}>+ Ajouter un partenaire</button>
           </div>
         </Card>
 
         {/* ── Coordonnées ── */}
         <Card>
-          <SectionHeading title="📞 Coordonnées" subtitle="Le numéro de téléphone alimente le bouton d'appel sur tout le site" />          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 10 }}>
+          <SectionHeading title="📞 Coordonnées" subtitle="Le numéro de téléphone alimente le bouton d'appel sur tout le site" />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 10 }}>
             {[{ key: "address", label: "Adresse", type: "text", ph: "4648 Rocky, New York" }, { key: "email", label: "Email", type: "email", ph: "example@gmail.com" }, { key: "phone", label: "📞 Téléphone (bouton appel)", type: "text", ph: "+88 0123 654 99" }, { key: "workingHours", label: "Heures d'ouverture", type: "text", ph: "Mon-Fri, 09am - 05pm" }].map(f => (
               <Field key={f.key} label={f.label}><Input type={f.type} value={form[f.key] || ""} onChange={e => patch(f.key, e.target.value)} placeholder={f.ph} /></Field>
             ))}

@@ -66,7 +66,10 @@ export const INFO_DEFAULT = {
     { name: "Caterpillar", logo: "" }, { name: "Bosch", logo: "" },
     { name: "Siemens", logo: "" }, { name: "Hilti", logo: "" },
     { name: "DeWalt", logo: "" }, { name: "3M", logo: "" },
-    { name: "Schneider Electric", logo: "" }, { name: "ABB", logo: "" },
+  ],
+  partners: [
+    { name: "Partenaire 1", logo: "" }, { name: "Partenaire 2", logo: "" },
+    { name: "Partenaire 3", logo: "" }, { name: "Partenaire 4", logo: "" },
   ],
   heroDesc_fr: "Des solutions de construction innovantes pour vos projets les plus ambitieux.",
   heroDesc_en: "Innovative construction solutions for your most ambitious projects.",

@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 export default function PartnersSection({ info = {} }) {
   const { t } = useTranslation();
-  const brands = (info.brands && info.brands.length > 0) ? info.brands : null;
+  const brands = (info.partners && info.partners.length > 0) ? info.partners : null;
   if (!brands) return null;
 
   const items = [...brands, ...brands];
