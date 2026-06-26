@@ -69,7 +69,7 @@ useThemeVars(info);
       {/* <TestimonialsSection /> */}
       {/* <NewsSection /> */}
       <ContactSection info={info} />
-      <BrandsSection />
+      <BrandsSection info={info} />
       <Footer info={info} />
       <BackToTop />
     </>
