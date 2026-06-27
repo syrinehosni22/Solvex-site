@@ -85,9 +85,14 @@ export default function ContactSection({ info }) {
             </p>
 
             {status === "sent" && (
-              <div style={{ background:"rgba(34,197,94,0.1)", border:"1px solid rgba(34,197,94,0.3)", borderRadius:8, padding:"14px 18px", marginBottom:20, color:"#16a34a", fontFamily:"'DM Sans',sans-serif", fontWeight:600, display:"flex", gap:10, alignItems:"center" }}>
-                <span style={{ fontSize:20 }}>✅</span>
-                {t("contact.success") || "Votre message a bien été envoyé ! Nous vous contacterons rapidement."}
+              <div style={{ background:"rgba(34,197,94,0.08)", border:"1px solid rgba(34,197,94,0.3)", borderRadius:10, padding:"18px 20px", marginBottom:20, fontFamily:"'DM Sans',sans-serif", display:"flex", flexDirection:"column", gap:8 }}>
+                <div style={{ display:"flex", gap:10, alignItems:"center" }}>
+                  <span style={{ fontSize:22 }}>✅</span>
+                  <span style={{ color:"#16a34a", fontWeight:700, fontSize:15 }}>Message envoyé avec succès !</span>
+                </div>
+                <p style={{ margin:0, color:"#555", fontSize:13, lineHeight:1.6, paddingLeft:32 }}>
+                  Un email a été envoyé à <strong>Contact@solvex-industry.com</strong> et <strong>aardhaouisolvex@gmail.com</strong>. Nous vous contacterons rapidement.
+                </p>
               </div>
             )}
             {status === "error" && (
