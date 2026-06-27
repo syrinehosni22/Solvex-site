@@ -33,7 +33,7 @@ export default function PartnersSection({ info = {} }) {
             const hover = e => { const img = e.currentTarget.querySelector("img"); const span = e.currentTarget.querySelector("span"); if (img) img.style.filter = "grayscale(0%) opacity(1)"; if (span) span.style.color = "var(--color-primary, #0A1684)"; };
             const unhover = e => { const img = e.currentTarget.querySelector("img"); const span = e.currentTarget.querySelector("span"); if (img) img.style.filter = "grayscale(100%) opacity(0.55)"; if (span) span.style.color = "#999"; };
             return link
-              ? <a key={i} href={link} target="_blank" rel="noreferrer" style={{ ...commonStyle, cursor: "pointer" }} onMouseEnter={hover} onMouseLeave={unhover}>{inner}</a>
+              ? <a key={i} href={link && !link.startsWith('http') ? 'https://' + link : link} target="_blank" rel="noreferrer" style={{ ...commonStyle, cursor: "pointer" }} onMouseEnter={hover} onMouseLeave={unhover}>{inner}</a>
               : <div key={i} style={{ ...commonStyle, cursor: "default" }} onMouseEnter={hover} onMouseLeave={unhover}>{inner}</div>;
           })}
         </div>

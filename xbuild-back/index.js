@@ -229,6 +229,56 @@ app.delete("/api/testimonials/:id", requireAuth, async (req, res) => {
 app.post("/api/contact", async (req, res) => {
   try {
     const doc = await db.devis.insert({ ...req.body, createdAt: new Date().toISOString(), read: false });
+
+    // ── Envoi email ──────────────────────────────────────────────────────
+    try {
+      const nodemailer = await import("nodemailer");
+      const transporter = nodemailer.default.createTransport({
+        host: process.env.SMTP_HOST || "smtp.gmail.com",
+        port: parseInt(process.env.SMTP_PORT || "587"),
+        secure: false,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      });
+
+      const { name, email, phone, subject, message, service } = req.body;
+
+      await transporter.sendMail({
+        from: `"Solvex Site" <${process.env.SMTP_USER}>`,
+        to: "Contact@solvex-industry.com",
+        cc: "aardhaouisolvex@gmail.com",
+        replyTo: email || process.env.SMTP_USER,
+        subject: `📩 Nouveau message — ${subject || service || "Contact"}`,
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f9f9f9;border-radius:8px;overflow:hidden;">
+            <div style="background:#0A1684;padding:24px 32px;">
+              <h2 style="color:#fff;margin:0;font-size:20px;">Nouveau message depuis le site</h2>
+            </div>
+            <div style="padding:28px 32px;background:#fff;">
+              <table style="width:100%;border-collapse:collapse;">
+                <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#666;width:140px;font-weight:600;">Nom</td><td style="padding:10px 0;border-bottom:1px solid #eee;color:#222;">${name || "—"}</td></tr>
+                <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#666;font-weight:600;">Email</td><td style="padding:10px 0;border-bottom:1px solid #eee;color:#222;">${email || "—"}</td></tr>
+                <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#666;font-weight:600;">Téléphone</td><td style="padding:10px 0;border-bottom:1px solid #eee;color:#222;">${phone || "—"}</td></tr>
+                <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#666;font-weight:600;">Sujet</td><td style="padding:10px 0;border-bottom:1px solid #eee;color:#222;">${subject || service || "—"}</td></tr>
+              </table>
+              <div style="margin-top:24px;">
+                <p style="color:#666;font-weight:600;margin-bottom:8px;">Message :</p>
+                <div style="background:#f5f5f5;border-left:4px solid #0A1684;padding:16px 20px;border-radius:4px;color:#333;line-height:1.7;">${(message || "").replace(/\n/g, "<br>")}</div>
+              </div>
+            </div>
+            <div style="padding:16px 32px;background:#f0f0f0;color:#999;font-size:12px;">
+              Reçu le ${new Date().toLocaleString("fr-FR")} · Solvex Industry
+            </div>
+          </div>
+        `,
+      });
+    } catch (mailErr) {
+      console.error("Email send error:", mailErr.message);
+      // On ne bloque pas la réponse si l'email échoue
+    }
+
     res.status(201).json(doc);
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
