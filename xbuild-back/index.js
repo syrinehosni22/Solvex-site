@@ -102,13 +102,13 @@ app.get("/api/info", async (_req, res) => {
         { icon:"🛡️", label_fr:"Sûr & Sécurisé", label_en:"Safe & Secure" },
       ],
       brands: [
-        { name: "Caterpillar", logo: "" }, { name: "Bosch", logo: "" },
-        { name: "Siemens", logo: "" },     { name: "Hilti", logo: "" },
-        { name: "DeWalt", logo: "" },      { name: "3M", logo: "" },
+        { name: "Caterpillar", logo: "", link: "" }, { name: "Bosch", logo: "", link: "" },
+        { name: "Siemens", logo: "", link: "" },     { name: "Hilti", logo: "", link: "" },
+        { name: "DeWalt", logo: "", link: "" },      { name: "3M", logo: "", link: "" },
       ],
       partners: [
-        { name: "Partenaire 1", logo: "" }, { name: "Partenaire 2", logo: "" },
-        { name: "Partenaire 3", logo: "" }, { name: "Partenaire 4", logo: "" },
+        { name: "Partenaire 1", logo: "", link: "" }, { name: "Partenaire 2", logo: "", link: "" },
+        { name: "Partenaire 3", logo: "", link: "" }, { name: "Partenaire 4", logo: "", link: "" },
       ],
     };
     res.json(doc);
