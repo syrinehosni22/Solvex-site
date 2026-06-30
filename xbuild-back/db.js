@@ -125,13 +125,17 @@ async function migrateProjects() {
 // ─── initDb ───────────────────────────────────────────────────────────────────
 export async function initDb() {
   await connectDb();
-  await upsertSeed(ServiceModel,     SEED_SERVICES,     "title_fr");
-  await upsertSeed(ProjectModel,     SEED_PROJECTS,     "title_fr");
+  // NOTE: Services et Projects ne sont PLUS réinsérés automatiquement.
+  // La base de données est la source unique de vérité pour ces deux collections —
+  // si un utilisateur les supprime ou les modifie depuis le dashboard, ils ne
+  // doivent jamais réapparaître au redémarrage du serveur.
+  // await upsertSeed(ServiceModel, SEED_SERVICES, "title_fr");
+  // await upsertSeed(ProjectModel, SEED_PROJECTS, "title_fr");
   await upsertSeed(ProcessModel,     SEED_PROCESS,      "title_fr");
   await upsertSeed(BlogModel,        SEED_BLOG,         "title_fr");
   await upsertSeed(TestimonialModel, SEED_TESTIMONIALS, "author");
   await migrateProjects();
-  console.log("✅ DB seeded & migrations applied");
+  console.log("✅ DB seeded & migrations applied (services/projects auto-seed disabled)");
 }
 
 // ─── Exports ──────────────────────────────────────────────────────────────────
