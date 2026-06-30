@@ -25,6 +25,30 @@ export function useApiList(path, fallback) {
   return data;
 }
 
+// Like useApiList, but treats the database as the single source of truth:
+// once the API responds (even with an empty array), that result is used —
+// no falling back to static/default content. Returns `null` while loading
+// so callers can show a spinner, then the real (possibly empty) array.
+export function useApiListStrict(path) {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(path);
+        if (!res.ok) { if (!cancelled) setData([]); return; }
+        const json = await res.json();
+        const safe = safeSerialize(json);
+        if (!cancelled) setData(Array.isArray(safe) ? safe : []);
+      } catch {
+        if (!cancelled) setData([]);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [path]);
+  return data;
+}
+
 export function useApiItem(basePath, id) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -54,7 +78,6 @@ export const INFO_DEFAULT = {
   companyName: "",
   logoImage: "",
   footerLogoImage: "",
-  preloaderLogo: "",
   primaryColor: "#0A1684",
   darkColor: "#121315",
   tagline_fr: "Nous Construisons & Gérons Vos Chantiers",

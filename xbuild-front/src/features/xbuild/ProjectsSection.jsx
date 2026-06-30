@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { STATIC_PROJECTS } from "./data";
 import { useIntersect, useCarousel } from "./hooks";
-import { useApiList } from "./apiHooks";
+import { useApiListStrict } from "./apiHooks";
 import { loc } from "./helpers";
 import SectionTitle from "./SectionTitle";
 
@@ -175,25 +174,22 @@ function ProjectCardMobile({ p, i, visible, onClick }) {
 export default function ProjectsSection() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
-  const apiProjects = useApiList("/api/projects", null);
+  const apiProjects = useApiListStrict("/api/projects");
   const [ref, visible] = useIntersect();
   const [selected, setSelected] = useState(null);
 
-  const staticItems = t("projects.items", { returnObjects: true });
-
-  const projects = apiProjects
-    ? apiProjects.map(p => ({
+  // null = still loading. Once loaded, use exactly what's in the DB (possibly empty) — no static fallback.
+  const loading = apiProjects === null;
+  const projects = loading
+    ? []
+    : apiProjects.map(p => ({
         ...p,
         title: loc(p, "title", lang),
         category: loc(p, "category", lang),
         desc: loc(p, "desc", lang),
-      }))
-    : STATIC_PROJECTS.map((p, i) => ({
-        ...p,
-        title: staticItems[i]?.title || p.title,
-        category: staticItems[i]?.category || p.category,
-        desc: staticItems[i]?.desc || p.desc || "",
       }));
+
+  if (!loading && projects.length === 0) return null;
 
   return (
     <>

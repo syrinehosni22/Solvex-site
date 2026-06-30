@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useIntersect } from "./hooks";
-import { useApiList } from "./apiHooks";
+import { useApiListStrict } from "./apiHooks";
 import { loc } from "./helpers";
 import SectionTitle from "./SectionTitle";
 
@@ -21,13 +21,17 @@ function IconDisplay({ icon, size = 30 }) {
 export default function ServicesSection() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
-  const apiServices = useApiList("/api/services", null);
+  const apiServices = useApiListStrict("/api/services");
   const [ref, visible] = useIntersect();
   const [hovered, setHovered] = useState(null);
 
-  const services = apiServices
-    ? apiServices.map(s => ({ ...s, title: loc(s, "title", lang), desc: loc(s, "desc", lang) }))
-    : t("services.items", { returnObjects: true });
+  // null = still loading. Once loaded, use exactly what's in the DB (possibly empty) — no static fallback.
+  const loading = apiServices === null;
+  const services = loading
+    ? []
+    : apiServices.map(s => ({ ...s, title: loc(s, "title", lang), desc: loc(s, "desc", lang) }));
+
+  if (!loading && services.length === 0) return null;
 
   const count = services.length || 1;
   let desktopCols;
