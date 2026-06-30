@@ -19,13 +19,15 @@ export function useCountUp(target, duration = 2000, start = false) {
   return count;
 }
 
-export function useIntersect(threshold = 0.2) {
+export function useIntersect(threshold = 0.1) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold });
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold, rootMargin: "0px 0px -10% 0px" });
     if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
+    // Safety fallback: if for any reason the observer never fires (very tall sections, mobile browser quirks), force visibility after a short delay.
+    const fallback = setTimeout(() => setVisible(true), 1200);
+    return () => { obs.disconnect(); clearTimeout(fallback); };
   }, []);
   return [ref, visible];
 }
