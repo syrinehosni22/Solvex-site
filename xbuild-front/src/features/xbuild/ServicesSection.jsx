@@ -39,22 +39,30 @@ export default function ServicesSection() {
 
   return (
     <section id="services" ref={ref} className="section-padding" style={{ padding: "100px 0", background: "#f8f8f8", overflow: "hidden", position: "relative" }}>
-      <div style={{ position: "absolute", top: -80, right: -80, width: 400, height: 400, borderRadius: "50%", background: "rgba(245,91,31,0.05)" }} />
+      <div className="services-deco-circle" style={{ position: "absolute", top: -80, right: -80, width: 400, height: 400, borderRadius: "50%", background: "rgba(245,91,31,0.05)" }} />
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(30px)", transition: "all 0.7s" }}>
           <SectionTitle tag={t("services.tag")} title={t("services.title")} center />
-          <p style={{ textAlign: "center", color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 16, lineHeight: 1.8, maxWidth: 720, margin: "-16px auto 0" }}>
+          <p className="services-subtitle" style={{ textAlign: "center", color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 16, lineHeight: 1.8, maxWidth: 720, margin: "-16px auto 0" }}>
             {t("services.subtitle")}
           </p>
         </div>
         <style>{`
           .services-grid { grid-template-columns: repeat(${desktopCols}, 1fr); }
           @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(${tabletCols}, 1fr) !important; } }
-          @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr !important; } }
+          @media (max-width: 560px) {
+            .services-grid { grid-template-columns: 1fr !important; gap: 16px !important; margin-top: 36px !important; }
+            .service-card { padding: 24px 20px !important; }
+            .services-deco-circle { width: 200px !important; height: 200px !important; top: -40px !important; right: -40px !important; }
+            .services-subtitle { font-size: 14px !important; padding: 0 8px; }
+          }
+          @media (max-width: 380px) {
+            .service-card { padding: 20px 16px !important; }
+          }
         `}</style>
         <div className="services-grid" style={{ display: "grid", gap: 24, marginTop: 56 }}>
           {services.map((s, i) => (
-            <div key={i}
+            <div key={i} className="service-card"
               onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
               style={{
                 background: "#fff", borderRadius: 16, padding: "36px 32px",
@@ -62,15 +70,16 @@ export default function ServicesSection() {
                 transform: visible ? (hovered === i ? "translateY(-6px)" : "translateY(0)") : "translateY(40px)",
                 opacity: visible ? 1 : 0, transitionDelay: `${i * 0.08 + 0.1}s`,
                 transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
+                minWidth: 0, overflow: "hidden",
               }}
             >
               <div style={{ marginBottom: 24 }}>
                 <IconDisplay icon={s.icon} size={64} />
               </div>
               <Link to={`/services#service-${i + 1}`} style={{ textDecoration: "none" }}>
-                <h3 style={{ fontSize: 19, fontWeight: 800, marginBottom: 12, color: "var(--color-dark, #121315)", fontFamily: "'DM Sans',sans-serif" }}>{s.title}</h3>
+                <h3 style={{ fontSize: 19, fontWeight: 800, marginBottom: 12, color: "var(--color-dark, #121315)", fontFamily: "'DM Sans',sans-serif", wordBreak: "break-word" }}>{s.title}</h3>
               </Link>
-              <p style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>{truncate(s.desc)}</p>
+              <p style={{ color: "#666", fontFamily: "'DM Sans',sans-serif", fontSize: 14, lineHeight: 1.7, marginBottom: 20, wordBreak: "break-word" }}>{truncate(s.desc)}</p>
               <Link to={`/services#service-${i + 1}`} style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--color-primary, #0A1684)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
                 {t("services.learnMore")} <span>→</span>
               </Link>
